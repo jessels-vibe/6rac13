@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — 6rac13</title>
+  <link rel="icon" href="assets/g-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue:   #1C1CCC;
+      --yellow: #F2C800;
+      --dark:   #28283A;
+      --red:    #CC1818;
+      --cream:  #F0E4C4;
+      --nav-h:  52px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* Shop page: yellow background, blue text */
+    body {
+      background: var(--yellow);
+      color: var(--blue);
+      font-family: 'Jost', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── NAV (inverted for yellow BG) ───────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0; z-index: 200;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px;
+      background: var(--yellow);
+      transition: box-shadow 0.3s;
+    }
+
+    nav.scrolled { box-shadow: 0 1px 0 rgba(28,28,204,0.15); }
+
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img {
+      height: 34px; width: 34px; object-fit: contain;
+      background: var(--blue); padding: 2px;
+    }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: var(--blue); text-decoration: none;
+      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 0.5; }
+    .nav-links a.active { border-bottom: 1px solid var(--blue); }
+
+    .nav-dropdown-wrap { position: relative; }
+    .dropdown-toggle { cursor: pointer; background: none; border: none; padding: 0; }
+    .nav-dropdown {
+      position: absolute; top: calc(100% + 12px); left: -16px;
+      background: var(--yellow); border: 1px solid rgba(28,28,204,0.2);
+      min-width: 160px; display: none; flex-direction: column; z-index: 300;
+    }
+    .nav-dropdown-wrap.open .nav-dropdown { display: flex; }
+    .nav-dropdown a {
+      padding: 12px 20px; color: rgba(28,28,204,0.65); text-decoration: none;
+      font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px;
+      letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .nav-dropdown a:hover { color: var(--blue); border-left-color: var(--blue); background: rgba(28,28,204,0.04); }
+
+    /* ── PAGE HEADER ─────────────────────────────────────────────────── */
+    .page-header {
+      padding: calc(var(--nav-h) + 48px) 28px 0;
+      min-height: 36vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+
+    .header-label {
+      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(28,28,204,0.4); margin-bottom: 12px;
+    }
+
+    .header-title {
+      font-family: 'Pinyon Script', cursive;
+      font-size: clamp(72px, 13vw, 160px);
+      color: var(--blue); line-height: 0.85; margin-bottom: 32px;
+    }
+
+    /* ── SHOP GRID ───────────────────────────────────────────────────── */
+    .shop-grid-wrap {
+      padding: 3px;
+      border-top: 1px solid rgba(28,28,204,0.15);
+    }
+
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    .shop-tile {
+      background: white;
+      text-decoration: none;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .shop-tile:hover { transform: translateY(-2px); }
+
+    .shop-tile-img-wrap {
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: #f0f0f0;
+    }
+
+    .shop-tile-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .shop-tile:hover .shop-tile-img { transform: scale(1.05); }
+
+    .shop-tile-img-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(28,28,204,0.08) 0%, rgba(28,28,204,0.04) 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .shop-tile-info {
+      padding: 16px;
+      background: var(--yellow);
+      flex: 1; display: flex; flex-direction: column; gap: 6px;
+    }
+
+    .shop-tile-title {
+      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 13px; color: var(--blue); line-height: 1.3;
+    }
+
+    .shop-tile-desc {
+      font-family: 'Jost', sans-serif; font-weight: 300;
+      font-size: 12px; color: rgba(28,28,204,0.6);
+      line-height: 1.5; display: -webkit-box;
+      -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .shop-tile-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .shop-tile-price {
+      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 15px; color: var(--blue);
+    }
+
+    .platform-badge {
+      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+      background: var(--blue); color: var(--yellow);
+      padding: 3px 8px;
+    }
+
+    .shop-tile-cta {
+      margin-top: 8px;
+      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--red);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* skeleton */
+    .skeleton-y {
+      background: rgba(28,28,204,0.07);
+      animation: pulse-y 1.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-y {
+      0%, 100% { opacity: 0.07; }
+      50%       { opacity: 0.14; }
+    }
+
+    .shop-empty {
+      display: none; grid-column: 1/-1;
+      text-align: center; padding: 100px 20px;
+      color: rgba(28,28,204,0.35); font-size: 14px; letter-spacing: 0.08em;
+    }
+
+    /* ── POSTCARD FOOTER ─────────────────────────────────────────────── */
+    .postcard-footer {
+      margin: 60px 28px 40px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1px 160px;
+      min-height: 140px;
+      border: 1px solid rgba(28,28,204,0.1);
+    }
+
+    .pc-left { padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+    .pc-brand { font-family: 'Pinyon Script', cursive; font-size: 28px; color: var(--dark); opacity: 0.5; }
+    .pc-lines { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-top: 16px; }
+    .pc-line { height: 1px; background: rgba(40,40,58,0.2); }
+    .pc-divider { background: rgba(40,40,58,0.15); }
+    .pc-right { padding: 16px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+    .pc-stamp { width: 48px; height: 56px; border: 1px solid rgba(40,40,58,0.2); display: flex; align-items: center; justify-content: center; }
+    .pc-stamp img { width: 32px; height: 32px; object-fit: contain; mix-blend-mode: multiply; }
+    .pc-addr-lines { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+    .pc-addr-line { height: 1px; background: rgba(40,40,58,0.2); }
+
+    /* ── MOBILE ──────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .shop-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .shop-grid { grid-template-columns: 1fr; }
+      .postcard-footer { grid-template-columns: 1fr; min-height: auto; }
+      .pc-divider, .pc-right { display: none; }
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/g-logo.png" alt="6rac13">
+    </a>
+    <ul class="nav-links">
+      <li class="nav-dropdown-wrap" id="workDropWrap">
+        <a href="work.html" class="dropdown-toggle" id="workToggle">Work</a>
+        <div class="nav-dropdown" id="workDropdown">
+          <a href="work.html">All Work</a>
+          <a href="work.html?filter=art">Art</a>
+          <a href="work.html?filter=videoart">Video Art</a>
+          <a href="work.html?filter=events">Events</a>
+        </div>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+    </ul>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <p class="header-label">The 6rac13 Shop</p>
+    <h1 class="header-title">Shop</h1>
+  </header>
+
+  <!-- SHOP GRID -->
+  <section class="shop-grid-wrap">
+    <div class="shop-grid" id="shopGrid">
+      <div class="shop-tile skeleton-y" style="aspect-ratio:1"></div>
+      <div class="shop-tile skeleton-y" style="aspect-ratio:1"></div>
+      <div class="shop-tile skeleton-y" style="aspect-ratio:1"></div>
+    </div>
+  </section>
+
+  <!-- POSTCARD FOOTER -->
+  <footer class="postcard-footer">
+    <div class="pc-left">
+      <span class="pc-brand">6rac13</span>
+      <div class="pc-lines">
+        <div class="pc-line"></div>
+        <div class="pc-line"></div>
+        <div class="pc-line"></div>
+        <div class="pc-line"></div>
+      </div>
+    </div>
+    <div class="pc-divider"></div>
+    <div class="pc-right">
+      <div class="pc-stamp"><img src="assets/g-logo.png" alt="G"></div>
+      <div class="pc-addr-lines">
+        <div class="pc-addr-line"></div>
+        <div class="pc-addr-line"></div>
+        <div class="pc-addr-line"></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    const workWrap = document.getElementById('workDropWrap');
+    document.getElementById('workToggle').addEventListener('click', e => { e.preventDefault(); workWrap.classList.toggle('open'); });
+    document.addEventListener('click', e => { if (!workWrap.contains(e.target)) workWrap.classList.remove('open'); });
+
+    function tileHTML(item) {
+      const imgBlock = item.imageUrl
+        ? `<img class="shop-tile-img" src="${item.imageUrl}" alt="${item.title}" loading="lazy">`
+        : `<div class="shop-tile-img-placeholder"></div>`;
+
+      return `
+        <a class="shop-tile" href="${item.externalUrl || '#'}" target="_blank" rel="noopener noreferrer">
+          <div class="shop-tile-img-wrap">${imgBlock}</div>
+          <div class="shop-tile-info">
+            <div class="shop-tile-title">${item.title}</div>
+            ${item.description ? `<div class="shop-tile-desc">${item.description}</div>` : ''}
+            <div class="shop-tile-footer">
+              <span class="shop-tile-price">${item.price || ''}</span>
+              <span class="platform-badge">${item.platform || 'Shop'}</span>
+            </div>
+            <div class="shop-tile-cta">Shop Now →</div>
+          </div>
+        </a>`;
+    }
+
+    const firebaseConfig = {
+      apiKey:            "PLACEHOLDER",
+      authDomain:        "PLACEHOLDER.firebaseapp.com",
+      databaseURL:       "https://PLACEHOLDER-default-rtdb.firebaseio.com",
+      projectId:         "PLACEHOLDER",
+      storageBucket:     "PLACEHOLDER.appspot.com",
+      messagingSenderId: "PLACEHOLDER",
+      appId:             "PLACEHOLDER"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    db.ref('shopItems').orderByChild('order').once('value', snap => {
+      const grid  = document.getElementById('shopGrid');
+      const items = [];
+      snap.forEach(child => {
+        const item = child.val();
+        item.id = child.key;
+        if (item.visible) items.push(item);
+      });
+
+      if (items.length === 0) {
+        grid.innerHTML = `<div class="shop-empty" style="display:block">No items yet — check back soon.</div>`;
+        return;
+      }
+
+      grid.innerHTML = items.map(tileHTML).join('');
+    });
+  </script>
+</body>
+</html>

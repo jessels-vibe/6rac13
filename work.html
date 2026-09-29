@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — 6rac13</title>
+  <link rel="icon" href="assets/g-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue:   #1C1CCC;
+      --yellow: #F2C800;
+      --dark:   #28283A;
+      --red:    #CC1818;
+      --cream:  #F0E4C4;
+      --nav-h:  52px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--blue);
+      color: var(--yellow);
+      font-family: 'Jost', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      background: var(--blue);
+      transition: box-shadow 0.3s;
+    }
+
+    nav.scrolled { box-shadow: 0 1px 0 rgba(242,200,0,0.12); }
+
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img {
+      height: 34px; width: 34px; object-fit: contain;
+      mix-blend-mode: multiply; background: var(--yellow); padding: 2px;
+    }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+
+    .nav-links a {
+      color: var(--yellow); text-decoration: none;
+      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 0.6; }
+    .nav-links a.active { border-bottom: 1px solid var(--yellow); }
+
+    .nav-dropdown-wrap { position: relative; }
+    .dropdown-toggle { cursor: pointer; background: none; border: none; padding: 0; }
+
+    .nav-dropdown {
+      position: absolute; top: calc(100% + 12px); left: -16px;
+      background: var(--blue); border: 1px solid rgba(242,200,0,0.25);
+      min-width: 160px; display: none; flex-direction: column; z-index: 300;
+    }
+
+    .nav-dropdown-wrap.open .nav-dropdown { display: flex; }
+
+    .nav-dropdown a {
+      padding: 12px 20px; color: rgba(242,200,0,0.75); text-decoration: none;
+      font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px;
+      letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.15s;
+      border-left: 2px solid transparent;
+    }
+
+    .nav-dropdown a:hover,
+    .nav-dropdown a.active-filter {
+      color: var(--yellow); border-left-color: var(--yellow);
+      background: rgba(242,200,0,0.04);
+    }
+
+    /* ── PAGE HEADER ─────────────────────────────────────────────────── */
+    .page-header {
+      padding: calc(var(--nav-h) + 48px) 28px 0;
+      min-height: 40vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .header-label {
+      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(242,200,0,0.45); margin-bottom: 12px;
+    }
+
+    .header-title {
+      font-family: 'Pinyon Script', cursive;
+      font-size: clamp(72px, 13vw, 160px);
+      color: var(--yellow);
+      line-height: 0.85;
+      margin-bottom: 32px;
+      transition: opacity 0.3s ease;
+    }
+
+    /* ── FILTER BAR ──────────────────────────────────────────────────── */
+    .filter-bar {
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 100;
+      background: var(--blue);
+      border-top: 1px solid rgba(242,200,0,0.15);
+      border-bottom: 1px solid rgba(242,200,0,0.15);
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filter-bar::-webkit-scrollbar { display: none; }
+
+    .filter-btn {
+      background: none; border: none; border-right: 1px solid rgba(242,200,0,0.12);
+      color: rgba(242,200,0,0.45); cursor: pointer;
+      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 14px 24px; white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .filter-btn:hover { color: var(--yellow); }
+
+    .filter-btn.active {
+      color: var(--blue);
+      background: var(--yellow);
+    }
+
+    /* ── PROJECT GRID ────────────────────────────────────────────────── */
+    .grid-wrap { padding: 3px; }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    .work-tile {
+      position: relative; overflow: hidden; cursor: pointer;
+      background: rgba(255,255,255,0.04);
+      aspect-ratio: 4/5;
+      text-decoration: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .work-tile.hidden { display: none; }
+
+    .work-tile:nth-child(5n+1) { aspect-ratio: 3/4; }
+    .work-tile:nth-child(5n+3) { aspect-ratio: 1/1; }
+
+    .tile-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .work-tile:hover .tile-img { transform: scale(1.05); }
+
+    .tile-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(28,28,204,0.92) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 20px;
+    }
+
+    .work-tile:hover .tile-overlay { opacity: 1; }
+
+    .tile-cat {
+      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(242,200,0,0.7); margin-bottom: 6px;
+    }
+
+    .tile-title {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 28px; color: var(--yellow); line-height: 1;
+    }
+
+    /* skeleton */
+    .skeleton {
+      background: rgba(255,255,255,0.06);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.06; }
+      50%       { opacity: 0.13; }
+    }
+
+    .works-empty {
+      display: none; grid-column: 1/-1;
+      text-align: center; padding: 100px 20px;
+      color: rgba(242,200,0,0.35); font-size: 14px; letter-spacing: 0.08em;
+    }
+
+    /* ── POSTCARD FOOTER ─────────────────────────────────────────────── */
+    .postcard-footer {
+      margin: 60px 28px 40px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1px 160px;
+      min-height: 140px;
+    }
+
+    .pc-left { padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+    .pc-brand { font-family: 'Pinyon Script', cursive; font-size: 28px; color: var(--dark); opacity: 0.5; }
+    .pc-lines { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-top: 16px; }
+    .pc-line { height: 1px; background: rgba(40,40,58,0.2); }
+    .pc-divider { background: rgba(40,40,58,0.15); }
+    .pc-right { padding: 16px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+    .pc-stamp { width: 48px; height: 56px; border: 1px solid rgba(40,40,58,0.2); display: flex; align-items: center; justify-content: center; }
+    .pc-stamp img { width: 32px; height: 32px; object-fit: contain; mix-blend-mode: multiply; }
+    .pc-addr-lines { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+    .pc-addr-line { height: 1px; background: rgba(40,40,58,0.2); }
+
+    /* ── MOBILE ──────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .work-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .work-grid { grid-template-columns: 1fr; }
+      .postcard-footer { grid-template-columns: 1fr; min-height: auto; }
+      .pc-divider, .pc-right { display: none; }
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/g-logo.png" alt="6rac13">
+    </a>
+    <ul class="nav-links">
+      <li class="nav-dropdown-wrap" id="workDropWrap">
+        <a href="work.html" class="dropdown-toggle active" id="workToggle">Work</a>
+        <div class="nav-dropdown" id="workDropdown">
+          <a href="work.html" data-filter="all">All Work</a>
+          <a href="work.html?filter=art" data-filter="art">Art</a>
+          <a href="work.html?filter=videoart" data-filter="videoart">Video Art</a>
+          <a href="work.html?filter=events" data-filter="events">Events</a>
+        </div>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="shop.html">Shop</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <p class="header-label" id="headerLabel">All Work</p>
+    <h1 class="header-title" id="headerTitle">Work</h1>
+  </header>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-cat="all">All</button>
+    <button class="filter-btn" data-cat="art">Art</button>
+    <button class="filter-btn" data-cat="videoart">Video Art</button>
+    <button class="filter-btn" data-cat="events">Events</button>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid-wrap">
+    <div class="work-grid" id="workGrid">
+      <div class="work-tile skeleton"></div>
+      <div class="work-tile skeleton"></div>
+      <div class="work-tile skeleton"></div>
+      <div class="work-tile skeleton"></div>
+      <div class="work-tile skeleton"></div>
+      <div class="work-tile skeleton"></div>
+    </div>
+  </div>
+
+  <!-- POSTCARD FOOTER -->
+  <footer class="postcard-footer">
+    <div class="pc-left">
+      <span class="pc-brand">6rac13</span>
+      <div class="pc-lines">
+        <div class="pc-line"></div>
+        <div class="pc-line"></div>
+        <div class="pc-line"></div>
+        <div class="pc-line"></div>
+      </div>
+    </div>
+    <div class="pc-divider"></div>
+    <div class="pc-right">
+      <div class="pc-stamp"><img src="assets/g-logo.png" alt="G"></div>
+      <div class="pc-addr-lines">
+        <div class="pc-addr-line"></div>
+        <div class="pc-addr-line"></div>
+        <div class="pc-addr-line"></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script>
+    // Sticky nav
+    window.addEventListener('scroll', () => {
+      document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Work dropdown
+    const workWrap   = document.getElementById('workDropWrap');
+    const workToggle = document.getElementById('workToggle');
+    workToggle.addEventListener('click', e => { e.preventDefault(); workWrap.classList.toggle('open'); });
+    document.addEventListener('click', e => { if (!workWrap.contains(e.target)) workWrap.classList.remove('open'); });
+
+    // Filter state
+    const CAT_LABELS = { all: 'Work', art: 'Art', videoart: 'Video Art', events: 'Events' };
+    const CAT_DISPLAY = { all: 'All Work', art: 'Art', videoart: 'Video Art', events: 'Events' };
+
+    let activeFilter = 'all';
+    let allProjects  = [];
+
+    // Read filter from URL param
+    const urlFilter = new URLSearchParams(window.location.search).get('filter');
+    if (urlFilter && CAT_LABELS[urlFilter]) activeFilter = urlFilter;
+
+    // Update header + filter bar to match active filter
+    function applyUIState() {
+      document.getElementById('headerTitle').textContent = CAT_LABELS[activeFilter];
+      document.getElementById('headerLabel').textContent = CAT_DISPLAY[activeFilter];
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === activeFilter);
+      });
+
+      document.querySelectorAll('#workDropdown a').forEach(a => {
+        a.classList.toggle('active-filter', a.dataset.filter === activeFilter);
+      });
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeFilter = btn.dataset.cat;
+        applyUIState();
+        renderGrid();
+        history.replaceState(null, '', activeFilter === 'all' ? 'work.html' : `?filter=${activeFilter}`);
+      });
+    });
+
+    // Dropdown filter links
+    document.querySelectorAll('#workDropdown a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        activeFilter = a.dataset.filter;
+        workWrap.classList.remove('open');
+        applyUIState();
+        renderGrid();
+        history.replaceState(null, '', activeFilter === 'all' ? 'work.html' : `?filter=${activeFilter}`);
+      });
+    });
+
+    function tileHTML(p) {
+      const cat = CAT_LABELS[p.category] || p.category;
+      return `
+        <a class="work-tile" href="project.html?id=${p.id}">
+          ${p.heroUrl
+            ? `<img class="tile-img" src="${p.heroUrl}" alt="${p.title}" loading="lazy">`
+            : `<div class="tile-img skeleton"></div>`}
+          <div class="tile-overlay">
+            <span class="tile-cat">${cat}</span>
+            <span class="tile-title">${p.title}</span>
+          </div>
+        </a>`;
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('workGrid');
+      const filtered = activeFilter === 'all'
+        ? allProjects
+        : allProjects.filter(p => p.category === activeFilter);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="works-empty" style="display:block">No projects in this category yet.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(tileHTML).join('');
+    }
+
+    // Firebase
+    const firebaseConfig = {
+      apiKey:            "PLACEHOLDER",
+      authDomain:        "PLACEHOLDER.firebaseapp.com",
+      databaseURL:       "https://PLACEHOLDER-default-rtdb.firebaseio.com",
+      projectId:         "PLACEHOLDER",
+      storageBucket:     "PLACEHOLDER.appspot.com",
+      messagingSenderId: "PLACEHOLDER",
+      appId:             "PLACEHOLDER"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    applyUIState();
+
+    db.ref('projects').orderByChild('order').once('value', snap => {
+      allProjects = [];
+      snap.forEach(child => {
+        const p = child.val();
+        p.id = child.key;
+        if (p.visible) allProjects.push(p);
+      });
+      renderGrid();
+    });
+  </script>
+</body>
+</html>
