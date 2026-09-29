@@ -199,30 +199,12 @@
     }
 
     /* ── POSTCARD FOOTER ─────────────────────────────────────────────── */
-    .postcard-footer {
-      margin: 0 28px 40px;
-      background: var(--cream);
-      display: grid;
-      grid-template-columns: 1fr 1px 160px;
-      min-height: 140px;
-    }
-
-    .pc-left { padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
-    .pc-brand { font-family: 'Amoresa Aged', cursive; font-size: 28px; color: var(--dark); opacity: 0.5; }
-    .pc-lines { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-top: 16px; }
-    .pc-line { height: 1px; background: rgba(40,40,58,0.2); }
-    .pc-divider { background: rgba(40,40,58,0.15); }
-    .pc-right { padding: 16px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
-    .pc-stamp { width: 48px; height: 56px; border: 1px solid rgba(40,40,58,0.2); display: flex; align-items: center; justify-content: center; }
-    .pc-stamp img { width: 32px; height: 32px; object-fit: contain; mix-blend-mode: multiply; }
-    .pc-addr-lines { width: 100%; display: flex; flex-direction: column; gap: 8px; }
-    .pc-addr-line { height: 1px; background: rgba(40,40,58,0.2); }
+    .postcard-footer { margin: 0 28px 40px; }
+    .postcard-img { width: 100%; display: block; }
 
     /* ── MOBILE ──────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       .contact-section { grid-template-columns: 1fr; gap: 48px; }
-      .postcard-footer { grid-template-columns: 1fr; min-height: auto; }
-      .pc-divider, .pc-right { display: none; }
       .nav-links { gap: 20px; }
     }
   </style>
@@ -301,24 +283,7 @@
 
   <!-- POSTCARD FOOTER -->
   <footer class="postcard-footer">
-    <div class="pc-left">
-      <span class="pc-brand">6rac13</span>
-      <div class="pc-lines">
-        <div class="pc-line"></div>
-        <div class="pc-line"></div>
-        <div class="pc-line"></div>
-        <div class="pc-line"></div>
-      </div>
-    </div>
-    <div class="pc-divider"></div>
-    <div class="pc-right">
-      <div class="pc-stamp"><img src="assets/g-logo.png" alt="G"></div>
-      <div class="pc-addr-lines">
-        <div class="pc-addr-line"></div>
-        <div class="pc-addr-line"></div>
-        <div class="pc-addr-line"></div>
-      </div>
-    </div>
+    <img src="assets/postcard.png" alt="6rac13 Postcard" class="postcard-img">
   </footer>
 
   <script>
