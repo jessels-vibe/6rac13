@@ -5,17 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin — 6rac13</title>
   <link rel="icon" href="assets/g-logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'Coco Gothic';
+      src: url('assets/fonts/CocoGothic.ttf') format('truetype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Coco Gothic';
+      src: url('assets/fonts/CocoGothic-Bold.ttf') format('truetype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'Coco Gothic';
+      src: url('assets/fonts/CocoGothic-Light.ttf') format('truetype');
+      font-weight: 300;
+    }
     :root {
       --yellow:  #F2C800;
       --blue:    #1C1CCC;
-      --dark:    #0D0D1A;
-      --surface: #181828;
-      --border:  rgba(255,255,255,0.08);
-      --text:    #E8E8F0;
-      --muted:   rgba(232,232,240,0.45);
-      --green:   #22C55E;
+      --dark:    #111111;
+      --surface: #F5EDD8;
+      --border:  rgba(0,0,0,0.12);
+      --text:    #111111;
+      --muted:   rgba(0,0,0,0.45);
+      --green:   #1A7A3E;
       --red:     #CC1818;
       --bar-h:   56px;
     }
@@ -23,9 +37,9 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: var(--dark);
+      background: #F5EDD8;
       color: var(--text);
-      font-family: 'Jost', sans-serif;
+      font-family: 'Coco Gothic', sans-serif;
       font-size: 13px;
       min-height: 100vh;
     }
@@ -50,8 +64,7 @@
     }
 
     .login-header img {
-      width: 36px; height: 36px; object-fit: contain;
-      background: var(--yellow); padding: 2px;
+      width: 40px; height: auto; object-fit: contain;
     }
 
     .login-header span {
@@ -60,9 +73,9 @@
     }
 
     .login-box input {
-      background: rgba(255,255,255,0.05);
+      background: #fff;
       border: 1px solid var(--border);
-      color: var(--text); font-family: 'Jost', sans-serif;
+      color: var(--text); font-family: 'Coco Gothic', sans-serif;
       font-size: 13px; padding: 10px 14px;
       outline: none; width: 100%;
       transition: border-color 0.2s;
@@ -74,7 +87,7 @@
     .login-btn {
       background: var(--yellow); color: var(--dark);
       border: none; cursor: pointer; padding: 12px;
-      font-family: 'Jost', sans-serif; font-weight: 700;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
       font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
       transition: opacity 0.2s;
     }
@@ -104,15 +117,14 @@
     }
 
     .admin-logo img {
-      width: 30px; height: 30px; object-fit: contain;
-      background: var(--yellow); padding: 2px;
+      width: 36px; height: auto; object-fit: contain;
     }
 
     .admin-tabs { display: flex; gap: 4px; flex: 1; }
 
     .tab-btn {
       background: none; border: none; cursor: pointer;
-      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
       font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--muted); padding: 8px 16px;
       transition: color 0.2s, background 0.2s;
@@ -124,7 +136,7 @@
     .logout-btn {
       background: none; border: 1px solid var(--border);
       color: var(--muted); cursor: pointer;
-      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
       font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
       padding: 6px 14px; transition: all 0.2s; margin-left: auto;
     }
@@ -151,7 +163,7 @@
     .save-publish-btn {
       background: var(--dark); color: var(--yellow);
       border: none; cursor: pointer;
-      font-family: 'Jost', sans-serif; font-weight: 700;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
       font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
       padding: 8px 20px; transition: opacity 0.2s;
     }
@@ -161,7 +173,7 @@
     .discard-btn {
       background: none; border: 1px solid rgba(13,13,26,0.3);
       color: var(--dark); cursor: pointer;
-      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
       font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
       padding: 8px 16px; transition: opacity 0.2s;
     }
@@ -200,7 +212,7 @@
     .add-btn {
       background: var(--yellow); color: var(--dark);
       border: none; cursor: pointer;
-      font-family: 'Jost', sans-serif; font-weight: 700;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
       font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
       padding: 10px 20px; transition: opacity 0.2s;
     }
@@ -289,7 +301,7 @@
       display: inline-flex; align-items: center; gap: 6px;
       background: none; border: 1px solid var(--border);
       cursor: pointer; padding: 5px 10px;
-      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
       font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--muted); transition: all 0.2s;
     }
@@ -305,7 +317,7 @@
     .row-btn {
       background: none; border: 1px solid var(--border); cursor: pointer;
       color: var(--muted); padding: 5px 10px; font-size: 12px;
-      transition: all 0.2s; font-family: 'Jost', sans-serif;
+      transition: all 0.2s; font-family: 'Coco Gothic', sans-serif;
     }
 
     .row-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
@@ -367,7 +379,7 @@
     .field-group textarea {
       background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
-      color: var(--text); font-family: 'Jost', sans-serif; font-size: 13px;
+      color: var(--text); font-family: 'Coco Gothic', sans-serif; font-size: 13px;
       padding: 10px 14px; outline: none; width: 100%;
       transition: border-color 0.2s;
     }
@@ -435,7 +447,7 @@
       position: absolute; top: 8px; right: 8px;
       background: rgba(0,0,0,0.7); border: 1px solid rgba(204,24,24,0.5);
       color: var(--red); cursor: pointer; padding: 4px 8px;
-      font-size: 11px; font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 11px; font-family: 'Coco Gothic', sans-serif; font-weight: 600;
     }
 
     /* BTS photo grid */
@@ -489,7 +501,7 @@
     .btn-cancel {
       background: none; border: 1px solid var(--border);
       color: var(--muted); cursor: pointer; padding: 10px 20px;
-      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
       font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
       transition: all 0.2s;
     }
@@ -499,7 +511,7 @@
     .btn-save {
       background: var(--yellow); color: var(--dark);
       border: none; cursor: pointer; padding: 10px 24px;
-      font-family: 'Jost', sans-serif; font-weight: 700;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
       font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
       transition: opacity 0.2s;
     }

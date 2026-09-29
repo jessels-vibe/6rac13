@@ -5,16 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>6rac13 — Grace Fairchild Vanderlaan</title>
   <link rel="icon" href="assets/g-logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'Amoresa Aged';
+      src: url('assets/fonts/AmorosaAged.otf') format('opentype');
+      font-weight: normal; font-style: normal;
+    }
+    @font-face {
+      font-family: 'Coco Gothic';
+      src: url('assets/fonts/CocoGothic.ttf') format('truetype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Coco Gothic';
+      src: url('assets/fonts/CocoGothic-Bold.ttf') format('truetype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'Coco Gothic';
+      src: url('assets/fonts/CocoGothic-Light.ttf') format('truetype');
+      font-weight: 300;
+    }
+
     :root {
-      --blue:    #1C1CCC;
-      --yellow:  #F2C800;
-      --dark:    #28283A;
-      --red:     #CC1818;
-      --cream:   #F0E4C4;
-      --white:   #ffffff;
-      --nav-h:   52px;
+      --blue:   #1C1CCC;
+      --yellow: #F2C800;
+      --dark:   #28283A;
+      --red:    #CC1818;
+      --cream:  #F0E4C4;
+      --nav-h:  80px;
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,170 +41,125 @@
     body {
       background: var(--blue);
       color: var(--yellow);
-      font-family: 'Jost', sans-serif;
+      font-family: 'Coco Gothic', sans-serif;
       min-height: 100vh;
     }
 
     /* ── NAV ─────────────────────────────────────────────────────────── */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
+      top: 0; left: 0; right: 0; z-index: 200;
       height: var(--nav-h);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
       background: var(--blue);
+      transition: box-shadow 0.3s;
     }
 
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-    }
+    nav.scrolled { box-shadow: 0 1px 0 rgba(242,200,0,0.15); }
 
-    .nav-logo img {
-      height: 34px;
-      width: 34px;
-      object-fit: contain;
-      mix-blend-mode: multiply;
-      background: var(--yellow);
-      padding: 2px;
-    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 62px; width: auto; object-fit: contain; display: block; }
 
-    .nav-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
-    }
-
+    .nav-links { display: flex; gap: 52px; list-style: none; }
     .nav-links a {
-      color: var(--yellow);
-      text-decoration: none;
-      font-family: 'Jost', sans-serif;
-      font-weight: 600;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      color: var(--yellow); text-decoration: none;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
+      font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase;
       transition: opacity 0.2s;
     }
-
     .nav-links a:hover { opacity: 0.6; }
-    .nav-links a.active { border-bottom: 1px solid var(--yellow); }
+    .nav-links a.active { border-bottom: 2px solid var(--yellow); }
 
-    /* work dropdown */
     .nav-dropdown-wrap { position: relative; }
-
     .dropdown-toggle { cursor: pointer; background: none; border: none; padding: 0; }
-
     .nav-dropdown {
-      position: absolute;
-      top: calc(100% + 12px);
-      left: -16px;
-      background: var(--blue);
-      border: 1px solid rgba(242,200,0,0.25);
-      min-width: 160px;
-      display: none;
-      flex-direction: column;
-      z-index: 300;
+      position: absolute; top: calc(100% + 12px); left: -16px;
+      background: var(--blue); border: 1px solid rgba(242,200,0,0.25);
+      min-width: 160px; display: none; flex-direction: column; z-index: 300;
     }
-
     .nav-dropdown-wrap.open .nav-dropdown { display: flex; }
-
     .nav-dropdown a {
-      padding: 12px 20px;
-      color: rgba(242,200,0,0.75);
-      text-decoration: none;
-      font-family: 'Jost', sans-serif;
-      font-weight: 600;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      transition: color 0.15s;
+      padding: 12px 20px; color: rgba(242,200,0,0.75); text-decoration: none;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 700; font-size: 12px;
+      letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.15s;
       border-left: 2px solid transparent;
     }
-
-    .nav-dropdown a:hover {
-      color: var(--yellow);
-      border-left-color: var(--yellow);
-      background: rgba(242,200,0,0.04);
-    }
-
-    /* sticky nav gets border when scrolled */
-    nav.scrolled { box-shadow: 0 1px 0 rgba(242,200,0,0.12); }
+    .nav-dropdown a:hover { color: var(--yellow); border-left-color: var(--yellow); background: rgba(242,200,0,0.04); }
 
     /* ── HERO ────────────────────────────────────────────────────────── */
     .home-hero {
-      min-height: 100vh;
+      height: 100vh;
       padding-top: var(--nav-h);
       position: relative;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    /* floating creatures */
-    .creature {
+    /* ID card — centered, slightly above midpoint */
+    .hero-card-wrap {
       position: absolute;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .creature img {
-      width: 100%;
-      height: auto;
-      mix-blend-mode: multiply;
-      display: block;
-    }
-
-    .c-rabbit       { top: 8%;   left: 3%;   width: clamp(100px, 14vw, 200px); transform: rotate(-6deg); }
-    .c-vtrap        { top: 5%;   left: 28%;  width: clamp(60px, 8vw, 120px); transform: rotate(4deg); }
-    .c-metal-fly    { top: 12%;  right: 8%;  width: clamp(80px, 11vw, 160px); }
-    .c-blue-fig     { top: 38%;  right: 3%;  width: clamp(90px, 12vw, 180px); transform: rotate(5deg); }
-    .c-red-fig      { bottom: 22%; right: 18%; width: clamp(80px, 10vw, 160px); transform: rotate(-8deg); }
-    .c-mama-bird    { bottom: 12%; left: 4%;  width: clamp(110px, 15vw, 220px); }
-    .c-worm         { bottom: 30%; left: 22%; width: clamp(70px, 9vw, 140px); transform: rotate(-25deg); }
-    .c-millipede    { bottom: 8%;  right: 5%; width: clamp(90px, 12vw, 180px); transform: rotate(20deg); }
-    .c-snake        { top: 50%;   right: 28%; width: clamp(70px, 9vw, 140px); transform: rotate(-15deg); }
-
-    /* ID card */
-    .id-card {
-      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -56%);
       z-index: 10;
     }
-
-    .id-card img {
-      width: clamp(260px, 30vw, 400px);
+    .hero-card-wrap img {
+      width: clamp(300px, 52vw, 740px);
       display: block;
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 28px 90px rgba(0,0,0,0.45);
     }
 
+    /* flanking figures */
+    .c-blue-fig {
+      position: absolute;
+      left: 2%;
+      bottom: 18%;
+      width: clamp(150px, 19vw, 290px);
+      z-index: 5;
+    }
+    .c-red-fig {
+      position: absolute;
+      right: 2%;
+      bottom: 18%;
+      width: clamp(150px, 19vw, 290px);
+      z-index: 5;
+    }
+    .c-blue-fig img,
+    .c-red-fig img { width: 100%; height: auto; display: block; }
+
+    /* Work / Contact CTAs */
+    .hero-ctas {
+      position: absolute;
+      bottom: 4%;
+      left: 0; right: 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 0 8%;
+      z-index: 20;
+    }
+    .hero-cta-link {
+      font-family: 'Amoresa Aged', cursive;
+      font-size: clamp(68px, 11vw, 160px);
+      color: var(--yellow);
+      text-decoration: none;
+      line-height: 0.85;
+      transition: opacity 0.2s;
+    }
+    .hero-cta-link:hover { opacity: 0.72; }
+
     /* ── SELECTED WORKS ──────────────────────────────────────────────── */
+    .works-section { padding: 80px 28px 0; }
+
     .section-label {
-      font-family: 'Jost', sans-serif;
-      font-weight: 600;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(242,200,0,0.5);
-      padding: 0 28px;
-      margin-bottom: 20px;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(242,200,0,0.5); margin-bottom: 20px;
     }
 
     .section-script {
-      font-family: 'Pinyon Script', cursive;
-      font-size: clamp(52px, 8vw, 96px);
-      color: var(--yellow);
-      line-height: 0.9;
-      padding: 0 28px;
-      margin-bottom: 40px;
-    }
-
-    /* project grid */
-    .works-section {
-      padding: 72px 28px 0;
+      font-family: 'Amoresa Aged', cursive;
+      font-size: clamp(52px, 8vw, 100px);
+      color: var(--yellow); line-height: 0.9; margin-bottom: 40px;
     }
 
     .works-grid {
@@ -195,228 +169,104 @@
     }
 
     .work-tile {
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      background: rgba(255,255,255,0.04);
-      aspect-ratio: 4/5;
+      position: relative; overflow: hidden; cursor: pointer;
+      background: rgba(255,255,255,0.04); aspect-ratio: 4/5;
       text-decoration: none;
     }
-
     .work-tile:nth-child(4n+1) { aspect-ratio: 3/4; }
     .work-tile:nth-child(4n+2) { aspect-ratio: 1/1; }
 
-    .tile-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-
+    .tile-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
     .work-tile:hover .tile-img { transform: scale(1.05); }
 
     .tile-overlay {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(28,28,204,0.92) 0%, transparent 55%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 20px;
+      opacity: 0; transition: opacity 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
     }
-
     .work-tile:hover .tile-overlay { opacity: 1; }
 
     .tile-cat {
-      font-family: 'Jost', sans-serif;
-      font-weight: 600;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(242,200,0,0.7);
-      margin-bottom: 6px;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 700; font-size: 10px;
+      letter-spacing: 0.15em; text-transform: uppercase; color: rgba(242,200,0,0.7); margin-bottom: 6px;
     }
-
     .tile-title {
-      font-family: 'Pinyon Script', cursive;
-      font-size: 28px;
-      color: var(--yellow);
-      line-height: 1;
+      font-family: 'Amoresa Aged', cursive; font-size: 28px; color: var(--yellow); line-height: 1;
     }
 
-    /* empty state */
     .works-empty {
-      display: none;
-      grid-column: 1/-1;
-      text-align: center;
-      padding: 80px 20px;
-      color: rgba(242,200,0,0.4);
-      font-size: 14px;
-      letter-spacing: 0.05em;
+      display: none; grid-column: 1/-1; text-align: center; padding: 80px 20px;
+      color: rgba(242,200,0,0.4); font-size: 14px; letter-spacing: 0.05em;
     }
 
-    .view-all-wrap {
-      padding: 40px 28px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
+    .view-all-wrap { padding: 40px 28px; }
     .view-all {
-      font-family: 'Jost', sans-serif;
-      font-weight: 600;
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--yellow);
-      text-decoration: none;
-      border-bottom: 1px solid var(--yellow);
-      padding-bottom: 2px;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 700; font-size: 12px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--yellow);
+      text-decoration: none; border-bottom: 1px solid var(--yellow); padding-bottom: 2px;
       transition: opacity 0.2s;
     }
-
     .view-all:hover { opacity: 0.6; }
 
     /* ── CONTACT STRIP ───────────────────────────────────────────────── */
     .contact-strip {
-      margin: 0 28px;
-      border-top: 1px solid rgba(242,200,0,0.2);
-      padding: 64px 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      margin: 0 28px; border-top: 1px solid rgba(242,200,0,0.2);
+      padding: 64px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
     }
-
     .contact-strip h2 {
-      font-family: 'Pinyon Script', cursive;
-      font-size: clamp(48px, 7vw, 88px);
-      color: var(--yellow);
-      line-height: 0.9;
-      grid-column: 1/-1;
+      font-family: 'Amoresa Aged', cursive; font-size: clamp(48px, 7vw, 88px);
+      color: var(--yellow); line-height: 0.9; grid-column: 1/-1;
     }
-
     .contact-col p, .contact-col a {
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 14px;
-      color: rgba(242,200,0,0.75);
-      text-decoration: none;
-      line-height: 2;
-      display: block;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 300; font-size: 14px;
+      color: rgba(242,200,0,0.75); text-decoration: none; line-height: 2; display: block;
     }
-
     .contact-col a:hover { color: var(--yellow); }
 
     /* ── POSTCARD FOOTER ─────────────────────────────────────────────── */
     .postcard-footer {
-      margin: 0 28px 40px;
-      background: var(--cream);
-      display: grid;
-      grid-template-columns: 1fr 1px 160px;
-      min-height: 140px;
+      margin: 0 28px 40px; background: var(--cream);
+      display: grid; grid-template-columns: 1fr 1px 160px; min-height: 140px;
     }
+    .pc-left { padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+    .pc-brand { font-family: 'Amoresa Aged', cursive; font-size: 28px; color: var(--dark); opacity: 0.5; }
+    .pc-lines { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-top: 16px; }
+    .pc-line { height: 1px; background: rgba(40,40,58,0.2); }
+    .pc-divider { background: rgba(40,40,58,0.15); }
+    .pc-right { padding: 16px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+    .pc-stamp { width: 48px; height: 56px; border: 1px solid rgba(40,40,58,0.2); display: flex; align-items: center; justify-content: center; }
+    .pc-stamp img { width: 32px; height: 32px; object-fit: contain; }
+    .pc-addr-lines { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+    .pc-addr-line { height: 1px; background: rgba(40,40,58,0.2); }
 
-    .pc-left {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .pc-brand {
-      font-family: 'Pinyon Script', cursive;
-      font-size: 28px;
-      color: var(--dark);
-      opacity: 0.5;
-    }
-
-    .pc-lines {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      flex: 1;
-      margin-top: 16px;
-    }
-
-    .pc-line {
-      height: 1px;
-      background: rgba(40,40,58,0.2);
-    }
-
-    .pc-divider { background: rgba(40,40,58,0.15); width: 1px; }
-
-    .pc-right {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .pc-stamp {
-      width: 48px;
-      height: 56px;
-      border: 1px solid rgba(40,40,58,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .pc-stamp img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-      mix-blend-mode: multiply;
-    }
-
-    .pc-addr-lines {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .pc-addr-line {
-      height: 1px;
-      background: rgba(40,40,58,0.2);
-    }
-
-    /* ── LOADING SKELETON ────────────────────────────────────────────── */
-    .skeleton {
-      background: rgba(255,255,255,0.06);
-      animation: pulse 1.4s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.06; }
-      50% { opacity: 0.12; }
-    }
+    /* ── SKELETON ────────────────────────────────────────────────────── */
+    .skeleton { background: rgba(255,255,255,0.06); animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 0.06; } 50% { opacity: 0.12; } }
 
     /* ── MOBILE ──────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       .works-grid { grid-template-columns: repeat(2, 1fr); }
       .contact-strip { grid-template-columns: 1fr; }
-      .postcard-footer { grid-template-columns: 1fr 1px 120px; }
-      .c-rabbit, .c-blue-fig, .c-red-fig, .c-worm, .c-snake { display: none; }
-      .nav-links { gap: 20px; }
-      .nav-links a { font-size: 11px; }
+      .c-blue-fig, .c-red-fig { width: clamp(100px, 14vw, 180px); bottom: 22%; }
+      .hero-card-wrap img { width: clamp(240px, 70vw, 500px); }
+      .hero-cta-link { font-size: clamp(48px, 9vw, 100px); }
+      .nav-links { gap: 28px; }
+      .nav-links a { font-size: 13px; }
     }
 
     @media (max-width: 480px) {
       .works-grid { grid-template-columns: 1fr; }
       .postcard-footer { grid-template-columns: 1fr; min-height: auto; }
-      .pc-divider { display: none; }
-      .pc-right { display: none; }
+      .pc-divider, .pc-right { display: none; }
+      .c-blue-fig { display: none; }
     }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav>
+  <nav id="mainNav">
     <a href="index.html" class="nav-logo">
       <img src="assets/g-logo.png" alt="6rac13">
     </a>
@@ -437,18 +287,14 @@
 
   <!-- HERO -->
   <section class="home-hero">
-    <div class="creature c-rabbit"><img src="assets/rabbit.png" alt=""></div>
-    <div class="creature c-vtrap"><img src="assets/venus-flytrap.png" alt=""></div>
-    <div class="creature c-metal-fly"><img src="assets/metal-fly.png" alt=""></div>
-    <div class="creature c-blue-fig"><img src="assets/blue-fig.png" alt=""></div>
-    <div class="creature c-red-fig"><img src="assets/red-fig.png" alt=""></div>
-    <div class="creature c-mama-bird"><img src="assets/mama-bird.png" alt=""></div>
-    <div class="creature c-worm"><img src="assets/worm.png" alt=""></div>
-    <div class="creature c-millipede"><img src="assets/millipede.png" alt=""></div>
-    <div class="creature c-snake"><img src="assets/snake.png" alt=""></div>
-
-    <div class="id-card">
+    <div class="c-blue-fig"><img src="assets/blue-fig.png" alt=""></div>
+    <div class="hero-card-wrap">
       <img src="assets/id-card.png" alt="Grace Fairchild Vanderlaan — 6rac13">
+    </div>
+    <div class="c-red-fig"><img src="assets/red-fig.png" alt=""></div>
+    <div class="hero-ctas">
+      <a href="work.html" class="hero-cta-link">Work</a>
+      <a href="contact.html" class="hero-cta-link">Contact</a>
     </div>
   </section>
 
@@ -456,9 +302,7 @@
   <section class="works-section">
     <p class="section-label">Selected Works</p>
     <h2 class="section-script">Work</h2>
-
     <div class="works-grid" id="worksGrid">
-      <!-- skeleton placeholders -->
       <div class="work-tile skeleton"></div>
       <div class="work-tile skeleton"></div>
       <div class="work-tile skeleton"></div>
@@ -466,7 +310,6 @@
       <div class="work-tile skeleton"></div>
       <div class="work-tile skeleton"></div>
     </div>
-
     <div class="view-all-wrap">
       <a href="work.html" class="view-all">View All Work</a>
     </div>
@@ -496,9 +339,7 @@
     </div>
     <div class="pc-divider"></div>
     <div class="pc-right">
-      <div class="pc-stamp">
-        <img src="assets/g-logo.png" alt="G">
-      </div>
+      <div class="pc-stamp"><img src="assets/g-logo.png" alt="G"></div>
       <div class="pc-addr-lines">
         <div class="pc-addr-line"></div>
         <div class="pc-addr-line"></div>
@@ -507,30 +348,17 @@
     </div>
   </footer>
 
-  <!-- FIREBASE -->
-  <script>
-    // Sticky nav scroll indicator
-    window.addEventListener('scroll', () => {
-      document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 10);
-    });
-
-    // Work dropdown toggle
-    const workWrap   = document.getElementById('workDropWrap');
-    const workToggle = document.getElementById('workToggle');
-
-    workToggle.addEventListener('click', e => {
-      e.preventDefault();
-      workWrap.classList.toggle('open');
-    });
-
-    document.addEventListener('click', e => {
-      if (!workWrap.contains(e.target)) workWrap.classList.remove('open');
-    });
-  </script>
-
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
   <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    const workWrap = document.getElementById('workDropWrap');
+    document.getElementById('workToggle').addEventListener('click', e => { e.preventDefault(); workWrap.classList.toggle('open'); });
+    document.addEventListener('click', e => { if (!workWrap.contains(e.target)) workWrap.classList.remove('open'); });
+
     const firebaseConfig = {
       apiKey:            "AIzaSyDmNYdW7lFABFWjA_eSEDqmd2YuOrX32g8",
       authDomain:        "rac13-12cca.firebaseapp.com",
@@ -544,11 +372,7 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    const CAT_LABELS = {
-      art:       'Art',
-      videoart:  'Video Art',
-      events:    'Events'
-    };
+    const CAT_LABELS = { art: 'Art', videoart: 'Video Art', events: 'Events' };
 
     function tileHTML(p) {
       const cat = CAT_LABELS[p.category] || p.category;
@@ -568,18 +392,15 @@
     db.ref('projects').orderByChild('order').once('value', snap => {
       const grid = document.getElementById('worksGrid');
       const projects = [];
-
       snap.forEach(child => {
         const p = child.val();
         p.id = child.key;
         if (p.visible && p.featured) projects.push(p);
       });
-
       if (projects.length === 0) {
         grid.innerHTML = `<div class="works-empty" style="display:block">No featured works yet.</div>`;
         return;
       }
-
       grid.innerHTML = projects.map(tileHTML).join('');
     });
   </script>

@@ -5,15 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Work — 6rac13</title>
   <link rel="icon" href="assets/g-logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'Amoresa Aged';
+      src: url('assets/fonts/AmorosaAged.otf') format('opentype');
+      font-weight: normal; font-style: normal;
+    }
+    @font-face {
+      font-family: 'Coco Gothic';
+      src: url('assets/fonts/CocoGothic.ttf') format('truetype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Coco Gothic';
+      src: url('assets/fonts/CocoGothic-Bold.ttf') format('truetype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'Coco Gothic';
+      src: url('assets/fonts/CocoGothic-Light.ttf') format('truetype');
+      font-weight: 300;
+    }
     :root {
       --blue:   #1C1CCC;
       --yellow: #F2C800;
       --dark:   #28283A;
       --red:    #CC1818;
       --cream:  #F0E4C4;
-      --nav-h:  52px;
+      --nav-h:  80px;
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,7 +40,7 @@
     body {
       background: var(--blue);
       color: var(--yellow);
-      font-family: 'Jost', sans-serif;
+      font-family: 'Coco Gothic', sans-serif;
       min-height: 100vh;
     }
 
@@ -42,17 +61,14 @@
     nav.scrolled { box-shadow: 0 1px 0 rgba(242,200,0,0.12); }
 
     .nav-logo { display: flex; align-items: center; text-decoration: none; }
-    .nav-logo img {
-      height: 34px; width: 34px; object-fit: contain;
-      mix-blend-mode: multiply; background: var(--yellow); padding: 2px;
-    }
+    .nav-logo img { height: 62px; width: auto; object-fit: contain; display: block; }
 
-    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links { display: flex; gap: 52px; list-style: none; }
 
     .nav-links a {
       color: var(--yellow); text-decoration: none;
-      font-family: 'Jost', sans-serif; font-weight: 600;
-      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
+      font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase;
       transition: opacity 0.2s;
     }
 
@@ -72,7 +88,7 @@
 
     .nav-dropdown a {
       padding: 12px 20px; color: rgba(242,200,0,0.75); text-decoration: none;
-      font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 600; font-size: 11px;
       letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.15s;
       border-left: 2px solid transparent;
     }
@@ -93,13 +109,13 @@
     }
 
     .header-label {
-      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
       font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
       color: rgba(242,200,0,0.45); margin-bottom: 12px;
     }
 
     .header-title {
-      font-family: 'Pinyon Script', cursive;
+      font-family: 'Amoresa Aged', cursive;
       font-size: clamp(72px, 13vw, 160px);
       color: var(--yellow);
       line-height: 0.85;
@@ -126,7 +142,7 @@
     .filter-btn {
       background: none; border: none; border-right: 1px solid rgba(242,200,0,0.12);
       color: rgba(242,200,0,0.45); cursor: pointer;
-      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
       font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
       padding: 14px 24px; white-space: nowrap;
       transition: color 0.2s, background 0.2s;
@@ -179,13 +195,13 @@
     .work-tile:hover .tile-overlay { opacity: 1; }
 
     .tile-cat {
-      font-family: 'Jost', sans-serif; font-weight: 600;
+      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
       font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
       color: rgba(242,200,0,0.7); margin-bottom: 6px;
     }
 
     .tile-title {
-      font-family: 'Pinyon Script', cursive;
+      font-family: 'Amoresa Aged', cursive;
       font-size: 28px; color: var(--yellow); line-height: 1;
     }
 
@@ -216,7 +232,7 @@
     }
 
     .pc-left { padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
-    .pc-brand { font-family: 'Pinyon Script', cursive; font-size: 28px; color: var(--dark); opacity: 0.5; }
+    .pc-brand { font-family: 'Amoresa Aged', cursive; font-size: 28px; color: var(--dark); opacity: 0.5; }
     .pc-lines { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-top: 16px; }
     .pc-line { height: 1px; background: rgba(40,40,58,0.2); }
     .pc-divider { background: rgba(40,40,58,0.15); }
