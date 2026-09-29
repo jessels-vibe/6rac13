@@ -391,7 +391,7 @@
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" id="lightboxImg">
+    <div id="lightboxMedia"></div>
   </div>
 
   <!-- POSTCARD FOOTER -->
@@ -433,13 +433,20 @@
     document.addEventListener('click', e => { if (!workWrap.contains(e.target)) workWrap.classList.remove('open'); });
 
     // Lightbox
-    const lightbox     = document.getElementById('lightbox');
-    const lightboxImg  = document.getElementById('lightboxImg');
-    document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('open'));
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+    const lightbox = document.getElementById('lightbox');
+    const lightboxMedia = document.getElementById('lightboxMedia');
+    function closeLightbox() {
+      lightboxMedia.innerHTML = '';
+      lightbox.classList.remove('open');
+    }
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
 
     function openLightbox(src) {
-      lightboxImg.src = src;
+      const isVid = /\.(mp4|mov|webm)(\?|$)/i.test(src);
+      lightboxMedia.innerHTML = isVid
+        ? `<video src="${src}" controls autoplay muted style="max-width:90vw;max-height:90vh;display:block;outline:none;"></video>`
+        : `<img src="${src}" alt="" style="max-width:90vw;max-height:90vh;object-fit:contain;display:block;">`;
       lightbox.classList.add('open');
     }
 
@@ -533,10 +540,13 @@
           const btsSection = document.getElementById('btsSection');
           const btsGrid    = document.getElementById('btsGrid');
           btsSection.style.display = 'block';
-          btsGrid.innerHTML = photos.map(url => `
-            <div class="bts-photo" onclick="openLightbox('${url}')">
-              <img src="${url}" alt="BTS" loading="lazy">
-            </div>`).join('');
+          btsGrid.innerHTML = photos.map(url => {
+            const isVid = /\.(mp4|mov|webm)(\?|$)/i.test(url);
+            const media = isVid
+              ? `<video src="${url}" muted playsinline loop preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;"></video>`
+              : `<img src="${url}" alt="BTS" loading="lazy">`;
+            return `<div class="bts-photo" onclick="openLightbox('${url}')">${media}</div>`;
+          }).join('');
         }
       });
     }

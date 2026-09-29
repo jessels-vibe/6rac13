@@ -381,7 +381,6 @@
 
   <!-- SELECTED WORKS -->
   <section class="works-section">
-    <p class="section-label">Selected Works</p>
     <h2 class="section-script">Work</h2>
     <div class="works-grid" id="worksGrid">
       <div class="work-tile skeleton"></div>
@@ -461,12 +460,17 @@
 
     function tileHTML(p) {
       const cat = CAT_LABELS[p.category] || p.category;
+      let media;
+      if (!p.heroUrl) {
+        media = `<div class="tile-img skeleton"></div>`;
+      } else if (p.heroType === 'video' || /\.(mp4|mov|webm)(\?|$)/i.test(p.heroUrl)) {
+        media = `<video class="tile-img" src="${p.heroUrl}" muted playsinline loop preload="metadata"></video>`;
+      } else {
+        media = `<img class="tile-img" src="${p.heroUrl}" alt="${p.title}" loading="lazy">`;
+      }
       return `
         <a class="work-tile" href="project.html?id=${p.id}">
-          ${p.heroUrl
-            ? `<img class="tile-img" src="${p.heroUrl}" alt="${p.title}" loading="lazy">`
-            : `<div class="tile-img skeleton"></div>`
-          }
+          ${media}
           <div class="tile-overlay">
             <span class="tile-cat">${cat}</span>
             <span class="tile-title">${p.title}</span>

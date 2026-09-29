@@ -111,7 +111,7 @@
     .header-label {
       font-family: 'Coco Gothic', sans-serif; font-weight: 600;
       font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(242,200,0,0.45); margin-bottom: 12px; text-align: right;
+      color: rgba(242,200,0,0.45); margin-bottom: 12px; text-align: right; display: none;
     }
 
     .header-title {
@@ -470,11 +470,17 @@
 
     function tileHTML(p) {
       const cat = CAT_LABELS[p.category] || p.category;
+      let media;
+      if (!p.heroUrl) {
+        media = `<div class="tile-img skeleton"></div>`;
+      } else if (p.heroType === 'video' || /\.(mp4|mov|webm)(\?|$)/i.test(p.heroUrl)) {
+        media = `<video class="tile-img" src="${p.heroUrl}" muted playsinline loop preload="metadata"></video>`;
+      } else {
+        media = `<img class="tile-img" src="${p.heroUrl}" alt="${p.title}" loading="lazy">`;
+      }
       return `
         <a class="work-tile" href="project.html?id=${p.id}">
-          ${p.heroUrl
-            ? `<img class="tile-img" src="${p.heroUrl}" alt="${p.title}" loading="lazy">`
-            : `<div class="tile-img skeleton"></div>`}
+          ${media}
           <div class="tile-overlay">
             <span class="tile-cat">${cat}</span>
             <span class="tile-title">${p.title}</span>
