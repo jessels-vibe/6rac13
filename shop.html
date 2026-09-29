@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Shop — 6rac13</title>
   <link rel="icon" href="assets/g-logo.png">
   <style>
@@ -86,6 +86,82 @@
       border-left: 2px solid transparent;
     }
     .nav-dropdown a:hover { color: var(--blue); border-left-color: var(--blue); background: rgba(28,28,204,0.04); }
+
+    /* ── HAMBURGER ───────────────────────────────────────────────────── */
+    .nav-burger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--blue);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── MOBILE NAV OVERLAY (inverted for shop) ──────────────────────── */
+    .mobile-nav {
+      position: fixed;
+      inset: 0;
+      z-index: 499;
+      background: var(--yellow);
+      display: flex;
+      flex-direction: column;
+      padding: 0 32px 48px;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .mobile-nav.open { transform: translateX(0); }
+
+    .mobile-nav-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-h);
+      flex-shrink: 0;
+    }
+
+    .mobile-nav-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--blue);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .mobile-nav-links { display: flex; flex-direction: column; padding-top: 12px; }
+
+    .mobile-nav-link {
+      font-family: 'Amoresa Aged', cursive;
+      font-size: clamp(56px, 16vw, 80px);
+      color: var(--blue);
+      text-decoration: none;
+      line-height: 1;
+      padding: 6px 0;
+      transition: opacity 0.15s;
+    }
+    .mobile-nav-link:active { opacity: 0.5; }
+
+    .mobile-nav-sub {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+      padding: 4px 0 20px 2px;
+      margin-bottom: 4px;
+      border-bottom: 1px solid rgba(28,28,204,0.12);
+    }
+    .mobile-nav-sub a {
+      font-family: 'Coco Gothic', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(28,28,204,0.45);
+      text-decoration: none;
+      padding: 8px 0;
+      display: inline-block;
+    }
 
     /* ── PAGE HEADER ─────────────────────────────────────────────────── */
     .page-header {
@@ -304,15 +380,117 @@
       letter-spacing: 0.08em;
     }
 
-    /* ── MOBILE ──────────────────────────────────────────────────────── */
+    /* ── MOBILE POSTCARD FORM ───────────────────────────────────────── */
+    .pc-mobile-wrap {
+      display: none;
+      margin: 0 20px 40px;
+      padding: 28px 24px 32px;
+      background: var(--cream);
+    }
+    .pc-mobile-to {
+      font-family: 'Coco Gothic', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(107,85,48,0.65);
+      margin-bottom: 20px;
+    }
+    .pc-mobile-msg {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(120,100,70,0.22);
+      resize: none;
+      font-family: 'Coco Gothic', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: #6B5530;
+      outline: none;
+      padding: 0 0 12px;
+      margin-bottom: 4px;
+      min-height: 100px;
+      line-height: 1.9;
+      -webkit-appearance: none;
+    }
+    .pc-mobile-msg::placeholder { color: rgba(107,85,48,0.3); }
+    .pc-mobile-field {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(120,100,70,0.18);
+      padding: 11px 0;
+      gap: 8px;
+      min-height: 44px;
+    }
+    .pc-mobile-lbl {
+      font-family: 'Coco Gothic', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(107,85,48,0.6);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .pc-mobile-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #5C4A2A;
+      font-family: 'Coco Gothic', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      outline: none;
+      min-width: 0;
+      -webkit-appearance: none;
+    }
+    .pc-mobile-input::placeholder { color: rgba(100,80,40,0.28); }
+    .pc-mobile-send {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      background: none;
+      border: 1px solid rgba(120,100,70,0.45);
+      color: #6B5530;
+      font-family: 'Coco Gothic', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pc-mobile-send:disabled { opacity: 0.4; }
+    .pc-mobile-sent {
+      text-align: center;
+      font-family: 'Coco Gothic', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      color: #6B5530;
+      padding: 24px 0;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────────────── */
     @media (max-width: 900px) {
       .shop-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-burger { display: flex; align-items: center; justify-content: center; }
+      .postcard-footer { display: none; }
+      .pc-mobile-wrap { display: block; }
+      body { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    }
+
+    @media (max-width: 420px) {
       .shop-grid { grid-template-columns: 1fr; }
-      .nav-links { gap: 20px; }
-      .nav-links a { font-size: 11px; }
     }
   </style>
 </head>
@@ -337,7 +515,38 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="shop.html" class="active">Shop</a></li>
     </ul>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu">
+      <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
+        <rect width="22" height="2" fill="currentColor"/>
+        <rect y="6" width="22" height="2" fill="currentColor"/>
+        <rect y="12" width="22" height="2" fill="currentColor"/>
+      </svg>
+    </button>
   </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-head">
+      <a href="index.html" class="nav-logo"><img src="assets/g-logo.png" alt="6rac13"></a>
+      <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <line x1="1" y1="1" x2="19" y2="19" stroke="currentColor" stroke-width="2.5"/>
+          <line x1="19" y1="1" x2="1" y2="19" stroke="currentColor" stroke-width="2.5"/>
+        </svg>
+      </button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="work.html" class="mobile-nav-link">Work</a>
+      <div class="mobile-nav-sub">
+        <a href="work.html">All</a>
+        <a href="work.html?filter=art">Art</a>
+        <a href="work.html?filter=videoart">Video Art</a>
+        <a href="work.html?filter=events">Events</a>
+      </div>
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="shop.html" class="mobile-nav-link">Shop</a>
+    </div>
+  </div>
 
   <!-- HEADER -->
   <header class="page-header">
@@ -380,6 +589,27 @@
     </div>
   </footer>
 
+  <!-- MOBILE POSTCARD FORM -->
+  <div class="pc-mobile-wrap">
+    <p class="pc-mobile-to">To: Gracie F. Vanderlaan</p>
+    <form id="pcFormMobile" action="https://formspree.io/f/mwlpabqv" method="POST">
+      <textarea class="pc-mobile-msg" name="message" placeholder="Write your message to Gracie…"></textarea>
+      <div class="pc-mobile-field">
+        <span class="pc-mobile-lbl">From</span>
+        <input class="pc-mobile-input" type="text" name="name" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="pc-mobile-field">
+        <input class="pc-mobile-input" type="email" name="email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="pc-mobile-field">
+        <span class="pc-mobile-lbl">Re</span>
+        <input class="pc-mobile-input" type="text" name="subject" placeholder="What's this about?">
+      </div>
+      <button class="pc-mobile-send" type="submit">Send →</button>
+    </form>
+    <p class="pc-mobile-sent" id="pcSentMobile" style="display:none">Message sent — Gracie will be in touch.</p>
+  </div>
+
   <!-- FIREBASE -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
@@ -391,6 +621,16 @@
     const workWrap = document.getElementById('workDropWrap');
     document.getElementById('workToggle').addEventListener('click', e => { e.preventDefault(); workWrap.classList.toggle('open'); });
     document.addEventListener('click', e => { if (!workWrap.contains(e.target)) workWrap.classList.remove('open'); });
+
+    // Mobile nav
+    const navBurger = document.getElementById('navBurger');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+    if (navBurger && mobileNav) {
+      navBurger.addEventListener('click', () => { mobileNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
+      mobileNavClose.addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; });
+      mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; }));
+    }
 
     function tileHTML(item) {
       const imgBlock = item.imageUrl
@@ -451,6 +691,20 @@
         try {
           const res = await fetch(pcForm.action, { method: 'POST', body: new FormData(pcForm), headers: { 'Accept': 'application/json' } });
           if (res.ok) { pcForm.style.display = 'none'; document.getElementById('pcSent').style.display = 'block'; }
+          else { btn.disabled = false; btn.textContent = 'Try Again →'; }
+        } catch { btn.disabled = false; btn.textContent = 'Try Again →'; }
+      });
+    }
+
+    const pcFormMobile = document.getElementById('pcFormMobile');
+    if (pcFormMobile) {
+      pcFormMobile.addEventListener('submit', async e => {
+        e.preventDefault();
+        const btn = pcFormMobile.querySelector('.pc-mobile-send');
+        btn.disabled = true; btn.textContent = 'Sending…';
+        try {
+          const res = await fetch(pcFormMobile.action, { method: 'POST', body: new FormData(pcFormMobile), headers: { 'Accept': 'application/json' } });
+          if (res.ok) { pcFormMobile.style.display = 'none'; document.getElementById('pcSentMobile').style.display = 'block'; }
           else { btn.disabled = false; btn.textContent = 'Try Again →'; }
         } catch { btn.disabled = false; btn.textContent = 'Try Again →'; }
       });
