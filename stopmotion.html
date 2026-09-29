@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact — 6rac13</title>
+  <title>Stop Motion — 6rac13</title>
   <link rel="icon" href="assets/g-logo.png">
   <style>
     @font-face {
@@ -51,15 +51,15 @@
       height: var(--nav-h);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 28px;
-      background: var(--blue);
-      transition: box-shadow 0.3s;
+      background: transparent;
+      transition: background 0.4s, box-shadow 0.3s;
     }
-
-    nav.scrolled { box-shadow: 0 1px 0 rgba(242,200,0,0.12); }
-
+    nav.scrolled {
+      background: var(--blue);
+      box-shadow: 0 1px 0 rgba(242,200,0,0.12);
+    }
     .nav-logo { display: flex; align-items: center; text-decoration: none; }
     .nav-logo img { height: 62px; width: auto; object-fit: contain; display: block; }
-
     .nav-links { display: flex; gap: 52px; list-style: none; }
     .nav-links a {
       color: var(--yellow); text-decoration: none;
@@ -69,7 +69,6 @@
     }
     .nav-links a:hover { opacity: 0.6; }
     .nav-links a.active { border-bottom: 1px solid var(--yellow); }
-
     .nav-dropdown-wrap { position: relative; }
     .dropdown-toggle { cursor: pointer; background: none; border: none; padding: 0; }
     .nav-dropdown {
@@ -85,118 +84,44 @@
       border-left: 2px solid transparent;
     }
     .nav-dropdown a:hover { color: var(--yellow); border-left-color: var(--yellow); background: rgba(242,200,0,0.04); }
+    .nav-dropdown a.active-sm { color: var(--yellow); border-left-color: var(--yellow); }
 
-    /* ── PAGE HEADER ─────────────────────────────────────────────────── */
-    .page-header {
-      padding: calc(var(--nav-h) + 48px) 28px 0;
-      min-height: 40vh;
-      display: flex; flex-direction: column; justify-content: flex-end;
+    /* ── HERO ────────────────────────────────────────────────────────── */
+    .sm-hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--blue);
     }
 
-    .header-label {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
-      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(242,200,0,0.4); margin-bottom: 12px; text-align: right;
-    }
-
-    .header-title {
+    .sm-title {
       font-family: 'Amoresa Aged', cursive;
-      font-size: clamp(72px, 13vw, 160px);
-      color: var(--yellow); line-height: 0.85; margin-bottom: 32px; text-align: right;
-    }
-
-    /* ── CONTACT GRID ────────────────────────────────────────────────── */
-    .contact-section {
-      padding: 0 28px 80px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      border-top: 1px solid rgba(242,200,0,0.12);
-      padding-top: 48px;
-    }
-
-    /* left: info */
-    .contact-info h2 {
-      font-family: 'Amoresa Aged', cursive;
-      font-size: clamp(36px, 5vw, 56px);
+      font-size: clamp(72px, 12vw, 180px);
       color: var(--yellow);
-      margin-bottom: 28px;
-      line-height: 1;
+      position: absolute;
+      top: 10%;
+      left: 17%;
+      right: 2%;
+      line-height: 0.88;
+      z-index: 5;
+      pointer-events: none;
     }
 
-    .contact-link {
-      display: block;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 300;
-      font-size: 14px; color: rgba(242,200,0,0.7);
-      text-decoration: none; line-height: 2.4;
-      letter-spacing: 0.02em;
-      transition: color 0.2s;
+    .sm-char {
+      position: absolute;
+      object-fit: contain;
     }
 
-    .contact-link:hover { color: var(--yellow); }
-
-    .contact-link-label {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
-      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: rgba(242,200,0,0.35);
-      margin-top: 20px; margin-bottom: 4px;
-      display: block;
-    }
-
-    /* right: form */
-    .contact-form { display: flex; flex-direction: column; gap: 20px; }
-
-    .field-wrap { display: flex; flex-direction: column; gap: 6px; }
-
-    .field-wrap label {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
-      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: rgba(242,200,0,0.4);
-    }
-
-    .field-wrap input,
-    .field-wrap textarea {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(242,200,0,0.2);
-      color: var(--yellow);
-      font-family: 'Coco Gothic', sans-serif; font-weight: 300;
-      font-size: 14px; padding: 12px 16px;
-      outline: none;
-      transition: border-color 0.2s;
-      resize: none;
-      width: 100%;
-    }
-
-    .field-wrap input:focus,
-    .field-wrap textarea:focus {
-      border-color: rgba(242,200,0,0.6);
-    }
-
-    .field-wrap input::placeholder,
-    .field-wrap textarea::placeholder {
-      color: rgba(242,200,0,0.2);
-    }
-
-    .submit-btn {
-      background: var(--yellow);
-      color: var(--blue);
-      border: none; cursor: pointer;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
-      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 16px 32px;
-      align-self: flex-start;
-      transition: opacity 0.2s;
-    }
-
-    .submit-btn:hover { opacity: 0.85; }
-    .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    .form-success {
-      display: none;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 300;
-      font-size: 14px; color: rgba(242,200,0,0.7);
-      padding: 16px; border: 1px solid rgba(242,200,0,0.2);
-    }
+    #sm-red-fig        { left: 1%;   bottom: 0;    height: 87vh; z-index: 8; }
+    #sm-blue-fig       { right: 1%;  bottom: 0;    height: 84vh; z-index: 8; }
+    #sm-rabbit         { left: 16%;  bottom: 10%;  height: 36vh; z-index: 6; }
+    #sm-flytrap        { left: 31%;  bottom: 1%;   height: 46vh; z-index: 6; }
+    #sm-two-head-worm  { left: 47%;  top: 17%;     height: 13vh; z-index: 6; }
+    #sm-millipede      { left: 50%;  top: 34%;     height: 22vh; z-index: 6; }
+    #sm-mama-bird      { left: 58%;  bottom: 22%;  height: 21vh; z-index: 6; }
+    #sm-metal-fly      { left: 70%;  top: 11%;     height: 19vh; z-index: 6; }
+    #sm-snake          { left: 63%;  top: 53%;     height: 15vh; z-index: 6; }
+    #sm-worm           { left: 44%;  top: 52%;     height: 11vh; z-index: 6; }
 
     /* ── POSTCARD FOOTER ─────────────────────────────────────────────── */
     .postcard-footer { margin: 0 28px 40px; }
@@ -296,8 +221,13 @@
 
     /* ── MOBILE ──────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
-      .contact-section { grid-template-columns: 1fr; gap: 48px; }
       .nav-links { gap: 20px; }
+      .nav-links a { font-size: 11px; }
+      .sm-title { font-size: clamp(52px, 11vw, 100px); left: 14%; top: 8%; }
+      #sm-red-fig  { height: 72vh; }
+      #sm-blue-fig { height: 68vh; }
+      #sm-rabbit   { height: 28vh; }
+      #sm-flytrap  { height: 36vh; }
     }
   </style>
 </head>
@@ -310,68 +240,33 @@
     </a>
     <ul class="nav-links">
       <li class="nav-dropdown-wrap" id="workDropWrap">
-        <a href="work.html" class="dropdown-toggle" id="workToggle">Work</a>
-        <div class="nav-dropdown">
+        <a href="work.html" class="dropdown-toggle active" id="workToggle">Work</a>
+        <div class="nav-dropdown" id="workDropdown">
           <a href="work.html">All Work</a>
           <a href="work.html?filter=art">Art</a>
           <a href="work.html?filter=videoart">Video Art</a>
           <a href="work.html?filter=events">Events</a>
-          <a href="stopmotion.html">Stop Motion</a>
+          <a href="stopmotion.html" class="active-sm">Stop Motion</a>
         </div>
       </li>
-      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="contact.html">Contact</a></li>
       <li><a href="shop.html">Shop</a></li>
     </ul>
   </nav>
 
-  <!-- HEADER -->
-  <header class="page-header">
-    <p class="header-label">Get in Touch</p>
-    <h1 class="header-title">Contact</h1>
-  </header>
-
-  <!-- CONTACT -->
-  <section class="contact-section">
-
-    <!-- Info -->
-    <div class="contact-info">
-      <h2>Grace Fairchild Vanderlaan</h2>
-
-      <span class="contact-link-label">Email</span>
-      <a class="contact-link" href="mailto:gracefairchildvanderlaan@gmail.com">
-        gracefairchildvanderlaan@gmail.com
-      </a>
-
-      <span class="contact-link-label">Instagram</span>
-      <a class="contact-link" href="https://instagram.com/6rac13" target="_blank" rel="noopener">
-        @6rac13
-      </a>
-
-      <span class="contact-link-label">Based in</span>
-      <span class="contact-link" style="cursor:default">Los Angeles, CA</span>
-    </div>
-
-    <!-- Form -->
-    <form class="contact-form" id="contactForm"
-          action="https://formspree.io/f/mwlpabqv"
-          method="POST">
-      <div class="field-wrap">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Your name" required>
-      </div>
-      <div class="field-wrap">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="your@email.com" required>
-      </div>
-      <div class="field-wrap">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="6" placeholder="Tell me about your project or commission…" required></textarea>
-      </div>
-      <button class="submit-btn" type="submit" id="submitBtn">Send Message</button>
-      <div class="form-success" id="formSuccess">
-        Message sent — I'll be in touch soon.
-      </div>
-    </form>
+  <!-- HERO -->
+  <section class="sm-hero">
+    <h1 class="sm-title">Stop Motion</h1>
+    <img class="sm-char" id="sm-red-fig"       src="assets/red-fig.png"       alt="">
+    <img class="sm-char" id="sm-blue-fig"      src="assets/blue-fig.png"      alt="">
+    <img class="sm-char" id="sm-rabbit"        src="assets/rabbit.png"        alt="">
+    <img class="sm-char" id="sm-flytrap"       src="assets/venus-flytrap.png" alt="">
+    <img class="sm-char" id="sm-two-head-worm" src="assets/two-head-worm.png" alt="">
+    <img class="sm-char" id="sm-millipede"     src="assets/millipede.png"     alt="">
+    <img class="sm-char" id="sm-mama-bird"     src="assets/mama-bird.png"     alt="">
+    <img class="sm-char" id="sm-metal-fly"     src="assets/metal-fly.png"     alt="">
+    <img class="sm-char" id="sm-snake"         src="assets/snake.png"         alt="">
+    <img class="sm-char" id="sm-worm"          src="assets/worm.png"          alt="">
   </section>
 
   <!-- POSTCARD FOOTER -->
@@ -404,41 +299,9 @@
     window.addEventListener('scroll', () => {
       document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
     });
-
     const workWrap = document.getElementById('workDropWrap');
     document.getElementById('workToggle').addEventListener('click', e => { e.preventDefault(); workWrap.classList.toggle('open'); });
     document.addEventListener('click', e => { if (!workWrap.contains(e.target)) workWrap.classList.remove('open'); });
-
-    // Formspree AJAX submit
-    const form      = document.getElementById('contactForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const successEl = document.getElementById('formSuccess');
-
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending…';
-
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (res.ok) {
-          form.reset();
-          successEl.style.display = 'block';
-          submitBtn.style.display = 'none';
-        } else {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Try Again';
-        }
-      } catch {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Try Again';
-      }
-    });
 
     const pcForm = document.getElementById('pcForm');
     if (pcForm) {
