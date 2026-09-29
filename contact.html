@@ -105,99 +105,6 @@
       color: var(--yellow); line-height: 0.85; margin-bottom: 32px; text-align: right;
     }
 
-    /* ── CONTACT GRID ────────────────────────────────────────────────── */
-    .contact-section {
-      padding: 0 28px 80px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      border-top: 1px solid rgba(242,200,0,0.12);
-      padding-top: 48px;
-    }
-
-    /* left: info */
-    .contact-info h2 {
-      font-family: 'Amoresa Aged', cursive;
-      font-size: clamp(36px, 5vw, 56px);
-      color: var(--yellow);
-      margin-bottom: 28px;
-      line-height: 1;
-    }
-
-    .contact-link {
-      display: block;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 300;
-      font-size: 14px; color: rgba(242,200,0,0.7);
-      text-decoration: none; line-height: 2.4;
-      letter-spacing: 0.02em;
-      transition: color 0.2s;
-    }
-
-    .contact-link:hover { color: var(--yellow); }
-
-    .contact-link-label {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
-      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: rgba(242,200,0,0.35);
-      margin-top: 20px; margin-bottom: 4px;
-      display: block;
-    }
-
-    /* right: form */
-    .contact-form { display: flex; flex-direction: column; gap: 20px; }
-
-    .field-wrap { display: flex; flex-direction: column; gap: 6px; }
-
-    .field-wrap label {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
-      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: rgba(242,200,0,0.4);
-    }
-
-    .field-wrap input,
-    .field-wrap textarea {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(242,200,0,0.2);
-      color: var(--yellow);
-      font-family: 'Coco Gothic', sans-serif; font-weight: 300;
-      font-size: 14px; padding: 12px 16px;
-      outline: none;
-      transition: border-color 0.2s;
-      resize: none;
-      width: 100%;
-    }
-
-    .field-wrap input:focus,
-    .field-wrap textarea:focus {
-      border-color: rgba(242,200,0,0.6);
-    }
-
-    .field-wrap input::placeholder,
-    .field-wrap textarea::placeholder {
-      color: rgba(242,200,0,0.2);
-    }
-
-    .submit-btn {
-      background: var(--yellow);
-      color: var(--blue);
-      border: none; cursor: pointer;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
-      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 16px 32px;
-      align-self: flex-start;
-      transition: opacity 0.2s;
-    }
-
-    .submit-btn:hover { opacity: 0.85; }
-    .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    .form-success {
-      display: none;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 300;
-      font-size: 14px; color: rgba(242,200,0,0.7);
-      padding: 16px; border: 1px solid rgba(242,200,0,0.2);
-    }
-
     /* ── POSTCARD FOOTER ─────────────────────────────────────────────── */
     .postcard-footer { margin: 0 28px 40px; }
     .pc-wrap { position: relative; }
@@ -217,10 +124,10 @@
       resize: none;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
-      font-size: clamp(10px, 1.2vw, 15px);
+      font-size: clamp(15px, 1.8vw, 23px);
       color: #6B5530;
       outline: none;
-      padding: 10% 4% 4% 4%;
+      padding: 15% 4% 4% 4%;
       line-height: 2;
     }
     .pc-msg::placeholder { color: rgba(107,85,48,0.35); }
@@ -228,28 +135,28 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 28% 4% 4% 6%;
+      padding: 40% 4% 4% 6%;
     }
     .pc-to {
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
-      font-size: clamp(8px, 1vw, 13px);
+      font-size: clamp(12px, 1.5vw, 20px);
       color: #6B5530;
       letter-spacing: 0.04em;
-      padding-bottom: 6%;
+      padding-bottom: 5%;
       border-bottom: 1px solid rgba(120,100,70,0.4);
     }
     .pc-row {
       display: flex;
       align-items: center;
-      padding: 4% 0 2%;
+      padding: 3.5% 0 1.5%;
       border-bottom: 1px solid rgba(120,100,70,0.25);
       gap: 4px;
     }
     .pc-lbl {
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
-      font-size: clamp(7px, 0.85vw, 11px);
+      font-size: clamp(11px, 1.3vw, 17px);
       color: rgba(107,85,48,0.7);
       white-space: nowrap;
     }
@@ -260,20 +167,20 @@
       color: #5C4A2A;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
-      font-size: clamp(8px, 0.95vw, 12px);
+      font-size: clamp(12px, 1.4vw, 18px);
       outline: none;
       min-width: 0;
     }
     .pc-input::placeholder { color: rgba(100,80,40,0.3); }
     .pc-send {
-      margin-top: 8%;
-      align-self: flex-start;
+      margin-top: 6%;
+      align-self: flex-end;
       background: none;
       border: 1px solid rgba(120,100,70,0.5);
       color: #6B5530;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
-      font-size: clamp(7px, 0.8vw, 10px);
+      font-size: clamp(11px, 1.2vw, 15px);
       letter-spacing: 0.12em;
       text-transform: uppercase;
       padding: 5px 10px;
@@ -289,14 +196,13 @@
       text-align: center;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
-      font-size: clamp(10px, 1.2vw, 15px);
+      font-size: clamp(15px, 1.8vw, 23px);
       color: #6B5530;
       letter-spacing: 0.08em;
     }
 
     /* ── MOBILE ──────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
-      .contact-section { grid-template-columns: 1fr; gap: 48px; }
       .nav-links { gap: 20px; }
     }
   </style>
@@ -329,50 +235,6 @@
     <p class="header-label">Get in Touch</p>
     <h1 class="header-title">Contact</h1>
   </header>
-
-  <!-- CONTACT -->
-  <section class="contact-section">
-
-    <!-- Info -->
-    <div class="contact-info">
-      <h2>Grace Fairchild Vanderlaan</h2>
-
-      <span class="contact-link-label">Email</span>
-      <a class="contact-link" href="mailto:gracefairchildvanderlaan@gmail.com">
-        gracefairchildvanderlaan@gmail.com
-      </a>
-
-      <span class="contact-link-label">Instagram</span>
-      <a class="contact-link" href="https://instagram.com/6rac13" target="_blank" rel="noopener">
-        @6rac13
-      </a>
-
-      <span class="contact-link-label">Based in</span>
-      <span class="contact-link" style="cursor:default">Los Angeles, CA</span>
-    </div>
-
-    <!-- Form -->
-    <form class="contact-form" id="contactForm"
-          action="https://formspree.io/f/mwlpabqv"
-          method="POST">
-      <div class="field-wrap">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Your name" required>
-      </div>
-      <div class="field-wrap">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="your@email.com" required>
-      </div>
-      <div class="field-wrap">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="6" placeholder="Tell me about your project or commission…" required></textarea>
-      </div>
-      <button class="submit-btn" type="submit" id="submitBtn">Send Message</button>
-      <div class="form-success" id="formSuccess">
-        Message sent — I'll be in touch soon.
-      </div>
-    </form>
-  </section>
 
   <!-- POSTCARD FOOTER -->
   <footer class="postcard-footer">
@@ -408,37 +270,6 @@
     const workWrap = document.getElementById('workDropWrap');
     document.getElementById('workToggle').addEventListener('click', e => { e.preventDefault(); workWrap.classList.toggle('open'); });
     document.addEventListener('click', e => { if (!workWrap.contains(e.target)) workWrap.classList.remove('open'); });
-
-    // Formspree AJAX submit
-    const form      = document.getElementById('contactForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const successEl = document.getElementById('formSuccess');
-
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending…';
-
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (res.ok) {
-          form.reset();
-          successEl.style.display = 'block';
-          submitBtn.style.display = 'none';
-        } else {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Try Again';
-        }
-      } catch {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Try Again';
-      }
-    });
 
     const pcForm = document.getElementById('pcForm');
     if (pcForm) {
