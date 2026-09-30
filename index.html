@@ -127,11 +127,9 @@
     .view-all:hover { opacity: 0.6; }
     .contact-strip {
       margin: 0 28px; border-top: 1px solid rgba(255,239,94,0.2);
-      padding: 64px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      padding: 40px 0 20px;
     }
-    .contact-strip h2 { font-family: 'Amoresa Aged', cursive; font-size: clamp(48px, 7vw, 88px); color: var(--yellow); line-height: 0.9; grid-column: 1/-1; }
-    .contact-col a { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 14px; color: rgba(255,239,94,0.75); text-decoration: none; line-height: 2; display: block; }
-    .contact-col a:hover { color: var(--yellow); }
+    .contact-strip h2 { font-family: 'Amoresa Aged', cursive; font-size: clamp(48px, 7vw, 88px); color: var(--yellow); line-height: 0.9; }
 
     /* ── WORK VIEW ───────────────────────────────────────────────────── */
     .page-header { padding: calc(var(--nav-h) + 36px) 28px 0; min-height: 30vh; display: flex; flex-direction: column; justify-content: flex-end; }
@@ -216,7 +214,7 @@
     .pc-bg { width: 100%; display: block; }
     .pc-form { position: absolute; left: 10%; right: 10.5%; top: 14%; bottom: 15%; display: flex; pointer-events: none; }
     .pc-form * { pointer-events: all; }
-    .pc-msg { flex: 1; background: transparent; border: 2px solid #1800AD; border-right: none; resize: none; font-family: 'Jost', sans-serif; font-weight: 700; font-size: clamp(13px, 1.6vw, 20px); color: #1800AD; outline: none; padding: 8% 6% 6% 8%; line-height: 2; }
+    .pc-msg { flex: 1; background: transparent; border: 2px solid #1800AD; border-right: none; resize: none; font-family: 'Jost', sans-serif; font-weight: 700; font-size: clamp(13px, 1.6vw, 20px); color: #1800AD; outline: none; padding: 6% 6% 4% 6%; line-height: 2; margin-top: 100px; margin-left: 20px; }
     .pc-msg::placeholder { color: rgba(24,0,173,0.45); font-weight: 700; }
     .pc-addr { flex: 1; display: flex; flex-direction: column; padding: 40% 4% 4% 7%; }
     .pc-to { font-family: 'Jost', sans-serif; font-weight: 700; font-size: clamp(12px, 1.5vw, 20px); color: #1800AD; letter-spacing: 0.04em; padding-bottom: 5%; }
@@ -265,9 +263,36 @@
       .work-grid { grid-template-columns: repeat(2, 1fr); }
       .project-body { padding: 28px 20px; }
       .next-project-bar { padding: 32px 20px 0; }
+
+      /* home */
+      .works-section { padding: 48px 16px 0; }
+      .works-grid { grid-template-columns: repeat(2, 1fr); }
+      .view-all-wrap { padding: 28px 16px; }
+      .contact-strip { margin: 0 16px; padding: 48px 0; grid-template-columns: 1fr; }
+      .c-blue-fig, .c-red-fig { width: clamp(110px, 30vw, 150px); }
+      .c-blue-fig { left: 2%; }
+      .c-red-fig  { right: 2%; }
+      .hero-cta-link { font-size: clamp(52px, 13vw, 80px); }
+
+      /* video art hero */
+      .vah-title { font-size: clamp(52px, 13vw, 120px); }
+
+      /* stop motion */
+      .sm-title { font-size: clamp(44px, 11vw, 72px); left: 10%; top: 6%; right: 1%; }
+      #sm-red-fig        { height: 68vh; }
+      #sm-blue-fig       { height: 64vh; }
+      #sm-rabbit         { height: 22vh; left: 20%; bottom: 8%; }
+      #sm-flytrap        { height: 28vh; left: 36%; bottom: 1%; }
+      #sm-two-head-worm  { height: 9vh;  left: 50%; top: 20%; }
+      #sm-millipede      { height: 14vh; left: 52%; top: 36%; }
+      #sm-mama-bird      { height: 14vh; left: 60%; bottom: 20%; }
+      #sm-metal-fly      { height: 12vh; left: 68%; top: 13%; }
+      #sm-snake          { height: 10vh; left: 62%; top: 52%; }
+      #sm-worm           { height: 8vh;  left: 46%; top: 54%; }
     }
     @media (max-width: 420px) {
       .work-grid { grid-template-columns: 1fr; }
+      .works-grid { grid-template-columns: 1fr; }
       .bts-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (hover: none) {
