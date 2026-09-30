@@ -63,7 +63,7 @@
     .nav-logo { display: flex; align-items: center; text-decoration: none; }
     .nav-logo img { height: 62px; width: auto; object-fit: contain; display: block; }
 
-    .nav-links { display: flex; gap: 52px; list-style: none; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
       color: var(--yellow); text-decoration: none;
       font-family: 'Coco Gothic', sans-serif; font-weight: 700;
@@ -197,40 +197,45 @@
     /* ── PROJECT BODY ────────────────────────────────────────────────── */
     .project-body {
       display: grid;
-      grid-template-columns: 72px 1fr 72px;
+      grid-template-columns: 1fr;
       gap: 0;
       padding: 48px 28px;
       align-items: start;
-    }
-
-    /* prev / next arrows */
-    .proj-arrow {
-      background: none;
-      border: 1px solid rgba(242,200,0,0.4);
-      color: var(--yellow);
-      width: 48px; height: 48px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      font-size: 20px;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-      text-decoration: none;
-      margin-top: 16px;
-    }
-
-    .proj-arrow:hover {
-      background: var(--yellow);
-      color: var(--blue);
-      border-color: var(--yellow);
-    }
-
-    .proj-arrow.disabled {
-      opacity: 0.2;
-      pointer-events: none;
+      max-width: 900px;
     }
 
     /* info */
-    .project-info {
-      padding: 0 24px;
+    .project-info { padding: 0; }
+
+    /* next project bar */
+    .next-project-bar {
+      border-top: 1px solid rgba(242,200,0,0.15);
+      padding: 40px 28px 0;
+    }
+    .next-project-link {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--yellow);
+      transition: opacity 0.2s;
+    }
+    .next-project-link:hover { opacity: 0.65; }
+    .np-label {
+      font-family: 'Coco Gothic', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(242,200,0,0.45);
+    }
+    .np-title {
+      font-family: 'Amoresa Aged', cursive;
+      font-size: clamp(32px, 5vw, 64px);
+      line-height: 1;
+    }
+    .np-arrow {
+      font-size: clamp(24px, 3vw, 40px);
     }
 
     .proj-cat {
@@ -332,12 +337,12 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
-      color: #6B5530;
+      color: #1C1CCC;
       outline: none;
       padding: 45% 4% 4% 4%;
       line-height: 2;
     }
-    .pc-msg::placeholder { color: rgba(107,85,48,0.35); }
+    .pc-msg::placeholder { color: rgba(28,28,204,0.35); }
     .pc-addr {
       flex: 1;
       display: flex;
@@ -348,7 +353,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: clamp(12px, 1.5vw, 20px);
-      color: #6B5530;
+      color: #1C1CCC;
       letter-spacing: 0.04em;
       padding-bottom: 5%;
       border-bottom: 1px solid rgba(120,100,70,0.4);
@@ -364,27 +369,27 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.3vw, 17px);
-      color: rgba(107,85,48,0.7);
+      color: rgba(28,28,204,0.7);
       white-space: nowrap;
     }
     .pc-input {
       flex: 1;
       background: transparent;
       border: none;
-      color: #5C4A2A;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: clamp(12px, 1.4vw, 18px);
       outline: none;
       min-width: 0;
     }
-    .pc-input::placeholder { color: rgba(100,80,40,0.3); }
+    .pc-input::placeholder { color: rgba(28,28,204,0.3); }
     .pc-send {
       margin-top: 6%;
       align-self: flex-end;
       background: none;
       border: 1px solid rgba(120,100,70,0.5);
-      color: #6B5530;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.2vw, 15px);
@@ -404,7 +409,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
-      color: #6B5530;
+      color: #1C1CCC;
       letter-spacing: 0.08em;
     }
 
@@ -421,7 +426,7 @@
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(107,85,48,0.65);
+      color: rgba(28,28,204,0.65);
       margin-bottom: 20px;
     }
     .pc-mobile-msg {
@@ -433,7 +438,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: 16px;
-      color: #6B5530;
+      color: #1C1CCC;
       outline: none;
       padding: 0 0 12px;
       margin-bottom: 4px;
@@ -441,7 +446,7 @@
       line-height: 1.9;
       -webkit-appearance: none;
     }
-    .pc-mobile-msg::placeholder { color: rgba(107,85,48,0.3); }
+    .pc-mobile-msg::placeholder { color: rgba(28,28,204,0.3); }
     .pc-mobile-field {
       display: flex;
       align-items: center;
@@ -456,7 +461,7 @@
       font-size: 11px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(107,85,48,0.6);
+      color: rgba(28,28,204,0.6);
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -464,7 +469,7 @@
       flex: 1;
       background: transparent;
       border: none;
-      color: #5C4A2A;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: 16px;
@@ -472,7 +477,7 @@
       min-width: 0;
       -webkit-appearance: none;
     }
-    .pc-mobile-input::placeholder { color: rgba(100,80,40,0.28); }
+    .pc-mobile-input::placeholder { color: rgba(28,28,204,0.28); }
     .pc-mobile-send {
       margin-top: 24px;
       display: flex;
@@ -481,7 +486,7 @@
       min-height: 44px;
       background: none;
       border: 1px solid rgba(120,100,70,0.45);
-      color: #6B5530;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: 11px;
@@ -499,16 +504,14 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: 15px;
-      color: #6B5530;
+      color: #1C1CCC;
       padding: 24px 0;
       letter-spacing: 0.08em;
     }
 
     /* ── RESPONSIVE ──────────────────────────────────────────────────── */
     @media (max-width: 768px) {
-      .project-body { grid-template-columns: 48px 1fr 48px; padding: 36px 16px; }
-      .proj-arrow { width: 40px; height: 40px; font-size: 16px; }
-      .project-info { padding: 0 12px; }
+      .project-body { padding: 36px 16px; }
       .bts-grid { grid-template-columns: repeat(2, 1fr); }
       .project-hero { height: 55vh; min-height: 300px; }
     }
@@ -519,17 +522,9 @@
       .postcard-footer { display: none; }
       .pc-mobile-wrap { display: block; }
       body { padding-bottom: env(safe-area-inset-bottom, 0px); }
-      .project-body { grid-template-columns: 1fr; padding: 28px 20px; }
-      .proj-arrow { display: none; }
-      .project-info { padding: 0; }
-      .proj-nav-mobile {
-        display: flex;
-        gap: 12px;
-        margin-top: 32px;
-      }
+      .project-body { padding: 28px 20px; }
+      .next-project-bar { padding: 32px 20px 0; }
     }
-
-    .proj-nav-mobile { display: none; }
 
     @media (max-width: 420px) {
       .bts-grid { grid-template-columns: repeat(2, 1fr); }
@@ -544,18 +539,13 @@
       <img src="assets/g-logo.png" alt="6rac13">
     </a>
     <ul class="nav-links">
-      <li class="nav-dropdown-wrap" id="workDropWrap">
-        <a href="work.html" class="dropdown-toggle active" id="workToggle">Work</a>
-        <div class="nav-dropdown" id="workDropdown">
-          <a href="work.html">All Work</a>
-          <a href="work.html?filter=art">Art</a>
-          <a href="work.html?filter=videoart">Video Art</a>
-          <a href="work.html?filter=events">Events</a>
-          <a href="stopmotion.html">Stop Motion</a>
-        </div>
-      </li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="work.html?filter=art">Art</a></li>
+      <li><a href="work.html?filter=portraits">Portraits</a></li>
+      <li><a href="work.html?filter=videoart">Video Art</a></li>
+      <li><a href="stopmotion.html">Stop Motion</a></li>
+      <li><a href="work.html?filter=events">Events</a></li>
       <li><a href="shop.html">Shop</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
     <button class="nav-burger" id="navBurger" aria-label="Open menu">
       <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
@@ -578,15 +568,13 @@
       </button>
     </div>
     <div class="mobile-nav-links">
-      <a href="work.html" class="mobile-nav-link">Work</a>
-      <div class="mobile-nav-sub">
-        <a href="work.html">All</a>
-        <a href="work.html?filter=art">Art</a>
-        <a href="work.html?filter=videoart">Video Art</a>
-        <a href="work.html?filter=events">Events</a>
-      </div>
-      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="work.html?filter=art" class="mobile-nav-link">Art</a>
+      <a href="work.html?filter=portraits" class="mobile-nav-link">Portraits</a>
+      <a href="work.html?filter=videoart" class="mobile-nav-link">Video Art</a>
+      <a href="stopmotion.html" class="mobile-nav-link">Stop Motion</a>
+      <a href="work.html?filter=events" class="mobile-nav-link">Events</a>
       <a href="shop.html" class="mobile-nav-link">Shop</a>
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
     </div>
   </div>
 
@@ -597,20 +585,20 @@
 
   <!-- PROJECT BODY -->
   <div class="project-body">
-    <a class="proj-arrow disabled" id="prevBtn" title="Previous project">←</a>
-
     <div class="project-info">
       <p class="proj-cat" id="projCat"></p>
       <h1 class="proj-title" id="projTitle">Loading…</h1>
       <p class="proj-desc" id="projDesc"></p>
-      <!-- mobile prev/next -->
-      <div class="proj-nav-mobile" id="projNavMobile">
-        <a class="proj-arrow disabled" id="prevBtnMobile" title="Previous project" style="margin-top:0">←</a>
-        <a class="proj-arrow disabled" id="nextBtnMobile" title="Next project" style="margin-top:0">→</a>
-      </div>
     </div>
+  </div>
 
-    <a class="proj-arrow disabled" id="nextBtn" title="Next project">→</a>
+  <!-- NEXT PROJECT -->
+  <div class="next-project-bar" id="nextProjectBar" style="display:none">
+    <a class="next-project-link" id="nextProjectLink" href="#">
+      <span class="np-label">Next Project</span>
+      <span class="np-title" id="nextProjectTitle"></span>
+      <span class="np-arrow">→</span>
+    </a>
   </div>
 
   <!-- BTS PHOTOS -->
@@ -676,13 +664,10 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
   <script>
-    // Nav scroll + dropdown
+    // Nav scroll
     window.addEventListener('scroll', () => {
       document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
     });
-    const workWrap = document.getElementById('workDropWrap');
-    document.getElementById('workToggle').addEventListener('click', e => { e.preventDefault(); workWrap.classList.toggle('open'); });
-    document.addEventListener('click', e => { if (!workWrap.contains(e.target)) workWrap.classList.remove('open'); });
 
     // Mobile nav
     const navBurger = document.getElementById('navBurger');
@@ -717,7 +702,7 @@
     const projectId = params.get('id');
     const backFilter = params.get('filter') || 'all';
 
-    const CAT_LABELS = { art: 'Art', videoart: 'Video Art', events: 'Events' };
+    const CAT_LABELS = { art: 'Art', portraits: 'Portraits', videoart: 'Video Art', events: 'Events' };
 
     const firebaseConfig = {
       apiKey:            "AIzaSyDmNYdW7lFABFWjA_eSEDqmd2YuOrX32g8",
@@ -773,36 +758,16 @@
         document.getElementById('projTitle').textContent = project.title;
         document.getElementById('projDesc').textContent  = project.description || '';
 
-        // Prev / Next (desktop)
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        // Prev / Next (mobile)
-        const prevBtnM = document.getElementById('prevBtnMobile');
-        const nextBtnM = document.getElementById('nextBtnMobile');
-
         function makeHref(p) {
           return `project.html?id=${p.id}${backFilter !== 'all' ? `&filter=${backFilter}` : ''}`;
         }
 
-        if (idx > 0) {
-          const prev = context[idx - 1];
-          prevBtn.href = makeHref(prev);
-          prevBtn.classList.remove('disabled');
-          prevBtnM.href = makeHref(prev);
-          prevBtnM.classList.remove('disabled');
-        }
-
         if (idx < context.length - 1) {
           const next = context[idx + 1];
-          nextBtn.href = makeHref(next);
-          nextBtn.classList.remove('disabled');
-          nextBtnM.href = makeHref(next);
-          nextBtnM.classList.remove('disabled');
-        }
-
-        // Show mobile nav only if there are siblings
-        if (context.length > 1) {
-          document.getElementById('projNavMobile').style.display = 'flex';
+          const bar = document.getElementById('nextProjectBar');
+          bar.style.display = 'block';
+          document.getElementById('nextProjectLink').href = makeHref(next);
+          document.getElementById('nextProjectTitle').textContent = next.title;
         }
 
         // BTS photos

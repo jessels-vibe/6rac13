@@ -61,7 +61,7 @@
     .nav-logo { display: flex; align-items: center; text-decoration: none; }
     .nav-logo img { height: 62px; width: auto; object-fit: contain; display: block; }
 
-    .nav-links { display: flex; gap: 52px; list-style: none; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
       color: var(--blue); text-decoration: none;
       font-family: 'Coco Gothic', sans-serif; font-weight: 700;
@@ -165,8 +165,8 @@
 
     /* ── PAGE HEADER ─────────────────────────────────────────────────── */
     .page-header {
-      padding: calc(var(--nav-h) + 48px) 28px 0;
-      min-height: 40vh;
+      padding: calc(var(--nav-h) + 36px) 28px 0;
+      min-height: 30vh;
       display: flex; flex-direction: column; justify-content: flex-end;
     }
 
@@ -304,12 +304,12 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
-      color: #6B5530;
+      color: #1C1CCC;
       outline: none;
       padding: 45% 4% 4% 4%;
       line-height: 2;
     }
-    .pc-msg::placeholder { color: rgba(107,85,48,0.35); }
+    .pc-msg::placeholder { color: rgba(28,28,204,0.35); }
     .pc-addr {
       flex: 1;
       display: flex;
@@ -320,7 +320,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: clamp(12px, 1.5vw, 20px);
-      color: #6B5530;
+      color: #1C1CCC;
       letter-spacing: 0.04em;
       padding-bottom: 5%;
       border-bottom: 1px solid rgba(120,100,70,0.4);
@@ -336,27 +336,27 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.3vw, 17px);
-      color: rgba(107,85,48,0.7);
+      color: rgba(28,28,204,0.7);
       white-space: nowrap;
     }
     .pc-input {
       flex: 1;
       background: transparent;
       border: none;
-      color: #5C4A2A;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: clamp(12px, 1.4vw, 18px);
       outline: none;
       min-width: 0;
     }
-    .pc-input::placeholder { color: rgba(100,80,40,0.3); }
+    .pc-input::placeholder { color: rgba(28,28,204,0.3); }
     .pc-send {
       margin-top: 6%;
       align-self: flex-end;
       background: none;
       border: 1px solid rgba(120,100,70,0.5);
-      color: #6B5530;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.2vw, 15px);
@@ -376,7 +376,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
-      color: #6B5530;
+      color: #1C1CCC;
       letter-spacing: 0.08em;
     }
 
@@ -393,7 +393,7 @@
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(107,85,48,0.65);
+      color: rgba(28,28,204,0.65);
       margin-bottom: 20px;
     }
     .pc-mobile-msg {
@@ -405,7 +405,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: 16px;
-      color: #6B5530;
+      color: #1C1CCC;
       outline: none;
       padding: 0 0 12px;
       margin-bottom: 4px;
@@ -413,7 +413,7 @@
       line-height: 1.9;
       -webkit-appearance: none;
     }
-    .pc-mobile-msg::placeholder { color: rgba(107,85,48,0.3); }
+    .pc-mobile-msg::placeholder { color: rgba(28,28,204,0.3); }
     .pc-mobile-field {
       display: flex;
       align-items: center;
@@ -428,7 +428,7 @@
       font-size: 11px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(107,85,48,0.6);
+      color: rgba(28,28,204,0.6);
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -436,7 +436,7 @@
       flex: 1;
       background: transparent;
       border: none;
-      color: #5C4A2A;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: 16px;
@@ -444,7 +444,7 @@
       min-width: 0;
       -webkit-appearance: none;
     }
-    .pc-mobile-input::placeholder { color: rgba(100,80,40,0.28); }
+    .pc-mobile-input::placeholder { color: rgba(28,28,204,0.28); }
     .pc-mobile-send {
       margin-top: 24px;
       display: flex;
@@ -453,7 +453,7 @@
       min-height: 44px;
       background: none;
       border: 1px solid rgba(120,100,70,0.45);
-      color: #6B5530;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: 11px;
@@ -471,7 +471,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: 15px;
-      color: #6B5530;
+      color: #1C1CCC;
       padding: 24px 0;
       letter-spacing: 0.08em;
     }
@@ -502,18 +502,13 @@
       <img src="assets/g-logo.png" alt="6rac13">
     </a>
     <ul class="nav-links">
-      <li class="nav-dropdown-wrap" id="workDropWrap">
-        <a href="work.html" class="dropdown-toggle" id="workToggle">Work</a>
-        <div class="nav-dropdown" id="workDropdown">
-          <a href="work.html">All Work</a>
-          <a href="work.html?filter=art">Art</a>
-          <a href="work.html?filter=videoart">Video Art</a>
-          <a href="work.html?filter=events">Events</a>
-          <a href="stopmotion.html">Stop Motion</a>
-        </div>
-      </li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="work.html?filter=art">Art</a></li>
+      <li><a href="work.html?filter=portraits">Portraits</a></li>
+      <li><a href="work.html?filter=videoart">Video Art</a></li>
+      <li><a href="stopmotion.html">Stop Motion</a></li>
+      <li><a href="work.html?filter=events">Events</a></li>
       <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
     <button class="nav-burger" id="navBurger" aria-label="Open menu">
       <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
@@ -536,15 +531,13 @@
       </button>
     </div>
     <div class="mobile-nav-links">
-      <a href="work.html" class="mobile-nav-link">Work</a>
-      <div class="mobile-nav-sub">
-        <a href="work.html">All</a>
-        <a href="work.html?filter=art">Art</a>
-        <a href="work.html?filter=videoart">Video Art</a>
-        <a href="work.html?filter=events">Events</a>
-      </div>
-      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="work.html?filter=art" class="mobile-nav-link">Art</a>
+      <a href="work.html?filter=portraits" class="mobile-nav-link">Portraits</a>
+      <a href="work.html?filter=videoart" class="mobile-nav-link">Video Art</a>
+      <a href="stopmotion.html" class="mobile-nav-link">Stop Motion</a>
+      <a href="work.html?filter=events" class="mobile-nav-link">Events</a>
       <a href="shop.html" class="mobile-nav-link">Shop</a>
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
     </div>
   </div>
 

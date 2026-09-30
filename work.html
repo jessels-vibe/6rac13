@@ -63,7 +63,7 @@
     .nav-logo { display: flex; align-items: center; text-decoration: none; }
     .nav-logo img { height: 62px; width: auto; object-fit: contain; display: block; }
 
-    .nav-links { display: flex; gap: 52px; list-style: none; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
 
     .nav-links a {
       color: var(--yellow); text-decoration: none;
@@ -175,10 +175,34 @@
       display: inline-block;
     }
 
+    /* ── VIDEO ART HERO ─────────────────────────────────────────────── */
+    .video-art-hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .vah-bg { position: absolute; inset: 0; }
+    .vah-bg video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .vah-overlay {
+      position: absolute; inset: 0;
+      background: rgba(28,28,204,0.45);
+    }
+    .vah-title {
+      position: relative; z-index: 2;
+      font-family: 'Amoresa Aged', cursive;
+      font-size: clamp(72px, 13vw, 180px);
+      color: var(--yellow);
+      text-align: center;
+      pointer-events: none;
+    }
+
     /* ── PAGE HEADER ─────────────────────────────────────────────────── */
     .page-header {
-      padding: calc(var(--nav-h) + 48px) 28px 0;
-      min-height: 40vh;
+      padding: calc(var(--nav-h) + 36px) 28px 0;
+      min-height: 30vh;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -320,12 +344,12 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
-      color: #6B5530;
+      color: #1C1CCC;
       outline: none;
       padding: 45% 4% 4% 4%;
       line-height: 2;
     }
-    .pc-msg::placeholder { color: rgba(107,85,48,0.35); }
+    .pc-msg::placeholder { color: rgba(28,28,204,0.35); }
     .pc-addr {
       flex: 1;
       display: flex;
@@ -336,7 +360,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: clamp(12px, 1.5vw, 20px);
-      color: #6B5530;
+      color: #1C1CCC;
       letter-spacing: 0.04em;
       padding-bottom: 5%;
       border-bottom: 1px solid rgba(120,100,70,0.4);
@@ -352,27 +376,27 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.3vw, 17px);
-      color: rgba(107,85,48,0.7);
+      color: rgba(28,28,204,0.7);
       white-space: nowrap;
     }
     .pc-input {
       flex: 1;
       background: transparent;
       border: none;
-      color: #5C4A2A;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: clamp(12px, 1.4vw, 18px);
       outline: none;
       min-width: 0;
     }
-    .pc-input::placeholder { color: rgba(100,80,40,0.3); }
+    .pc-input::placeholder { color: rgba(28,28,204,0.3); }
     .pc-send {
       margin-top: 6%;
       align-self: flex-end;
       background: none;
       border: 1px solid rgba(120,100,70,0.5);
-      color: #6B5530;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.2vw, 15px);
@@ -392,7 +416,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
-      color: #6B5530;
+      color: #1C1CCC;
       letter-spacing: 0.08em;
     }
 
@@ -409,7 +433,7 @@
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(107,85,48,0.65);
+      color: rgba(28,28,204,0.65);
       margin-bottom: 20px;
     }
     .pc-mobile-msg {
@@ -421,7 +445,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: 16px;
-      color: #6B5530;
+      color: #1C1CCC;
       outline: none;
       padding: 0 0 12px;
       margin-bottom: 4px;
@@ -429,7 +453,7 @@
       line-height: 1.9;
       -webkit-appearance: none;
     }
-    .pc-mobile-msg::placeholder { color: rgba(107,85,48,0.3); }
+    .pc-mobile-msg::placeholder { color: rgba(28,28,204,0.3); }
     .pc-mobile-field {
       display: flex;
       align-items: center;
@@ -444,7 +468,7 @@
       font-size: 11px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(107,85,48,0.6);
+      color: rgba(28,28,204,0.6);
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -452,7 +476,7 @@
       flex: 1;
       background: transparent;
       border: none;
-      color: #5C4A2A;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: 16px;
@@ -460,7 +484,7 @@
       min-width: 0;
       -webkit-appearance: none;
     }
-    .pc-mobile-input::placeholder { color: rgba(100,80,40,0.28); }
+    .pc-mobile-input::placeholder { color: rgba(28,28,204,0.28); }
     .pc-mobile-send {
       margin-top: 24px;
       display: flex;
@@ -469,7 +493,7 @@
       min-height: 44px;
       background: none;
       border: 1px solid rgba(120,100,70,0.45);
-      color: #6B5530;
+      color: #1C1CCC;
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 700;
       font-size: 11px;
@@ -487,7 +511,7 @@
       font-family: 'Coco Gothic', sans-serif;
       font-weight: 300;
       font-size: 15px;
-      color: #6B5530;
+      color: #1C1CCC;
       padding: 24px 0;
       letter-spacing: 0.08em;
     }
@@ -525,19 +549,14 @@
     <a href="index.html" class="nav-logo">
       <img src="assets/g-logo.png" alt="6rac13">
     </a>
-    <ul class="nav-links">
-      <li class="nav-dropdown-wrap" id="workDropWrap">
-        <a href="work.html" class="dropdown-toggle active" id="workToggle">Work</a>
-        <div class="nav-dropdown" id="workDropdown">
-          <a href="work.html" data-filter="all">All Work</a>
-          <a href="work.html?filter=art" data-filter="art">Art</a>
-          <a href="work.html?filter=videoart" data-filter="videoart">Video Art</a>
-          <a href="work.html?filter=events" data-filter="events">Events</a>
-          <a href="stopmotion.html">Stop Motion</a>
-        </div>
-      </li>
-      <li><a href="contact.html">Contact</a></li>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="work.html?filter=art" data-filter="art">Art</a></li>
+      <li><a href="work.html?filter=portraits" data-filter="portraits">Portraits</a></li>
+      <li><a href="work.html?filter=videoart" data-filter="videoart">Video Art</a></li>
+      <li><a href="stopmotion.html">Stop Motion</a></li>
+      <li><a href="work.html?filter=events" data-filter="events">Events</a></li>
       <li><a href="shop.html">Shop</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
     <button class="nav-burger" id="navBurger" aria-label="Open menu">
       <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
@@ -560,15 +579,13 @@
       </button>
     </div>
     <div class="mobile-nav-links">
-      <a href="work.html" class="mobile-nav-link">Work</a>
-      <div class="mobile-nav-sub">
-        <a href="work.html">All</a>
-        <a href="work.html?filter=art">Art</a>
-        <a href="work.html?filter=videoart">Video Art</a>
-        <a href="work.html?filter=events">Events</a>
-      </div>
-      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="work.html?filter=art" class="mobile-nav-link">Art</a>
+      <a href="work.html?filter=portraits" class="mobile-nav-link">Portraits</a>
+      <a href="work.html?filter=videoart" class="mobile-nav-link">Video Art</a>
+      <a href="stopmotion.html" class="mobile-nav-link">Stop Motion</a>
+      <a href="work.html?filter=events" class="mobile-nav-link">Events</a>
       <a href="shop.html" class="mobile-nav-link">Shop</a>
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
     </div>
   </div>
 
@@ -582,8 +599,16 @@
   <div class="filter-bar">
     <button class="filter-btn active" data-cat="all">All</button>
     <button class="filter-btn" data-cat="art">Art</button>
+    <button class="filter-btn" data-cat="portraits">Portraits</button>
     <button class="filter-btn" data-cat="videoart">Video Art</button>
     <button class="filter-btn" data-cat="events">Events</button>
+  </div>
+
+  <!-- VIDEO ART HERO -->
+  <div class="video-art-hero" id="videoArtHero" style="display:none">
+    <div class="vah-bg" id="vahBg"></div>
+    <div class="vah-overlay"></div>
+    <h2 class="vah-title">Video Art</h2>
   </div>
 
   <!-- GRID -->
@@ -654,12 +679,6 @@
       document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
     });
 
-    // Work dropdown
-    const workWrap   = document.getElementById('workDropWrap');
-    const workToggle = document.getElementById('workToggle');
-    workToggle.addEventListener('click', e => { e.preventDefault(); workWrap.classList.toggle('open'); });
-    document.addEventListener('click', e => { if (!workWrap.contains(e.target)) workWrap.classList.remove('open'); });
-
     // Mobile nav
     const navBurger = document.getElementById('navBurger');
     const mobileNav = document.getElementById('mobileNav');
@@ -671,8 +690,8 @@
     }
 
     // Filter state
-    const CAT_LABELS = { all: 'Work', art: 'Art', videoart: 'Video Art', events: 'Events' };
-    const CAT_DISPLAY = { all: 'All Work', art: 'Art', videoart: 'Video Art', events: 'Events' };
+    const CAT_LABELS = { all: 'Work', art: 'Art', portraits: 'Portraits', videoart: 'Video Art', events: 'Events' };
+    const CAT_DISPLAY = { all: 'All Work', art: 'Art', portraits: 'Portraits', videoart: 'Video Art', events: 'Events' };
 
     let activeFilter = 'all';
     let allProjects  = [];
@@ -681,36 +700,41 @@
     const urlFilter = new URLSearchParams(window.location.search).get('filter');
     if (urlFilter && CAT_LABELS[urlFilter]) activeFilter = urlFilter;
 
-    // Update header + filter bar to match active filter
+    // Update header, filter bar, nav links, video hero
     function applyUIState() {
-      document.getElementById('headerTitle').textContent = CAT_LABELS[activeFilter];
-      document.getElementById('headerLabel').textContent = CAT_DISPLAY[activeFilter];
+      document.getElementById('headerTitle').textContent = CAT_LABELS[activeFilter] || activeFilter;
+      document.getElementById('headerLabel').textContent = CAT_DISPLAY[activeFilter] || activeFilter;
 
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.cat === activeFilter);
       });
 
-      document.querySelectorAll('#workDropdown a').forEach(a => {
-        a.classList.toggle('active-filter', a.dataset.filter === activeFilter);
+      document.querySelectorAll('#navLinks a[data-filter]').forEach(a => {
+        a.classList.toggle('active', a.dataset.filter === activeFilter);
       });
+
+      const hero = document.getElementById('videoArtHero');
+      if (activeFilter === 'videoart') {
+        hero.style.display = 'flex';
+        setVideoHero();
+      } else {
+        hero.style.display = 'none';
+      }
+    }
+
+    let videoHeroSet = false;
+    function setVideoHero() {
+      if (videoHeroSet) return;
+      const firstVid = allProjects.find(p => p.category === 'videoart' && p.heroUrl && (p.heroType === 'video' || /\.(mp4|mov|webm)(\?|$)/i.test(p.heroUrl)));
+      if (!firstVid) return;
+      document.getElementById('vahBg').innerHTML = `<video src="${firstVid.heroUrl}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>`;
+      videoHeroSet = true;
     }
 
     // Filter buttons
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         activeFilter = btn.dataset.cat;
-        applyUIState();
-        renderGrid();
-        history.replaceState(null, '', activeFilter === 'all' ? 'work.html' : `?filter=${activeFilter}`);
-      });
-    });
-
-    // Dropdown filter links
-    document.querySelectorAll('#workDropdown a').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        activeFilter = a.dataset.filter;
-        workWrap.classList.remove('open');
         applyUIState();
         renderGrid();
         history.replaceState(null, '', activeFilter === 'all' ? 'work.html' : `?filter=${activeFilter}`);
@@ -775,6 +799,7 @@
         if (p.visible) allProjects.push(p);
       });
       renderGrid();
+      if (activeFilter === 'videoart') setVideoHero();
     });
 
     const pcForm = document.getElementById('pcForm');
