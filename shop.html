@@ -484,6 +484,10 @@
     @media (max-width: 420px) {
       .shop-grid { grid-template-columns: 1fr; }
     }
+
+    /* ── IMAGE PROTECTION ────────────────────────────────────────────── */
+    img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }
+    .shop-tile-img-wrap { user-select: none; -webkit-user-select: none; }
   </style>
 </head>
 <body>
@@ -702,6 +706,9 @@
         } catch { btn.disabled = false; btn.textContent = 'Try Again →'; }
       });
     }
+
+    document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG' || e.target.closest('.shop-tile')) e.preventDefault(); });
+    document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
   </script>
 </body>
 </html>

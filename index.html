@@ -298,6 +298,10 @@
     @media (hover: none) {
       .tile-overlay { opacity: 1; background: linear-gradient(to top, rgba(24,0,173,0.85) 0%, transparent 50%); }
     }
+
+    /* ── IMAGE PROTECTION ────────────────────────────────────────────── */
+    img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }
+    .work-tile, .bts-photo, .shop-tile-img-wrap, .home-hero, .project-hero { user-select: none; -webkit-user-select: none; }
   </style>
 </head>
 <body>
@@ -715,6 +719,10 @@
         else { btn.disabled = false; btn.textContent = 'Try Again →'; }
       } catch { btn.disabled = false; btn.textContent = 'Try Again →'; }
     });
+
+    /* ── Image protection ────────────────────────────────────────────── */
+    document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG' || e.target.closest('.work-tile, .bts-photo, .project-hero, .home-hero, .sm-hero')) e.preventDefault(); });
+    document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
 
     /* ── Boot ─────────────────────────────────────────────────────────── */
     window.addEventListener('hashchange', route);
