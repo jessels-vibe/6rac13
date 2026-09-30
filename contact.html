@@ -15,8 +15,8 @@
       font-weight: normal; font-style: normal;
     }
     :root {
-      --blue:   #1C1CCC;
-      --yellow: #F2C800;
+      --blue:   #1800AD;
+      --yellow: #FFEF5E;
       --dark:   #28283A;
       --red:    #CC1818;
       --cream:  #F0E4C4;
@@ -43,7 +43,7 @@
       transition: box-shadow 0.3s;
     }
 
-    nav.scrolled { box-shadow: 0 1px 0 rgba(242,200,0,0.12); }
+    nav.scrolled { box-shadow: 0 1px 0 rgba(255,239,94,0.12); }
 
     .nav-logo { display: flex; align-items: center; text-decoration: none; }
     .nav-logo img { height: 62px; width: auto; object-fit: contain; display: block; }
@@ -69,17 +69,17 @@
     .dropdown-toggle.active { border-bottom: 1px solid var(--yellow); }
     .nav-dropdown {
       position: absolute; top: calc(100% + 12px); left: -16px;
-      background: var(--blue); border: 1px solid rgba(242,200,0,0.25);
+      background: var(--blue); border: 1px solid rgba(255,239,94,0.25);
       min-width: 160px; display: none; flex-direction: column; z-index: 300;
     }
     .nav-dropdown-wrap.open .nav-dropdown { display: flex; }
     .nav-dropdown a {
-      padding: 12px 20px; color: rgba(242,200,0,0.75); text-decoration: none;
+      padding: 12px 20px; color: rgba(255,239,94,0.75); text-decoration: none;
       font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px;
       letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.15s;
       border-left: 2px solid transparent;
     }
-    .nav-dropdown a:hover { color: var(--yellow); border-left-color: var(--yellow); background: rgba(242,200,0,0.04); }
+    .nav-dropdown a:hover { color: var(--yellow); border-left-color: var(--yellow); background: rgba(255,239,94,0.04); }
 
     /* ── HAMBURGER ───────────────────────────────────────────────────── */
     .nav-burger {
@@ -143,7 +143,7 @@
       gap: 4px 16px;
       padding: 4px 0 20px 2px;
       margin-bottom: 4px;
-      border-bottom: 1px solid rgba(242,200,0,0.12);
+      border-bottom: 1px solid rgba(255,239,94,0.12);
     }
     .mobile-nav-sub a {
       font-family: 'Jost', sans-serif;
@@ -151,7 +151,7 @@
       font-size: 10px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(242,200,0,0.45);
+      color: rgba(255,239,94,0.45);
       text-decoration: none;
       padding: 8px 0;
       display: inline-block;
@@ -167,7 +167,7 @@
     .header-label {
       font-family: 'Jost', sans-serif; font-weight: 600;
       font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(242,200,0,0.4); margin-bottom: 12px; text-align: right; display: none;
+      color: rgba(255,239,94,0.4); margin-bottom: 12px; text-align: right; display: none;
     }
 
     .header-title {
@@ -191,28 +191,28 @@
     .pc-msg {
       flex: 1;
       background: transparent;
-      border: none;
+      border: 2px solid #1800AD;
       resize: none;
       font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: clamp(15px, 1.8vw, 23px);
-      color: #1C1CCC;
+      font-weight: 700;
+      font-size: clamp(13px, 1.6vw, 20px);
+      color: #1800AD;
       outline: none;
-      padding: 45% 4% 4% 10%;
+      padding: 8% 6% 6% 8%;
       line-height: 2;
     }
-    .pc-msg::placeholder { color: rgba(28,28,204,0.35); }
+    .pc-msg::placeholder { color: rgba(24,0,173,0.45); font-weight: 700; }
     .pc-addr {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 40% 4% 4% 9%;
+      padding: 40% 4% 4% 7%;
     }
     .pc-to {
       font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: clamp(12px, 1.5vw, 20px);
-      color: #1C1CCC;
+      color: #1800AD;
       letter-spacing: 0.04em;
       padding-bottom: 5%;
       
@@ -228,27 +228,27 @@
       font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.3vw, 17px);
-      color: rgba(28,28,204,0.7);
+      color: rgba(24,0,173,0.7);
       white-space: nowrap;
     }
     .pc-input {
       flex: 1;
       background: transparent;
       border: none;
-      color: #1C1CCC;
+      color: #1800AD;
       font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: clamp(12px, 1.4vw, 18px);
       outline: none;
       min-width: 0;
     }
-    .pc-input::placeholder { color: rgba(28,28,204,0.3); }
+    .pc-input::placeholder { color: rgba(24,0,173,0.3); }
     .pc-send {
       margin-top: 6%;
       align-self: flex-end; margin-right: 30px;
       background: none;
       border: 1px solid rgba(120,100,70,0.5);
-      color: #1C1CCC;
+      color: #1800AD;
       font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.2vw, 15px);
@@ -268,7 +268,7 @@
       font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
-      color: #1C1CCC;
+      color: #1800AD;
       letter-spacing: 0.08em;
     }
 
@@ -285,7 +285,7 @@
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(28,28,204,0.65);
+      color: rgba(24,0,173,0.65);
       margin-bottom: 20px;
     }
     .pc-mobile-msg {
@@ -297,7 +297,7 @@
       font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 16px;
-      color: #1C1CCC;
+      color: #1800AD;
       outline: none;
       padding: 0 0 12px;
       margin-bottom: 4px;
@@ -305,7 +305,7 @@
       line-height: 1.9;
       -webkit-appearance: none;
     }
-    .pc-mobile-msg::placeholder { color: rgba(28,28,204,0.3); }
+    .pc-mobile-msg::placeholder { color: rgba(24,0,173,0.3); }
     .pc-mobile-field {
       display: flex;
       align-items: center;
@@ -320,7 +320,7 @@
       font-size: 11px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(28,28,204,0.6);
+      color: rgba(24,0,173,0.6);
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -328,7 +328,7 @@
       flex: 1;
       background: transparent;
       border: none;
-      color: #1C1CCC;
+      color: #1800AD;
       font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 16px;
@@ -336,7 +336,7 @@
       min-width: 0;
       -webkit-appearance: none;
     }
-    .pc-mobile-input::placeholder { color: rgba(28,28,204,0.28); }
+    .pc-mobile-input::placeholder { color: rgba(24,0,173,0.28); }
     .pc-mobile-send {
       margin-top: 24px;
       display: flex;
@@ -345,7 +345,7 @@
       min-height: 44px;
       background: none;
       border: 1px solid rgba(120,100,70,0.45);
-      color: #1C1CCC;
+      color: #1800AD;
       font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: 11px;
@@ -363,7 +363,7 @@
       font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 15px;
-      color: #1C1CCC;
+      color: #1800AD;
       padding: 24px 0;
       letter-spacing: 0.08em;
     }
@@ -390,11 +390,11 @@
       <li class="nav-dropdown-wrap" id="workDropWrap">
         <button class="dropdown-toggle" id="workToggle">Work</button>
         <div class="nav-dropdown">
-          <a href="work.html?filter=art">Art</a>
-          <a href="work.html?filter=portraits">Portraits</a>
-          <a href="work.html?filter=videoart">Video Art</a>
-          <a href="stopmotion.html">Stop Motion</a>
-          <a href="work.html?filter=events">Events</a>
+          <a href="index.html#work/art">Art</a>
+          <a href="index.html#work/portraits">Portraits</a>
+          <a href="index.html#work/videoart">Video Art</a>
+          <a href="index.html#stopmotion">Stop Motion</a>
+          <a href="index.html#work/events">Events</a>
         </div>
       </li>
       <li><a href="shop.html">Shop</a></li>
@@ -421,13 +421,13 @@
       </button>
     </div>
     <div class="mobile-nav-links">
-      <a href="work.html" class="mobile-nav-link">Work</a>
+      <a href="index.html#work" class="mobile-nav-link">Work</a>
       <div class="mobile-nav-sub">
-        <a href="work.html?filter=art">Art</a>
-        <a href="work.html?filter=portraits">Portraits</a>
-        <a href="work.html?filter=videoart">Video Art</a>
-        <a href="stopmotion.html">Stop Motion</a>
-        <a href="work.html?filter=events">Events</a>
+        <a href="index.html#work/art">Art</a>
+        <a href="index.html#work/portraits">Portraits</a>
+        <a href="index.html#work/videoart">Video Art</a>
+        <a href="index.html#stopmotion">Stop Motion</a>
+        <a href="index.html#work/events">Events</a>
       </div>
       <a href="shop.html" class="mobile-nav-link">Shop</a>
       <a href="contact.html" class="mobile-nav-link">Contact</a>

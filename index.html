@@ -14,514 +14,264 @@
       src: url('assets/fonts/AmorosaAged.otf') format('opentype');
       font-weight: normal; font-style: normal;
     }
-
     :root {
-      --blue:   #1C1CCC;
-      --yellow: #F2C800;
+      --blue:   #1800AD;
+      --yellow: #FFEF5E;
       --dark:   #28283A;
       --red:    #CC1818;
       --cream:  #F0E4C4;
       --nav-h:  80px;
     }
-
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--blue); color: var(--yellow); font-family: 'Jost', sans-serif; min-height: 100vh; }
 
-    body {
-      background: var(--blue);
-      color: var(--yellow);
-      font-family: 'Jost', sans-serif;
-      min-height: 100vh;
-    }
+    /* ── VIEWS ───────────────────────────────────────────────────────── */
+    .view { display: none; }
+    .view.active { display: block; }
 
     /* ── NAV ─────────────────────────────────────────────────────────── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0; z-index: 200;
-      height: var(--nav-h);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 32px;
-      background: var(--blue);
-      transition: box-shadow 0.3s;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: var(--nav-h); display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; background: var(--blue); transition: box-shadow 0.3s;
     }
-
-    nav.scrolled { box-shadow: 0 1px 0 rgba(242,200,0,0.15); }
-
+    nav.scrolled { box-shadow: 0 1px 0 rgba(255,239,94,0.12); }
     .nav-logo { display: flex; align-items: center; text-decoration: none; }
     .nav-logo img { height: 62px; width: auto; object-fit: contain; display: block; }
-
     .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
-      color: var(--yellow); text-decoration: none;
-      font-family: 'Jost', sans-serif; font-weight: 700;
-      font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase;
-      transition: opacity 0.2s;
+      color: var(--yellow); text-decoration: none; font-family: 'Jost', sans-serif;
+      font-weight: 700; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; transition: opacity 0.2s;
     }
     .nav-links a:hover { opacity: 0.6; }
-    .nav-links a.active { border-bottom: 2px solid var(--yellow); }
-
+    .nav-links a.active { border-bottom: 1px solid var(--yellow); }
     .nav-dropdown-wrap { position: relative; }
     .dropdown-toggle {
       cursor: pointer; background: none; border: none; padding: 0;
       color: var(--yellow); font-family: 'Jost', sans-serif; font-weight: 700;
-      font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase;
-      transition: opacity 0.2s;
+      font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; transition: opacity 0.2s;
     }
     .dropdown-toggle:hover { opacity: 0.6; }
-    .dropdown-toggle.active { border-bottom: 2px solid var(--yellow); }
+    .dropdown-toggle.active { border-bottom: 1px solid var(--yellow); }
     .nav-dropdown {
       position: absolute; top: calc(100% + 12px); left: -16px;
-      background: var(--blue); border: 1px solid rgba(242,200,0,0.25);
+      background: var(--blue); border: 1px solid rgba(255,239,94,0.25);
       min-width: 160px; display: none; flex-direction: column; z-index: 300;
     }
     .nav-dropdown-wrap.open .nav-dropdown { display: flex; }
     .nav-dropdown a {
-      padding: 12px 20px; color: rgba(242,200,0,0.75); text-decoration: none;
-      font-family: 'Jost', sans-serif; font-weight: 700; font-size: 12px;
+      padding: 12px 20px; color: rgba(255,239,94,0.75); text-decoration: none;
+      font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px;
       letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.15s;
       border-left: 2px solid transparent;
     }
-    .nav-dropdown a:hover { color: var(--yellow); border-left-color: var(--yellow); background: rgba(242,200,0,0.04); }
+    .nav-dropdown a:hover,
+    .nav-dropdown a.active-filter { color: var(--yellow); border-left-color: var(--yellow); background: rgba(255,239,94,0.04); }
 
     /* ── HAMBURGER ───────────────────────────────────────────────────── */
     .nav-burger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      color: var(--yellow);
-      -webkit-tap-highlight-color: transparent;
+      display: none; background: none; border: none; cursor: pointer;
+      padding: 8px; color: var(--yellow); -webkit-tap-highlight-color: transparent;
     }
 
-    /* ── MOBILE NAV OVERLAY ──────────────────────────────────────────── */
+    /* ── MOBILE NAV ──────────────────────────────────────────────────── */
     .mobile-nav {
-      position: fixed;
-      inset: 0;
-      z-index: 499;
-      background: var(--blue);
-      display: flex;
-      flex-direction: column;
-      padding: 0 32px 48px;
-      overflow-y: auto;
-      transform: translateX(100%);
+      position: fixed; inset: 0; z-index: 499; background: var(--blue);
+      display: flex; flex-direction: column; padding: 0 32px 48px;
+      overflow-y: auto; transform: translateX(100%);
       transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .mobile-nav.open { transform: translateX(0); }
-
-    .mobile-nav-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: var(--nav-h);
-      flex-shrink: 0;
-    }
-
-    .mobile-nav-close {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      color: var(--yellow);
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    .mobile-nav-head { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); flex-shrink: 0; }
+    .mobile-nav-close { background: none; border: none; cursor: pointer; padding: 8px; color: var(--yellow); -webkit-tap-highlight-color: transparent; }
     .mobile-nav-links { display: flex; flex-direction: column; padding-top: 12px; }
-
     .mobile-nav-link {
-      font-family: 'Amoresa Aged', cursive;
-      font-size: clamp(56px, 16vw, 80px);
-      color: var(--yellow);
-      text-decoration: none;
-      line-height: 1;
-      padding: 6px 0;
-      transition: opacity 0.15s;
+      font-family: 'Amoresa Aged', cursive; font-size: clamp(56px, 16vw, 80px);
+      color: var(--yellow); text-decoration: none; line-height: 1; padding: 6px 0; transition: opacity 0.15s;
     }
     .mobile-nav-link:active { opacity: 0.6; }
-
     .mobile-nav-sub {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 16px;
-      padding: 4px 0 20px 2px;
-      margin-bottom: 4px;
-      border-bottom: 1px solid rgba(242,200,0,0.12);
+      display: flex; flex-wrap: wrap; gap: 4px 16px;
+      padding: 4px 0 20px 2px; margin-bottom: 4px; border-bottom: 1px solid rgba(255,239,94,0.12);
     }
     .mobile-nav-sub a {
-      font-family: 'Jost', sans-serif;
-      font-weight: 700;
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(242,200,0,0.45);
-      text-decoration: none;
-      padding: 8px 0;
-      display: inline-block;
+      font-family: 'Jost', sans-serif; font-weight: 700; font-size: 10px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,239,94,0.45); text-decoration: none; padding: 8px 0; display: inline-block;
     }
 
-    /* ── HERO ────────────────────────────────────────────────────────── */
-    .home-hero {
-      height: 100vh;
-      padding-top: var(--nav-h);
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* ID card — centered, slightly above midpoint */
-    .hero-card-wrap {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -56%);
-      z-index: 10;
-    }
-    .hero-card-wrap img {
-      width: clamp(300px, 52vw, 740px);
-      display: block;
-      filter: drop-shadow(0 24px 64px rgba(0,0,0,0.65));
-    }
-
-    /* flanking figures */
-    .c-blue-fig {
-      position: absolute;
-      left: 14%;
-      bottom: 18%;
-      width: clamp(150px, 19vw, 290px);
-      z-index: 20;
-    }
-    .c-red-fig {
-      position: absolute;
-      right: 14%;
-      bottom: 18%;
-      width: clamp(150px, 19vw, 290px);
-      z-index: 20;
-    }
-    .c-blue-fig img,
-    .c-red-fig img { width: 100%; height: auto; display: block; }
-
-    /* Work / Contact CTAs */
+    /* ── HOME VIEW ───────────────────────────────────────────────────── */
+    .home-hero { height: 100vh; padding-top: var(--nav-h); position: relative; overflow: hidden; }
+    .hero-card-wrap { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -56%); z-index: 10; }
+    .hero-card-wrap img { width: clamp(300px, 52vw, 740px); display: block; filter: drop-shadow(0 24px 64px rgba(0,0,0,0.65)); }
+    .c-blue-fig { position: absolute; left: 14%; bottom: 18%; width: clamp(150px, 19vw, 290px); z-index: 20; }
+    .c-red-fig  { position: absolute; right: 14%; bottom: 18%; width: clamp(150px, 19vw, 290px); z-index: 20; }
+    .c-blue-fig img, .c-red-fig img { width: 100%; height: auto; display: block; }
     .hero-ctas {
-      position: absolute;
-      bottom: 4%;
-      left: 0; right: 0;
-      display: flex;
-      justify-content: space-around;
-      padding: 0 8%;
-      z-index: 20;
+      position: absolute; bottom: 4%; left: 0; right: 0;
+      display: flex; justify-content: space-around; padding: 0 8%; z-index: 20;
     }
     .hero-cta-link {
-      font-family: 'Amoresa Aged', cursive;
-      font-size: clamp(68px, 11vw, 160px);
-      color: var(--yellow);
-      text-decoration: none;
-      line-height: 0.85;
-      transition: opacity 0.2s;
+      font-family: 'Amoresa Aged', cursive; font-size: clamp(68px, 11vw, 160px);
+      color: var(--yellow); text-decoration: none; line-height: 0.85; transition: opacity 0.2s;
     }
     .hero-cta-link:hover { opacity: 0.72; }
-
-    /* ── SELECTED WORKS ──────────────────────────────────────────────── */
     .works-section { padding: 80px 28px 0; }
-
-    .section-label {
-      font-family: 'Jost', sans-serif; font-weight: 700;
-      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(242,200,0,0.5); margin-bottom: 20px;
-    }
-
-    .section-script {
-      font-family: 'Amoresa Aged', cursive;
-      font-size: clamp(52px, 8vw, 100px);
-      color: var(--yellow); line-height: 0.9; margin-bottom: 40px;
-    }
-
-    .works-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
-    }
-
-    .work-tile {
-      position: relative; overflow: hidden; cursor: pointer;
-      background: rgba(255,255,255,0.04); aspect-ratio: 4/5;
-      text-decoration: none;
-    }
-    .work-tile:nth-child(4n+1) { aspect-ratio: 3/4; }
-    .work-tile:nth-child(4n+2) { aspect-ratio: 1/1; }
-
-    .tile-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-    .work-tile:hover .tile-img { transform: scale(1.05); }
-
-    .tile-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(28,28,204,0.92) 0%, transparent 55%);
-      opacity: 0; transition: opacity 0.3s ease;
-      display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
-    }
-    .work-tile:hover .tile-overlay { opacity: 1; }
-
-    .tile-cat {
-      font-family: 'Jost', sans-serif; font-weight: 700; font-size: 10px;
-      letter-spacing: 0.15em; text-transform: uppercase; color: rgba(242,200,0,0.7); margin-bottom: 6px;
-    }
-    .tile-title {
-      font-family: 'Amoresa Aged', cursive; font-size: 28px; color: var(--yellow); line-height: 1;
-    }
-
-    .works-empty {
-      display: none; grid-column: 1/-1; text-align: center; padding: 80px 20px;
-      color: rgba(242,200,0,0.4); font-size: 14px; letter-spacing: 0.05em;
-    }
-
+    .works-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
     .view-all-wrap { padding: 40px 28px; }
     .view-all {
       font-family: 'Jost', sans-serif; font-weight: 700; font-size: 12px;
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--yellow);
-      text-decoration: none; border-bottom: 1px solid var(--yellow); padding-bottom: 2px;
-      transition: opacity 0.2s;
+      text-decoration: none; border-bottom: 1px solid var(--yellow); padding-bottom: 2px; transition: opacity 0.2s;
     }
     .view-all:hover { opacity: 0.6; }
-
-    /* ── CONTACT STRIP ───────────────────────────────────────────────── */
     .contact-strip {
-      margin: 0 28px; border-top: 1px solid rgba(242,200,0,0.2);
+      margin: 0 28px; border-top: 1px solid rgba(255,239,94,0.2);
       padding: 64px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
     }
-    .contact-strip h2 {
-      font-family: 'Amoresa Aged', cursive; font-size: clamp(48px, 7vw, 88px);
-      color: var(--yellow); line-height: 0.9; grid-column: 1/-1;
-    }
-    .contact-col p, .contact-col a {
-      font-family: 'Jost', sans-serif; font-weight: 300; font-size: 14px;
-      color: rgba(242,200,0,0.75); text-decoration: none; line-height: 2; display: block;
-    }
+    .contact-strip h2 { font-family: 'Amoresa Aged', cursive; font-size: clamp(48px, 7vw, 88px); color: var(--yellow); line-height: 0.9; grid-column: 1/-1; }
+    .contact-col a { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 14px; color: rgba(255,239,94,0.75); text-decoration: none; line-height: 2; display: block; }
     .contact-col a:hover { color: var(--yellow); }
+
+    /* ── WORK VIEW ───────────────────────────────────────────────────── */
+    .page-header { padding: calc(var(--nav-h) + 36px) 28px 0; min-height: 30vh; display: flex; flex-direction: column; justify-content: flex-end; }
+    .header-title { font-family: 'Amoresa Aged', cursive; font-size: clamp(72px, 13vw, 160px); color: var(--yellow); line-height: 0.85; margin-bottom: 32px; transition: opacity 0.3s; text-align: right; }
+    .video-art-hero { position: relative; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .vah-bg { position: absolute; inset: 0; }
+    .vah-bg video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .vah-overlay { position: absolute; inset: 0; background: rgba(24,0,173,0.45); }
+    .vah-title { position: relative; z-index: 2; font-family: 'Amoresa Aged', cursive; font-size: clamp(72px, 13vw, 180px); color: var(--yellow); text-align: center; pointer-events: none; }
+    .grid-wrap { padding: 3px; }
+    .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+
+    /* shared tile styles */
+    .work-tile {
+      position: relative; overflow: hidden; cursor: pointer;
+      background: rgba(255,255,255,0.04); aspect-ratio: 4/5; text-decoration: none; transition: opacity 0.4s;
+    }
+    .work-tile:nth-child(5n+1) { aspect-ratio: 3/4; }
+    .work-tile:nth-child(5n+3) { aspect-ratio: 1/1; }
+    .works-grid .work-tile:nth-child(4n+1) { aspect-ratio: 3/4; }
+    .works-grid .work-tile:nth-child(4n+2) { aspect-ratio: 1/1; }
+    .tile-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+    .work-tile:hover .tile-img { transform: scale(1.05); }
+    .tile-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(24,0,173,0.92) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
+    }
+    .work-tile:hover .tile-overlay { opacity: 1; }
+    .tile-cat { font-family: 'Jost', sans-serif; font-weight: 600; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,239,94,0.7); margin-bottom: 6px; }
+    .tile-title { font-family: 'Amoresa Aged', cursive; font-size: 28px; color: var(--yellow); line-height: 1; }
+    .skeleton { background: rgba(255,255,255,0.06); animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 0.06; } 50% { opacity: 0.13; } }
+    .works-empty { display: none; grid-column: 1/-1; text-align: center; padding: 100px 20px; color: rgba(255,239,94,0.35); font-size: 14px; letter-spacing: 0.08em; }
+
+    /* ── STOP MOTION VIEW ────────────────────────────────────────────── */
+    .sm-hero { position: relative; height: 100vh; overflow: hidden; background: var(--blue); }
+    .sm-title { font-family: 'Amoresa Aged', cursive; font-size: clamp(72px, 12vw, 180px); color: var(--yellow); position: absolute; top: 10%; left: 17%; right: 2%; line-height: 0.88; z-index: 5; pointer-events: none; }
+    .sm-char { position: absolute; object-fit: contain; }
+    #sm-red-fig        { left: 1%;   bottom: 0;    height: 87vh; z-index: 8; }
+    #sm-blue-fig       { right: 1%;  bottom: 0;    height: 84vh; z-index: 8; }
+    #sm-rabbit         { left: 16%;  bottom: 10%;  height: 36vh; z-index: 6; }
+    #sm-flytrap        { left: 31%;  bottom: 1%;   height: 46vh; z-index: 6; }
+    #sm-two-head-worm  { left: 47%;  top: 17%;     height: 13vh; z-index: 6; }
+    #sm-millipede      { left: 50%;  top: 34%;     height: 22vh; z-index: 6; }
+    #sm-mama-bird      { left: 58%;  bottom: 22%;  height: 21vh; z-index: 6; }
+    #sm-metal-fly      { left: 70%;  top: 11%;     height: 19vh; z-index: 6; }
+    #sm-snake          { left: 63%;  top: 53%;     height: 15vh; z-index: 6; }
+    #sm-worm           { left: 44%;  top: 52%;     height: 11vh; z-index: 6; }
+
+    /* ── PROJECT VIEW ────────────────────────────────────────────────── */
+    .project-hero { width: 100%; height: 75vh; min-height: 400px; position: relative; overflow: hidden; background: var(--dark); }
+    .hero-img, .hero-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-skeleton { width: 100%; height: 100%; background: rgba(255,255,255,0.06); animation: pulse 1.4s ease-in-out infinite; }
+    .project-body { display: grid; grid-template-columns: 1fr; padding: 48px 28px; align-items: start; max-width: 900px; }
+    .proj-cat { font-family: 'Jost', sans-serif; font-weight: 600; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,239,94,0.5); margin-bottom: 12px; }
+    .proj-title { font-family: 'Amoresa Aged', cursive; font-size: clamp(52px, 9vw, 112px); color: var(--yellow); line-height: 0.9; margin-bottom: 28px; }
+    .proj-desc { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.72); max-width: 640px; }
+    .next-project-bar { border-top: 1px solid rgba(255,239,94,0.15); padding: 40px 28px 0; }
+    .next-project-link { display: inline-flex; align-items: baseline; gap: 16px; text-decoration: none; color: var(--yellow); transition: opacity 0.2s; }
+    .next-project-link:hover { opacity: 0.65; }
+    .np-label { font-family: 'Jost', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,239,94,0.45); }
+    .np-title { font-family: 'Amoresa Aged', cursive; font-size: clamp(32px, 5vw, 64px); line-height: 1; }
+    .np-arrow { font-size: clamp(24px, 3vw, 40px); }
+    .bts-section { padding: 0 28px; }
+    .bts-label { font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,239,94,0.4); border-top: 1px solid rgba(255,239,94,0.12); padding-top: 28px; margin-bottom: 16px; }
+    .bts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+    .bts-photo { aspect-ratio: 1; overflow: hidden; cursor: pointer; background: rgba(255,255,255,0.04); }
+    .bts-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+    .bts-photo:hover img { transform: scale(1.06); }
+
+    /* ── LIGHTBOX ────────────────────────────────────────────────────── */
+    .lightbox { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.92); align-items: center; justify-content: center; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; display: block; }
+    .lightbox-close { position: absolute; top: 24px; right: 28px; background: none; border: 1px solid rgba(255,239,94,0.4); color: var(--yellow); width: 40px; height: 40px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .lightbox-close:hover { background: var(--yellow); color: var(--blue); }
 
     /* ── POSTCARD FOOTER ─────────────────────────────────────────────── */
     .postcard-footer { margin: 0 28px 40px; }
     .pc-wrap { position: relative; }
     .pc-bg { width: 100%; display: block; }
-    .pc-form {
-      position: absolute;
-      left: 10%; right: 10.5%;
-      top: 14%; bottom: 15%;
-      display: flex;
-      pointer-events: none;
-    }
+    .pc-form { position: absolute; left: 10%; right: 10.5%; top: 14%; bottom: 15%; display: flex; pointer-events: none; }
     .pc-form * { pointer-events: all; }
-    .pc-msg {
-      flex: 1;
-      background: transparent;
-      border: none;
-      resize: none;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: clamp(15px, 1.8vw, 23px);
-      color: #1C1CCC;
-      outline: none;
-      padding: 45% 4% 4% 10%;
-      line-height: 2;
-    }
-    .pc-msg::placeholder { color: rgba(28,28,204,0.35); }
-    .pc-addr {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 40% 4% 4% 9%;
-    }
-    .pc-to {
-      font-family: 'Jost', sans-serif;
-      font-weight: 700;
-      font-size: clamp(12px, 1.5vw, 20px);
-      color: #1C1CCC;
-      letter-spacing: 0.04em;
-      padding-bottom: 5%;
-      
-    }
-    .pc-row {
-      display: flex;
-      align-items: center;
-      padding: 3.5% 0 1.5%;
-      
-      gap: 4px;
-    }
-    .pc-lbl {
-      font-family: 'Jost', sans-serif;
-      font-weight: 700;
-      font-size: clamp(11px, 1.3vw, 17px);
-      color: rgba(28,28,204,0.7);
-      white-space: nowrap;
-    }
-    .pc-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: #1C1CCC;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: clamp(12px, 1.4vw, 18px);
-      outline: none;
-      min-width: 0;
-    }
-    .pc-input::placeholder { color: rgba(28,28,204,0.3); }
-    .pc-send {
-      margin-top: 6%;
-      align-self: flex-end; margin-right: 30px;
-      background: none;
-      border: 1px solid rgba(120,100,70,0.5);
-      color: #1C1CCC;
-      font-family: 'Jost', sans-serif;
-      font-weight: 700;
-      font-size: clamp(11px, 1.2vw, 15px);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 5px 10px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
+    .pc-msg { flex: 1; background: transparent; border: 2px solid #1800AD; resize: none; font-family: 'Jost', sans-serif; font-weight: 700; font-size: clamp(13px, 1.6vw, 20px); color: #1800AD; outline: none; padding: 8% 6% 6% 8%; line-height: 2; }
+    .pc-msg::placeholder { color: rgba(24,0,173,0.45); font-weight: 700; }
+    .pc-addr { flex: 1; display: flex; flex-direction: column; padding: 40% 4% 4% 7%; }
+    .pc-to { font-family: 'Jost', sans-serif; font-weight: 700; font-size: clamp(12px, 1.5vw, 20px); color: #1800AD; letter-spacing: 0.04em; padding-bottom: 5%; }
+    .pc-row { display: flex; align-items: center; padding: 3.5% 0 1.5%; gap: 4px; }
+    .pc-lbl { font-family: 'Jost', sans-serif; font-weight: 700; font-size: clamp(11px, 1.3vw, 17px); color: rgba(24,0,173,0.7); white-space: nowrap; }
+    .pc-input { flex: 1; background: transparent; border: none; color: #1800AD; font-family: 'Jost', sans-serif; font-weight: 300; font-size: clamp(12px, 1.4vw, 18px); outline: none; min-width: 0; }
+    .pc-input::placeholder { color: rgba(24,0,173,0.3); }
+    .pc-send { margin-top: 6%; align-self: flex-end; margin-right: 30px; background: none; border: 1px solid rgba(120,100,70,0.5); color: #1800AD; font-family: 'Jost', sans-serif; font-weight: 700; font-size: clamp(11px, 1.2vw, 15px); letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 10px; cursor: pointer; transition: background 0.2s; }
     .pc-send:hover { background: rgba(120,100,70,0.12); }
     .pc-send:disabled { opacity: 0.4; cursor: not-allowed; }
-    .pc-sent {
-      position: absolute;
-      left: 10%; right: 10%;
-      top: 40%;
-      text-align: center;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: clamp(15px, 1.8vw, 23px);
-      color: #1C1CCC;
-      letter-spacing: 0.08em;
-    }
+    .pc-sent { position: absolute; left: 10%; right: 10%; top: 40%; text-align: center; font-family: 'Jost', sans-serif; font-weight: 300; font-size: clamp(15px, 1.8vw, 23px); color: #1800AD; letter-spacing: 0.08em; }
 
-    /* ── MOBILE POSTCARD FORM ───────────────────────────────────────── */
-    .pc-mobile-wrap {
-      display: none;
-      margin: 0 20px 40px;
-      padding: 28px 24px 32px;
-      background: var(--cream);
-    }
-    .pc-mobile-to {
-      font-family: 'Jost', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(28,28,204,0.65);
-      margin-bottom: 20px;
-    }
-    .pc-mobile-msg {
-      width: 100%;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(120,100,70,0.22);
-      resize: none;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 16px;
-      color: #1C1CCC;
-      outline: none;
-      padding: 0 0 12px;
-      margin-bottom: 4px;
-      min-height: 100px;
-      line-height: 1.9;
-      -webkit-appearance: none;
-    }
-    .pc-mobile-msg::placeholder { color: rgba(28,28,204,0.3); }
-    .pc-mobile-field {
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid rgba(120,100,70,0.18);
-      padding: 11px 0;
-      gap: 8px;
-      min-height: 44px;
-    }
-    .pc-mobile-lbl {
-      font-family: 'Jost', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(28,28,204,0.6);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .pc-mobile-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: #1C1CCC;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 16px;
-      outline: none;
-      min-width: 0;
-      -webkit-appearance: none;
-    }
-    .pc-mobile-input::placeholder { color: rgba(28,28,204,0.28); }
-    .pc-mobile-send {
-      margin-top: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      background: none;
-      border: 1px solid rgba(120,100,70,0.45);
-      color: #1C1CCC;
-      font-family: 'Jost', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 12px 24px;
-      cursor: pointer;
-      width: 100%;
-      transition: background 0.2s;
-      -webkit-tap-highlight-color: transparent;
-    }
+    /* ── MOBILE POSTCARD ─────────────────────────────────────────────── */
+    .pc-mobile-wrap { display: none; margin: 0 20px 40px; padding: 28px 24px 32px; background: var(--cream); }
+    .pc-mobile-to { font-family: 'Jost', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(24,0,173,0.65); margin-bottom: 20px; }
+    .pc-mobile-msg { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(120,100,70,0.22); resize: none; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 16px; color: #1800AD; outline: none; padding: 0 0 12px; margin-bottom: 4px; min-height: 100px; line-height: 1.9; -webkit-appearance: none; }
+    .pc-mobile-msg::placeholder { color: rgba(24,0,173,0.3); }
+    .pc-mobile-field { display: flex; align-items: center; border-bottom: 1px solid rgba(120,100,70,0.18); padding: 11px 0; gap: 8px; min-height: 44px; }
+    .pc-mobile-lbl { font-family: 'Jost', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(24,0,173,0.6); white-space: nowrap; flex-shrink: 0; }
+    .pc-mobile-input { flex: 1; background: transparent; border: none; color: #1800AD; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 16px; outline: none; min-width: 0; -webkit-appearance: none; }
+    .pc-mobile-input::placeholder { color: rgba(24,0,173,0.28); }
+    .pc-mobile-send { margin-top: 24px; display: flex; align-items: center; justify-content: center; min-height: 44px; background: none; border: 1px solid rgba(120,100,70,0.45); color: #1800AD; font-family: 'Jost', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 24px; cursor: pointer; width: 100%; transition: background 0.2s; -webkit-tap-highlight-color: transparent; }
     .pc-mobile-send:disabled { opacity: 0.4; }
-    .pc-mobile-sent {
-      text-align: center;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 15px;
-      color: #1C1CCC;
-      padding: 24px 0;
-      letter-spacing: 0.08em;
-    }
-
-    /* ── SKELETON ────────────────────────────────────────────────────── */
-    .skeleton { background: rgba(255,255,255,0.06); animation: pulse 1.4s ease-in-out infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 0.06; } 50% { opacity: 0.12; } }
+    .pc-mobile-sent { text-align: center; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 15px; color: #1800AD; padding: 24px 0; letter-spacing: 0.08em; }
 
     /* ── RESPONSIVE ──────────────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .works-grid { grid-template-columns: repeat(2, 1fr); }
-      .contact-strip { grid-template-columns: 1fr; }
-      .c-blue-fig, .c-red-fig { width: clamp(100px, 14vw, 180px); bottom: 22%; }
-      .hero-card-wrap img { width: clamp(240px, 70vw, 500px); }
-      .hero-cta-link { font-size: clamp(48px, 9vw, 100px); }
-      .nav-links { gap: 28px; }
-      .nav-links a { font-size: 13px; }
+    @media (max-width: 900px) {
+      .work-grid, .works-grid { grid-template-columns: repeat(2, 1fr); }
     }
-
+    @media (max-width: 768px) {
+      .project-body { padding: 36px 16px; }
+      .bts-grid { grid-template-columns: repeat(2, 1fr); }
+      .project-hero { height: 55vh; min-height: 300px; }
+      .sm-title { font-size: clamp(52px, 11vw, 100px); left: 14%; top: 8%; }
+      #sm-red-fig  { height: 72vh; }
+      #sm-blue-fig { height: 68vh; }
+      #sm-rabbit   { height: 28vh; }
+      #sm-flytrap  { height: 36vh; }
+    }
     @media (max-width: 640px) {
       .nav-links { display: none; }
       .nav-burger { display: flex; align-items: center; justify-content: center; }
       .postcard-footer { display: none; }
       .pc-mobile-wrap { display: block; }
       body { padding-bottom: env(safe-area-inset-bottom, 0px); }
-      .c-blue-fig { display: none; }
-      .c-red-fig { right: 4%; width: clamp(90px, 24vw, 160px); }
-      .hero-ctas { padding: 0 4%; }
+      .work-grid { grid-template-columns: repeat(2, 1fr); }
+      .project-body { padding: 28px 20px; }
+      .next-project-bar { padding: 32px 20px 0; }
     }
-
-    @media (max-width: 480px) {
-      .works-grid { grid-template-columns: 1fr; }
+    @media (max-width: 420px) {
+      .work-grid { grid-template-columns: 1fr; }
+      .bts-grid { grid-template-columns: repeat(2, 1fr); }
     }
-
     @media (hover: none) {
-      .tile-overlay {
-        opacity: 1;
-        background: linear-gradient(to top, rgba(28,28,204,0.85) 0%, transparent 50%);
-      }
+      .tile-overlay { opacity: 1; background: linear-gradient(to top, rgba(24,0,173,0.85) 0%, transparent 50%); }
     }
   </style>
 </head>
@@ -529,18 +279,16 @@
 
   <!-- NAV -->
   <nav id="mainNav">
-    <a href="index.html" class="nav-logo">
-      <img src="assets/g-logo.png" alt="6rac13">
-    </a>
+    <a href="#" class="nav-logo"><img src="assets/g-logo.png" alt="6rac13"></a>
     <ul class="nav-links">
       <li class="nav-dropdown-wrap" id="workDropWrap">
         <button class="dropdown-toggle" id="workToggle">Work</button>
-        <div class="nav-dropdown">
-          <a href="work.html?filter=art">Art</a>
-          <a href="work.html?filter=portraits">Portraits</a>
-          <a href="work.html?filter=videoart">Video Art</a>
-          <a href="stopmotion.html">Stop Motion</a>
-          <a href="work.html?filter=events">Events</a>
+        <div class="nav-dropdown" id="workDropdown">
+          <a href="#work/art">Art</a>
+          <a href="#work/portraits">Portraits</a>
+          <a href="#work/videoart">Video Art</a>
+          <a href="#stopmotion">Stop Motion</a>
+          <a href="#work/events">Events</a>
         </div>
       </li>
       <li><a href="shop.html">Shop</a></li>
@@ -558,7 +306,7 @@
   <!-- MOBILE NAV -->
   <div class="mobile-nav" id="mobileNav">
     <div class="mobile-nav-head">
-      <a href="index.html" class="nav-logo"><img src="assets/g-logo.png" alt="6rac13"></a>
+      <a href="#" class="nav-logo"><img src="assets/g-logo.png" alt="6rac13"></a>
       <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <line x1="1" y1="1" x2="19" y2="19" stroke="currentColor" stroke-width="2.5"/>
@@ -567,54 +315,118 @@
       </button>
     </div>
     <div class="mobile-nav-links">
-      <a href="work.html" class="mobile-nav-link">Work</a>
+      <a href="#work" class="mobile-nav-link">Work</a>
       <div class="mobile-nav-sub">
-        <a href="work.html?filter=art">Art</a>
-        <a href="work.html?filter=portraits">Portraits</a>
-        <a href="work.html?filter=videoart">Video Art</a>
-        <a href="stopmotion.html">Stop Motion</a>
-        <a href="work.html?filter=events">Events</a>
+        <a href="#work/art">Art</a>
+        <a href="#work/portraits">Portraits</a>
+        <a href="#work/videoart">Video Art</a>
+        <a href="#stopmotion">Stop Motion</a>
+        <a href="#work/events">Events</a>
       </div>
       <a href="shop.html" class="mobile-nav-link">Shop</a>
       <a href="contact.html" class="mobile-nav-link">Contact</a>
     </div>
   </div>
 
-  <!-- HERO -->
-  <section class="home-hero">
-    <div class="c-blue-fig"><img src="assets/blue-fig.png" alt=""></div>
-    <div class="hero-card-wrap">
-      <img src="assets/id-card.png" alt="Grace Fairchild Vanderlaan — 6rac13">
-    </div>
-    <div class="c-red-fig"><img src="assets/red-fig.png" alt=""></div>
-    <div class="hero-ctas">
-      <a href="work.html" class="hero-cta-link">Work</a>
-      <a href="contact.html" class="hero-cta-link">Contact</a>
-    </div>
-  </section>
+  <!-- ── VIEW: HOME ──────────────────────────────────────────────────── -->
+  <div class="view" id="view-home">
+    <section class="home-hero">
+      <div class="c-blue-fig"><img src="assets/blue-fig.png" alt=""></div>
+      <div class="hero-card-wrap"><img src="assets/id-card.png" alt="Grace Fairchild Vanderlaan — 6rac13"></div>
+      <div class="c-red-fig"><img src="assets/red-fig.png" alt=""></div>
+      <div class="hero-ctas">
+        <a href="#works-grid-section" class="hero-cta-link" id="heroWorkCta">Work</a>
+        <a href="contact.html" class="hero-cta-link">Contact</a>
+      </div>
+    </section>
+    <section class="works-section" id="works-grid-section">
+      <div class="works-grid" id="worksGrid">
+        <div class="work-tile skeleton"></div>
+        <div class="work-tile skeleton"></div>
+        <div class="work-tile skeleton"></div>
+        <div class="work-tile skeleton"></div>
+        <div class="work-tile skeleton"></div>
+        <div class="work-tile skeleton"></div>
+      </div>
+      <div class="view-all-wrap"><a href="#work" class="view-all">Browse by Category</a></div>
+    </section>
+    <section class="contact-strip">
+      <h2>Get in touch</h2>
+      <div class="contact-col">
+        <a href="https://instagram.com/6rac13" target="_blank" rel="noopener">@6rac13</a>
+      </div>
+    </section>
+  </div>
 
-  <!-- SELECTED WORKS -->
-  <section class="works-section">
-    <div class="works-grid" id="worksGrid">
-      <div class="work-tile skeleton"></div>
-      <div class="work-tile skeleton"></div>
-      <div class="work-tile skeleton"></div>
-      <div class="work-tile skeleton"></div>
-      <div class="work-tile skeleton"></div>
-      <div class="work-tile skeleton"></div>
+  <!-- ── VIEW: WORK ──────────────────────────────────────────────────── -->
+  <div class="view" id="view-work">
+    <header class="page-header">
+      <h1 class="header-title" id="headerTitle">Work</h1>
+    </header>
+    <div class="video-art-hero" id="videoArtHero" style="display:none">
+      <div class="vah-bg" id="vahBg"></div>
+      <div class="vah-overlay"></div>
+      <h2 class="vah-title">Video Art</h2>
     </div>
-    <div class="view-all-wrap">
-      <a href="work.html" class="view-all">View All Work</a>
+    <div class="grid-wrap">
+      <div class="work-grid" id="workGrid">
+        <div class="work-tile skeleton"></div>
+        <div class="work-tile skeleton"></div>
+        <div class="work-tile skeleton"></div>
+        <div class="work-tile skeleton"></div>
+        <div class="work-tile skeleton"></div>
+        <div class="work-tile skeleton"></div>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- CONTACT STRIP -->
-  <section class="contact-strip">
-    <h2>Get in touch</h2>
-    <div class="contact-col">
-      <a href="https://instagram.com/6rac13" target="_blank" rel="noopener">@6rac13</a>
+  <!-- ── VIEW: STOP MOTION ───────────────────────────────────────────── -->
+  <div class="view" id="view-stopmotion">
+    <section class="sm-hero">
+      <h1 class="sm-title">Stop Motion</h1>
+      <img class="sm-char" id="sm-red-fig"       src="assets/red-fig.png"       alt="">
+      <img class="sm-char" id="sm-blue-fig"      src="assets/blue-fig.png"      alt="">
+      <img class="sm-char" id="sm-rabbit"        src="assets/rabbit.png"        alt="">
+      <img class="sm-char" id="sm-flytrap"       src="assets/venus-flytrap.png" alt="">
+      <img class="sm-char" id="sm-two-head-worm" src="assets/two-head-worm.png" alt="">
+      <img class="sm-char" id="sm-millipede"     src="assets/millipede.png"     alt="">
+      <img class="sm-char" id="sm-mama-bird"     src="assets/mama-bird.png"     alt="">
+      <img class="sm-char" id="sm-metal-fly"     src="assets/metal-fly.png"     alt="">
+      <img class="sm-char" id="sm-snake"         src="assets/snake.png"         alt="">
+      <img class="sm-char" id="sm-worm"          src="assets/worm.png"          alt="">
+    </section>
+  </div>
+
+  <!-- ── VIEW: PROJECT ──────────────────────────────────────────────── -->
+  <div class="view" id="view-project">
+    <div class="project-hero" id="projectHero">
+      <div class="hero-skeleton"></div>
     </div>
-  </section>
+    <div class="project-body">
+      <div class="project-info">
+        <p class="proj-cat" id="projCat"></p>
+        <h1 class="proj-title" id="projTitle">Loading…</h1>
+        <p class="proj-desc" id="projDesc"></p>
+      </div>
+    </div>
+    <div class="next-project-bar" id="nextProjectBar" style="display:none">
+      <a class="next-project-link" id="nextProjectLink" href="#">
+        <span class="np-label">Next Project</span>
+        <span class="np-title" id="nextProjectTitle"></span>
+        <span class="np-arrow">→</span>
+      </a>
+    </div>
+    <section class="bts-section" id="btsSection" style="display:none">
+      <p class="bts-label">Behind the Scenes</p>
+      <div class="bts-grid" id="btsGrid"></div>
+    </section>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <div id="lightboxMedia"></div>
+  </div>
 
   <!-- POSTCARD FOOTER -->
   <footer class="postcard-footer">
@@ -624,17 +436,9 @@
         <textarea class="pc-msg" name="message" placeholder="Write your message to Gracie…"></textarea>
         <div class="pc-addr">
           <div class="pc-to">To: Gracie F. Vanderlaan</div>
-          <div class="pc-row">
-            <span class="pc-lbl">From:</span>
-            <input class="pc-input" type="text" name="name" placeholder="Your name">
-          </div>
-          <div class="pc-row">
-            <input class="pc-input" type="email" name="email" placeholder="your@email.com">
-          </div>
-          <div class="pc-row">
-            <span class="pc-lbl">Subject:</span>
-            <input class="pc-input" type="text" name="subject" placeholder="What's this about?">
-          </div>
+          <div class="pc-row"><span class="pc-lbl">From:</span><input class="pc-input" type="text" name="name" placeholder="Your name"></div>
+          <div class="pc-row"><input class="pc-input" type="email" name="email" placeholder="your@email.com"></div>
+          <div class="pc-row"><span class="pc-lbl">Subject:</span><input class="pc-input" type="text" name="subject" placeholder="What's this about?"></div>
           <button class="pc-send" type="submit">Send →</button>
         </div>
       </form>
@@ -647,17 +451,9 @@
     <p class="pc-mobile-to">To: Gracie F. Vanderlaan</p>
     <form id="pcFormMobile" action="https://formspree.io/f/mwlpabqv" method="POST">
       <textarea class="pc-mobile-msg" name="message" placeholder="Write your message to Gracie…"></textarea>
-      <div class="pc-mobile-field">
-        <span class="pc-mobile-lbl">From</span>
-        <input class="pc-mobile-input" type="text" name="name" placeholder="Your name" autocomplete="name">
-      </div>
-      <div class="pc-mobile-field">
-        <input class="pc-mobile-input" type="email" name="email" placeholder="your@email.com" autocomplete="email">
-      </div>
-      <div class="pc-mobile-field">
-        <span class="pc-mobile-lbl">Re</span>
-        <input class="pc-mobile-input" type="text" name="subject" placeholder="What's this about?">
-      </div>
+      <div class="pc-mobile-field"><span class="pc-mobile-lbl">From</span><input class="pc-mobile-input" type="text" name="name" placeholder="Your name" autocomplete="name"></div>
+      <div class="pc-mobile-field"><input class="pc-mobile-input" type="email" name="email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="pc-mobile-field"><span class="pc-mobile-lbl">Re</span><input class="pc-mobile-input" type="text" name="subject" placeholder="What's this about?"></div>
       <button class="pc-mobile-send" type="submit">Send →</button>
     </form>
     <p class="pc-mobile-sent" id="pcSentMobile" style="display:none">Message sent — Gracie will be in touch.</p>
@@ -666,25 +462,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
   <script>
-    window.addEventListener('scroll', () => {
-      document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
-    });
-
-    const workWrap = document.getElementById('workDropWrap');
-    document.getElementById('workToggle').addEventListener('click', e => { e.preventDefault(); workWrap.classList.toggle('open'); });
-    document.addEventListener('click', e => { if (!workWrap.contains(e.target)) workWrap.classList.remove('open'); });
-
-    // Mobile nav
-    const navBurger = document.getElementById('navBurger');
-    const mobileNav = document.getElementById('mobileNav');
-    const mobileNavClose = document.getElementById('mobileNavClose');
-    if (navBurger && mobileNav) {
-      navBurger.addEventListener('click', () => { mobileNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
-      mobileNavClose.addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; });
-      mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; }));
-    }
-
-    const firebaseConfig = {
+    /* ── Firebase ─────────────────────────────────────────────────────── */
+    firebase.initializeApp({
       apiKey:            "AIzaSyDmNYdW7lFABFWjA_eSEDqmd2YuOrX32g8",
       authDomain:        "rac13-12cca.firebaseapp.com",
       databaseURL:       "https://rac13-12cca-default-rtdb.firebaseio.com",
@@ -692,15 +471,54 @@
       storageBucket:     "rac13-12cca.firebasestorage.app",
       messagingSenderId: "761534687296",
       appId:             "1:761534687296:web:04fef318d00c1f7b0457a5"
-    };
-
-    firebase.initializeApp(firebaseConfig);
+    });
     const db = firebase.database();
 
-    const CAT_LABELS = { art: 'Art', videoart: 'Video Art', events: 'Events' };
+    /* ── Data cache ───────────────────────────────────────────────────── */
+    let allProjects = null;
+    function loadProjects(cb) {
+      if (allProjects !== null) { cb(allProjects); return; }
+      db.ref('projects').orderByChild('order').once('value', snap => {
+        allProjects = [];
+        snap.forEach(child => { const p = child.val(); p.id = child.key; if (p.visible) allProjects.push(p); });
+        cb(allProjects);
+      });
+    }
 
-    function tileHTML(p) {
-      const cat = CAT_LABELS[p.category] || p.category;
+    const CAT_LABELS = { all: 'Work', art: 'Art', portraits: 'Portraits', videoart: 'Video Art', events: 'Events' };
+
+    /* ── Nav ──────────────────────────────────────────────────────────── */
+    window.addEventListener('scroll', () => {
+      document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    const workDropWrap = document.getElementById('workDropWrap');
+    document.getElementById('workToggle').addEventListener('click', e => { e.preventDefault(); workDropWrap.classList.toggle('open'); });
+    document.addEventListener('click', e => { if (!workDropWrap.contains(e.target)) workDropWrap.classList.remove('open'); });
+
+    const mobileNav = document.getElementById('mobileNav');
+    document.getElementById('navBurger').addEventListener('click', () => { mobileNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
+    document.getElementById('mobileNavClose').addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; }));
+
+    /* ── Lightbox ─────────────────────────────────────────────────────── */
+    const lightbox = document.getElementById('lightbox');
+    const lightboxMedia = document.getElementById('lightboxMedia');
+    function closeLightbox() { lightboxMedia.innerHTML = ''; lightbox.classList.remove('open'); }
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    function openLightbox(src) {
+      const isVid = /\.(mp4|mov|webm)(\?|$)/i.test(src);
+      lightboxMedia.innerHTML = isVid
+        ? `<video src="${src}" controls autoplay muted style="max-width:90vw;max-height:90vh;display:block;"></video>`
+        : `<img src="${src}" alt="" style="max-width:90vw;max-height:90vh;object-fit:contain;display:block;">`;
+      lightbox.classList.add('open');
+    }
+
+    /* ── Tile ─────────────────────────────────────────────────────────── */
+    function tileHTML(p, filter) {
+      const cat  = CAT_LABELS[p.category] || p.category;
+      const href = (filter && filter !== 'all') ? `#project/${p.id}/${filter}` : `#project/${p.id}`;
       let media;
       if (!p.heroUrl) {
         media = `<div class="tile-img skeleton"></div>`;
@@ -709,58 +527,176 @@
       } else {
         media = `<img class="tile-img" src="${p.heroUrl}" alt="${p.title}" loading="lazy">`;
       }
-      return `
-        <a class="work-tile" href="project.html?id=${p.id}">
-          ${media}
-          <div class="tile-overlay">
-            <span class="tile-cat">${cat}</span>
-            <span class="tile-title">${p.title}</span>
-          </div>
-        </a>`;
+      return `<a class="work-tile" href="${href}">${media}<div class="tile-overlay"><span class="tile-cat">${cat}</span><span class="tile-title">${p.title}</span></div></a>`;
     }
 
-    db.ref('projects').orderByChild('order').once('value', snap => {
-      const grid = document.getElementById('worksGrid');
-      const projects = [];
-      snap.forEach(child => {
-        const p = child.val();
-        p.id = child.key;
-        if (p.visible && p.featured) projects.push(p);
+    /* ── Router ───────────────────────────────────────────────────────── */
+    const VIEWS = ['home', 'work', 'stopmotion', 'project'];
+    let videoHeroSet = false;
+
+    function showView(name) {
+      VIEWS.forEach(v => document.getElementById(`view-${v}`).classList.remove('active'));
+      document.getElementById(`view-${name}`).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function setNavActive(view, filter) {
+      const toggle = document.getElementById('workToggle');
+      const isWork = (view === 'work' || view === 'stopmotion' || view === 'project');
+      toggle.classList.toggle('active', isWork);
+      document.querySelectorAll('#workDropdown a').forEach(a => {
+        const h = a.getAttribute('href');
+        const match = (view === 'stopmotion' && h === '#stopmotion') ||
+                      (view === 'work' && filter && h === `#work/${filter}`);
+        a.classList.toggle('active-filter', match);
       });
-      if (projects.length === 0) {
-        grid.innerHTML = `<div class="works-empty" style="display:block">No featured works yet.</div>`;
-        return;
-      }
-      grid.innerHTML = projects.map(tileHTML).join('');
+    }
+
+    /* Smooth-scroll the hero Work CTA instead of hash-routing */
+    document.getElementById('heroWorkCta').addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('works-grid-section').scrollIntoView({ behavior: 'smooth' });
     });
 
-    const pcForm = document.getElementById('pcForm');
-    if (pcForm) {
-      pcForm.addEventListener('submit', async e => {
-        e.preventDefault();
-        const btn = pcForm.querySelector('.pc-send');
-        btn.disabled = true; btn.textContent = 'Sending…';
-        try {
-          const res = await fetch(pcForm.action, { method: 'POST', body: new FormData(pcForm), headers: { 'Accept': 'application/json' } });
-          if (res.ok) { pcForm.style.display = 'none'; document.getElementById('pcSent').style.display = 'block'; }
-          else { btn.disabled = false; btn.textContent = 'Try Again →'; }
-        } catch { btn.disabled = false; btn.textContent = 'Try Again →'; }
-      });
+    function route() {
+      const hash  = location.hash.slice(1) || '';
+      const parts = hash.split('/');
+      const view  = parts[0];
+      workDropWrap.classList.remove('open');
+
+      /* If hash matches a DOM id (e.g. #works-grid-section), let browser scroll */
+      if (view && document.getElementById(view)) return;
+
+      if (!view || view === 'home') {
+        showView('home');
+        setNavActive('home', null);
+        document.title = '6rac13';
+        loadProjects(ps => {
+          const grid = document.getElementById('worksGrid');
+          grid.innerHTML = ps.length ? ps.map(p => tileHTML(p, null)).join('') : '';
+        });
+
+      } else if (view === 'work') {
+        const filter = parts[1] || 'all';
+        showView('work');
+        setNavActive('work', filter);
+        document.title = `${CAT_LABELS[filter] || 'Work'} — 6rac13`;
+        document.getElementById('headerTitle').textContent = CAT_LABELS[filter] || filter;
+
+        const hero = document.getElementById('videoArtHero');
+        if (filter === 'videoart') {
+          hero.style.display = 'flex';
+          if (!videoHeroSet) {
+            loadProjects(ps => {
+              const v = ps.find(p => p.category === 'videoart' && p.heroUrl && (p.heroType === 'video' || /\.(mp4|mov|webm)(\?|$)/i.test(p.heroUrl)));
+              if (v) { document.getElementById('vahBg').innerHTML = `<video src="${v.heroUrl}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>`; videoHeroSet = true; }
+            });
+          }
+        } else {
+          hero.style.display = 'none';
+        }
+
+        loadProjects(ps => {
+          const grid = document.getElementById('workGrid');
+          const list = filter === 'all' ? ps : ps.filter(p => p.category === filter);
+          grid.innerHTML = list.length
+            ? list.map(p => tileHTML(p, filter)).join('')
+            : `<div class="works-empty" style="display:block">No projects in this category yet.</div>`;
+        });
+
+      } else if (view === 'stopmotion') {
+        showView('stopmotion');
+        setNavActive('stopmotion', null);
+        document.title = 'Stop Motion — 6rac13';
+
+      } else if (view === 'project') {
+        const projectId = parts[1];
+        const filter    = parts[2] || 'all';
+        showView('project');
+        setNavActive('project', null);
+
+        const heroEl = document.getElementById('projectHero');
+        heroEl.innerHTML = '<div class="hero-skeleton"></div>';
+        document.getElementById('projCat').textContent   = '';
+        document.getElementById('projTitle').textContent = 'Loading…';
+        document.getElementById('projDesc').textContent  = '';
+        document.getElementById('nextProjectBar').style.display = 'none';
+        document.getElementById('btsSection').style.display    = 'none';
+        document.getElementById('btsGrid').innerHTML = '';
+
+        loadProjects(ps => {
+          const context = filter === 'all' ? ps : ps.filter(p => p.category === filter);
+          const idx     = context.findIndex(p => p.id === projectId);
+          const project = idx >= 0 ? context[idx] : ps.find(p => p.id === projectId);
+
+          if (!project) { document.getElementById('projTitle').textContent = 'Project not found.'; return; }
+
+          document.title = `${project.title} — 6rac13`;
+
+          if (project.heroType === 'video' && project.heroUrl) {
+            heroEl.innerHTML = `<video class="hero-video" src="${project.heroUrl}" autoplay muted loop playsinline></video>`;
+          } else if (project.heroUrl) {
+            heroEl.innerHTML = `<img class="hero-img" src="${project.heroUrl}" alt="${project.title}">`;
+          }
+
+          document.getElementById('projCat').textContent   = CAT_LABELS[project.category] || project.category || '';
+          document.getElementById('projTitle').textContent = project.title;
+          document.getElementById('projDesc').textContent  = project.description || '';
+
+          if (idx >= 0 && idx < context.length - 1) {
+            const next = context[idx + 1];
+            const nextHref = filter !== 'all' ? `#project/${next.id}/${filter}` : `#project/${next.id}`;
+            document.getElementById('nextProjectBar').style.display = 'block';
+            document.getElementById('nextProjectLink').href = nextHref;
+            document.getElementById('nextProjectTitle').textContent = next.title;
+          }
+
+          const photos = project.btsPhotos
+            ? (Array.isArray(project.btsPhotos) ? project.btsPhotos : Object.values(project.btsPhotos))
+            : [];
+          if (photos.length) {
+            document.getElementById('btsSection').style.display = 'block';
+            document.getElementById('btsGrid').innerHTML = photos.map(url => {
+              const isVid = /\.(mp4|mov|webm)(\?|$)/i.test(url);
+              const media = isVid
+                ? `<video src="${url}" muted playsinline loop preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;"></video>`
+                : `<img src="${url}" alt="BTS" loading="lazy">`;
+              return `<div class="bts-photo" onclick="openLightbox('${url}')">${media}</div>`;
+            }).join('');
+          }
+        });
+
+      } else {
+        location.hash = '';
+      }
     }
 
-    const pcFormMobile = document.getElementById('pcFormMobile');
-    if (pcFormMobile) {
-      pcFormMobile.addEventListener('submit', async e => {
-        e.preventDefault();
-        const btn = pcFormMobile.querySelector('.pc-mobile-send');
-        btn.disabled = true; btn.textContent = 'Sending…';
-        try {
-          const res = await fetch(pcFormMobile.action, { method: 'POST', body: new FormData(pcFormMobile), headers: { 'Accept': 'application/json' } });
-          if (res.ok) { pcFormMobile.style.display = 'none'; document.getElementById('pcSentMobile').style.display = 'block'; }
-          else { btn.disabled = false; btn.textContent = 'Try Again →'; }
-        } catch { btn.disabled = false; btn.textContent = 'Try Again →'; }
-      });
-    }
+    /* ── Postcard ─────────────────────────────────────────────────────── */
+    document.getElementById('pcForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = e.currentTarget.querySelector('.pc-send');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      try {
+        const res = await fetch(e.currentTarget.action, { method: 'POST', body: new FormData(e.currentTarget), headers: { 'Accept': 'application/json' } });
+        if (res.ok) { e.currentTarget.style.display = 'none'; document.getElementById('pcSent').style.display = 'block'; }
+        else { btn.disabled = false; btn.textContent = 'Try Again →'; }
+      } catch { btn.disabled = false; btn.textContent = 'Try Again →'; }
+    });
+
+    document.getElementById('pcFormMobile').addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = e.currentTarget.querySelector('.pc-mobile-send');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      try {
+        const res = await fetch(e.currentTarget.action, { method: 'POST', body: new FormData(e.currentTarget), headers: { 'Accept': 'application/json' } });
+        if (res.ok) { e.currentTarget.style.display = 'none'; document.getElementById('pcSentMobile').style.display = 'block'; }
+        else { btn.disabled = false; btn.textContent = 'Try Again →'; }
+      } catch { btn.disabled = false; btn.textContent = 'Try Again →'; }
+    });
+
+    /* ── Boot ─────────────────────────────────────────────────────────── */
+    window.addEventListener('hashchange', route);
+    route();
   </script>
 </body>
 </html>
