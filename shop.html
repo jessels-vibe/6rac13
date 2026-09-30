@@ -274,7 +274,7 @@
     }
 
     /* ── POSTCARD FOOTER ─────────────────────────────────────────────── */
-    .postcard-footer { margin: 0 28px 40px; }
+    .postcard-footer { margin: 60px 28px 40px; }
     .pc-wrap { position: relative; }
     .pc-bg { width: 100%; display: block; }
     .pc-form {
@@ -288,25 +288,33 @@
     .pc-msg {
       flex: 1;
       background: transparent;
-      border: 2px solid #1800AD;
-      border-right: none;
+      border: none;
       resize: none;
       font-family: 'Jost', sans-serif;
       font-weight: 700;
-      font-size: clamp(13px, 1.6vw, 20px);
+      font-size: clamp(13px, 1.6vw, 18px);
       color: #1800AD;
       outline: none;
-      padding: 6% 6% 4% 6%;
-      line-height: 2;
-      margin-top: 100px;
-      margin-left: 20px;
+      padding: 32% 6% 4% 11%;
+      line-height: 1.5;
+      overflow-y: auto;
+      -webkit-touch-callout: none;
     }
     .pc-msg::placeholder { color: rgba(24,0,173,0.45); font-weight: 700; }
+    .pc-char-count {
+      position: absolute;
+      bottom: 18%;
+      left: 12%;
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(9px, 1vw, 11px);
+      color: rgba(24,0,173,0.35);
+      pointer-events: none;
+    }
     .pc-addr {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 40% 4% 4% 7%;
+      justify-content: flex-end; padding: 8% 4% 9% 7%;
     }
     .pc-to {
       font-family: 'Jost', sans-serif;
@@ -314,8 +322,7 @@
       font-size: clamp(12px, 1.5vw, 20px);
       color: #1800AD;
       letter-spacing: 0.04em;
-      padding-bottom: 5%;
-      
+      padding-bottom: 2.5%;
     }
     .pc-row {
       display: flex;
@@ -345,7 +352,7 @@
     .pc-input::placeholder { color: rgba(24,0,173,0.3); }
     .pc-send {
       margin-top: 6%;
-      align-self: flex-end; margin-right: 50px;
+      align-self: flex-end; margin-right: 70px;
       background: none;
       border: 1px solid rgba(120,100,70,0.5);
       color: #1800AD;
@@ -372,102 +379,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* ── MOBILE POSTCARD FORM ───────────────────────────────────────── */
-    .pc-mobile-wrap {
-      display: none;
-      margin: 0 20px 40px;
-      padding: 28px 24px 32px;
-      background: var(--cream);
-    }
-    .pc-mobile-to {
-      font-family: 'Jost', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(24,0,173,0.65);
-      margin-bottom: 20px;
-    }
-    .pc-mobile-msg {
-      width: 100%;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(120,100,70,0.22);
-      resize: none;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 16px;
-      color: #1800AD;
-      outline: none;
-      padding: 0 0 12px;
-      margin-bottom: 4px;
-      min-height: 100px;
-      line-height: 1.9;
-      -webkit-appearance: none;
-    }
-    .pc-mobile-msg::placeholder { color: rgba(24,0,173,0.3); }
-    .pc-mobile-field {
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid rgba(120,100,70,0.18);
-      padding: 11px 0;
-      gap: 8px;
-      min-height: 44px;
-    }
-    .pc-mobile-lbl {
-      font-family: 'Jost', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(24,0,173,0.6);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .pc-mobile-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: #1800AD;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 16px;
-      outline: none;
-      min-width: 0;
-      -webkit-appearance: none;
-    }
-    .pc-mobile-input::placeholder { color: rgba(24,0,173,0.28); }
-    .pc-mobile-send {
-      margin-top: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      background: none;
-      border: 1px solid rgba(120,100,70,0.45);
-      color: #1800AD;
-      font-family: 'Jost', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 12px 24px;
-      cursor: pointer;
-      width: 100%;
-      transition: background 0.2s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .pc-mobile-send:disabled { opacity: 0.4; }
-    .pc-mobile-sent {
-      text-align: center;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 15px;
-      color: #1800AD;
-      padding: 24px 0;
-      letter-spacing: 0.08em;
-    }
-
     /* ── RESPONSIVE ──────────────────────────────────────────────────── */
     @media (max-width: 900px) {
       .shop-grid { grid-template-columns: repeat(2, 1fr); }
@@ -476,9 +387,9 @@
     @media (max-width: 640px) {
       .nav-links { display: none; }
       .nav-burger { display: flex; align-items: center; justify-content: center; }
-      .postcard-footer { display: none; }
-      .pc-mobile-wrap { display: block; }
       body { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      .postcard-footer { margin: 40px 12px 40px; }
+      .pc-msg { font-size: 16px; padding: 20% 8% 4% 8%; }
     }
 
     @media (max-width: 420px) {
@@ -567,7 +478,7 @@
     <div class="pc-wrap">
       <img src="assets/postcard.png" class="pc-bg" alt="">
       <form class="pc-form" id="pcForm" action="https://formspree.io/f/mwlpabqv" method="POST">
-        <textarea class="pc-msg" name="message" placeholder="Write your message to Gracie…"></textarea>
+        <textarea class="pc-msg" id="pcMsg" name="message" placeholder="Write your message to Gracie…" maxlength="200"></textarea>
         <div class="pc-addr">
           <div class="pc-to">To: Gracie F. Vanderlaan</div>
           <div class="pc-row">
@@ -584,30 +495,10 @@
           <button class="pc-send" type="submit">Send →</button>
         </div>
       </form>
+      <span class="pc-char-count" id="pcCharCount">0 / 200</span>
       <div class="pc-sent" id="pcSent" style="display:none">Message sent — Gracie will be in touch.</div>
     </div>
   </footer>
-
-  <!-- MOBILE POSTCARD FORM -->
-  <div class="pc-mobile-wrap">
-    <p class="pc-mobile-to">To: Gracie F. Vanderlaan</p>
-    <form id="pcFormMobile" action="https://formspree.io/f/mwlpabqv" method="POST">
-      <textarea class="pc-mobile-msg" name="message" placeholder="Write your message to Gracie…"></textarea>
-      <div class="pc-mobile-field">
-        <span class="pc-mobile-lbl">From</span>
-        <input class="pc-mobile-input" type="text" name="name" placeholder="Your name" autocomplete="name">
-      </div>
-      <div class="pc-mobile-field">
-        <input class="pc-mobile-input" type="email" name="email" placeholder="your@email.com" autocomplete="email">
-      </div>
-      <div class="pc-mobile-field">
-        <span class="pc-mobile-lbl">Re</span>
-        <input class="pc-mobile-input" type="text" name="subject" placeholder="What's this about?">
-      </div>
-      <button class="pc-mobile-send" type="submit">Send →</button>
-    </form>
-    <p class="pc-mobile-sent" id="pcSentMobile" style="display:none">Message sent — Gracie will be in touch.</p>
-  </div>
 
   <!-- FIREBASE -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -683,6 +574,11 @@
 
     const pcForm = document.getElementById('pcForm');
     if (pcForm) {
+      const pcMsg = document.getElementById('pcMsg');
+      const pcCharCount = document.getElementById('pcCharCount');
+      if (pcMsg && pcCharCount) {
+        pcMsg.addEventListener('input', () => { pcCharCount.textContent = `${pcMsg.value.length} / 200`; });
+      }
       pcForm.addEventListener('submit', async e => {
         e.preventDefault();
         const btn = pcForm.querySelector('.pc-send');
@@ -690,20 +586,6 @@
         try {
           const res = await fetch(pcForm.action, { method: 'POST', body: new FormData(pcForm), headers: { 'Accept': 'application/json' } });
           if (res.ok) { pcForm.style.display = 'none'; document.getElementById('pcSent').style.display = 'block'; }
-          else { btn.disabled = false; btn.textContent = 'Try Again →'; }
-        } catch { btn.disabled = false; btn.textContent = 'Try Again →'; }
-      });
-    }
-
-    const pcFormMobile = document.getElementById('pcFormMobile');
-    if (pcFormMobile) {
-      pcFormMobile.addEventListener('submit', async e => {
-        e.preventDefault();
-        const btn = pcFormMobile.querySelector('.pc-mobile-send');
-        btn.disabled = true; btn.textContent = 'Sending…';
-        try {
-          const res = await fetch(pcFormMobile.action, { method: 'POST', body: new FormData(pcFormMobile), headers: { 'Accept': 'application/json' } });
-          if (res.ok) { pcFormMobile.style.display = 'none'; document.getElementById('pcSentMobile').style.display = 'block'; }
           else { btn.disabled = false; btn.textContent = 'Try Again →'; }
         } catch { btn.disabled = false; btn.textContent = 'Try Again →'; }
       });
