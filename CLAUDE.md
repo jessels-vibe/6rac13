@@ -131,3 +131,13 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 **Admin features:** Firebase Auth login, two tabs (Projects + Shop), CRUD with add/edit/delete modals, hero image/video upload, BTS photo multi-upload with per-photo delete, drag-and-drop reorder, featured/visible toggles, Save & Publish pattern (stages order/visibility changes, writes all at once).
 
 **Still needs:** Real Firebase config (replace PLACEHOLDER in 5 files), Formspree endpoint (contact.html), admin login email created in Firebase Console, GitHub repo + Pages setup.
+
+### 2026-09-29 — Revision pass A
+
+**index.html:** Added "All Work" to nav dropdown + mobile sub-links. Removed duplicate Video Art `<h2>`. Stop Motion title pushed below nav (`top: calc(var(--nav-h) + 8px)`). Inline project expand system — tile click expands panel in grid (CSS grid-template-rows transition), pushState URL `?p=id`, Esc/× closes, back button closes. Removed category label from expanded view. Expand hero uses `object-fit: contain` (not cropped). Multi-category frontend: `getCategories()` helper reads `categories[]` with fallback to legacy `category` string. Title fades (opacity transition) when switching filters. Mobile postcard form removed — single postcard scales to all widths. Postcard textarea: no border, `padding: 18% 8%`, `line-height: 1.5`, 200-char limit with counter. BTS video links rendered as clickable platform cards.
+
+**contact.html:** Reduced header gap (`padding-top: 40px`, `margin-bottom: 16px`). Mobile postcard form removed. Same postcard + char counter + no-border textarea. "All Work" added to nav dropdown.
+
+**admin.html:** Category single `<select>` replaced with multi-select chip checkboxes. BTS photos section replaced with repeatable video link list (URL + optional label, drag-to-reorder). `saveProject()` writes `categories[]` array and `btsLinks[]`. `getCategories()` migration helper for old `category` string data.
+
+**shop.html:** Added "All Work" to nav dropdown + mobile sub-links.

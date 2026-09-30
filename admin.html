@@ -507,6 +507,51 @@
     .btn-save:hover { opacity: 0.85; }
     .btn-save:disabled { opacity: 0.4; cursor: not-allowed; }
 
+    /* category chip multi-select */
+    .cat-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 6px 0; }
+    .cat-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid var(--border); padding: 6px 12px; cursor: pointer;
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      font-weight: 600; color: var(--muted); transition: all 0.15s;
+      user-select: none;
+    }
+    .cat-chip:hover { border-color: rgba(242,200,0,0.3); color: var(--text); }
+    .cat-chip input[type="checkbox"] { display: none; }
+    .cat-chip:has(input:checked) { background: rgba(242,200,0,0.12); border-color: rgba(242,200,0,0.5); color: var(--yellow); }
+
+    /* BTS link list */
+    .bts-link-row {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+    }
+    .bts-link-row input[type="url"],
+    .bts-link-row input[type="text"] {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: var(--text); font-family: 'Jost', sans-serif; font-size: 12px;
+      padding: 8px 10px; outline: none;
+      transition: border-color 0.2s;
+    }
+    .bts-link-row input[type="url"]:focus,
+    .bts-link-row input[type="text"]:focus { border-color: rgba(242,200,0,0.4); }
+    .bts-link-row input[type="url"] { flex: 2; min-width: 0; }
+    .bts-link-row input[type="text"] { flex: 1; min-width: 0; }
+    .bts-link-remove {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      cursor: pointer; width: 28px; height: 28px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; transition: all 0.15s;
+    }
+    .bts-link-remove:hover { color: var(--red); border-color: var(--red); }
+    .bts-link-drag { color: var(--muted); cursor: grab; padding: 4px; flex-shrink: 0; font-size: 14px; }
+    .add-link-btn {
+      margin-top: 10px; background: none; border: 1px dashed var(--border);
+      color: var(--muted); cursor: pointer; padding: 8px 16px;
+      font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px;
+      letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.15s; width: 100%;
+    }
+    .add-link-btn:hover { border-color: rgba(242,200,0,0.3); color: var(--yellow); }
+
     /* ── MISC ──────────────────────────────────────────────────────── */
     .empty-state {
       text-align: center; padding: 80px 20px;
@@ -633,13 +678,13 @@
 
         <div class="field-row">
           <div class="field-group">
-            <label>Category</label>
-            <select id="fCategory">
-              <option value="art">Art</option>
-              <option value="portraits">Portraits</option>
-              <option value="videoart">Video Art</option>
-              <option value="events">Events</option>
-            </select>
+            <label>Categories <span style="font-weight:300;text-transform:none;letter-spacing:0">(select one or more)</span></label>
+            <div class="cat-chips" id="fCategoryChips">
+              <label class="cat-chip"><input type="checkbox" value="art"> Art</label>
+              <label class="cat-chip"><input type="checkbox" value="portraits"> Portraits</label>
+              <label class="cat-chip"><input type="checkbox" value="videoart"> Video Art</label>
+              <label class="cat-chip"><input type="checkbox" value="events"> Events</label>
+            </div>
           </div>
           <div class="field-group">
             <label>Hero Type</label>
@@ -671,15 +716,9 @@
         </div>
 
         <div class="field-group">
-          <label>BTS Photos</label>
-          <div class="bts-upload-grid" id="btsGrid"></div>
-          <div class="upload-zone" style="margin-top:6px">
-            <input type="file" id="btsFiles" accept="image/*" multiple>
-            <p class="upload-zone-label"><strong>Click to add BTS photos</strong> — multiple OK</p>
-          </div>
-          <div class="upload-progress" id="btsProgress">
-            <div class="upload-progress-bar" id="btsProgressBar"></div>
-          </div>
+          <label>BTS Video Links</label>
+          <div id="btsLinksList"></div>
+          <button type="button" class="add-link-btn" id="addBtsLink">+ Add Link</button>
         </div>
 
         <div class="check-row">
@@ -801,13 +840,20 @@
   let editingType   = null;   // 'project' | 'shop'
   let heroUrl       = '';
   let heroType      = 'image';
-  let btsPhotos     = {};     // { key: url }
+  let btsLinks      = [];     // [{ url, label }]
   let shopImgUrl    = '';
 
   // dragging
   let dragSrc = null;
 
-  const CAT_LABELS = { art: 'Art', videoart: 'Video Art', events: 'Events' };
+  const CAT_LABELS = { art: 'Art', portraits: 'Portraits', videoart: 'Video Art', events: 'Events' };
+
+  /* Transparent migration: old single string → array */
+  function getCategories(p) {
+    if (Array.isArray(p.categories) && p.categories.length) return p.categories;
+    if (p.category) return [p.category];
+    return ['art'];
+  }
 
   // ─── AUTH ─────────────────────────────────────────────────────────────
   auth.onAuthStateChanged(user => {
@@ -925,10 +971,11 @@
   }
 
   function projRowHTML(p) {
-    const cat = p.category || 'art';
+    const cats = getCategories(p);
     const thumb = p.heroUrl
       ? `<img class="row-thumb" src="${p.heroUrl}" alt="" loading="lazy">`
       : `<div class="row-thumb-placeholder">🖼</div>`;
+    const catBadges = cats.map(c => `<span class="cat-badge ${c}">${CAT_LABELS[c] || c}</span>`).join(' ');
 
     return `
       <div class="item-row projects-row" draggable="true" data-id="${p.id}">
@@ -938,7 +985,7 @@
           <div class="row-title">${p.title || 'Untitled'}</div>
           <div class="row-sub">${p.heroType === 'video' ? 'Video' : 'Image'}</div>
         </div>
-        <span class="cat-badge ${cat}">${CAT_LABELS[cat] || cat}</span>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">${catBadges}</div>
         <button class="toggle-pill featured ${p.featured ? 'on' : ''}" data-id="${p.id}" data-field="featured">
           ${p.featured ? '★ On' : '☆ Off'}
         </button>
@@ -1115,7 +1162,7 @@
     editingType = type;
     heroUrl     = '';
     shopImgUrl  = '';
-    btsPhotos   = {};
+    btsLinks    = [];
     heroType    = 'image';
 
     const overlay = document.getElementById('modalOverlay');
@@ -1130,35 +1177,39 @@
       setHeroType('image');
       document.getElementById('heroPrev').style.display       = 'none';
       document.getElementById('heroUploadZone').style.display = 'block';
-      document.getElementById('btsGrid').innerHTML            = '';
+      document.getElementById('btsLinksList').innerHTML       = '';
       document.getElementById('fFeatured').checked            = false;
       document.getElementById('fVisible').checked             = true;
+      /* reset all category chips */
+      document.querySelectorAll('#fCategoryChips input').forEach(cb => cb.checked = false);
 
       if (id) {
         const p = projectsMap[id];
-        document.getElementById('fTitle').value       = p.title || '';
-        document.getElementById('fCategory').value   = p.category || 'art';
-        document.getElementById('fDesc').value        = p.description || '';
-        document.getElementById('fFeatured').checked  = !!p.featured;
-        document.getElementById('fVisible').checked   = p.visible !== false;
+        document.getElementById('fTitle').value      = p.title || '';
+        document.getElementById('fDesc').value       = p.description || '';
+        document.getElementById('fFeatured').checked = !!p.featured;
+        document.getElementById('fVisible').checked  = p.visible !== false;
         heroType = p.heroType || 'image';
         setHeroType(heroType);
+
+        /* load categories (backwards-compatible) */
+        const cats = getCategories(p);
+        document.querySelectorAll('#fCategoryChips input').forEach(cb => {
+          cb.checked = cats.includes(cb.value);
+        });
 
         if (p.heroUrl) {
           heroUrl = p.heroUrl;
           showHeroPreview(p.heroUrl, p.heroType === 'video');
         }
 
-        if (p.btsPhotos) {
-          btsPhotos = typeof p.btsPhotos === 'object' && !Array.isArray(p.btsPhotos)
-            ? { ...p.btsPhotos }
-            : Object.fromEntries((p.btsPhotos || []).map((u, i) => [i, u]));
-          renderBtsThumbs();
-        }
+        /* load bts links */
+        btsLinks = Array.isArray(p.btsLinks) ? [...p.btsLinks] : [];
+        renderBtsLinks();
       } else {
-        document.getElementById('fTitle').value     = '';
-        document.getElementById('fCategory').value  = 'art';
-        document.getElementById('fDesc').value       = '';
+        document.getElementById('fTitle').value = '';
+        document.getElementById('fDesc').value  = '';
+        renderBtsLinks();
       }
 
     } else {
@@ -1259,54 +1310,58 @@
     );
   });
 
-  // BTS upload
-  document.getElementById('btsFiles').addEventListener('change', async e => {
-    const files = [...e.target.files];
-    if (!files.length) return;
+  // BTS link management
+  function renderBtsLinks() {
+    const list = document.getElementById('btsLinksList');
+    list.innerHTML = '';
+    btsLinks.forEach((lk, i) => {
+      const row = document.createElement('div');
+      row.className = 'bts-link-row';
+      row.draggable = true;
+      row.dataset.idx = i;
+      row.innerHTML = `
+        <span class="bts-link-drag">⠿</span>
+        <input type="url" placeholder="https://youtube.com/…" value="${lk.url || ''}" data-field="url" data-idx="${i}">
+        <input type="text" placeholder="Label (optional)" value="${lk.label || ''}" data-field="label" data-idx="${i}">
+        <button class="bts-link-remove" data-idx="${i}">✕</button>`;
+      list.appendChild(row);
+    });
 
-    const tmpId = editingId || `tmp_${Date.now()}`;
-    const prog  = document.getElementById('btsProgress');
-    const bar   = document.getElementById('btsProgressBar');
-    prog.style.display = 'block';
-
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const key  = `bts_${Date.now()}_${i}`;
-      const path = `projects/${tmpId}/bts/${key}.${file.name.split('.').pop()}`;
-      const ref  = storage.ref(path);
-
-      await new Promise((resolve, reject) => {
-        const task = ref.put(file);
-        task.on('state_changed',
-          snap => { bar.style.width = ((i + snap.bytesTransferred/snap.totalBytes) / files.length * 100) + '%'; },
-          reject,
-          async () => {
-            btsPhotos[key] = await ref.getDownloadURL();
-            resolve();
-          }
-        );
+    list.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const idx = +inp.dataset.idx;
+        btsLinks[idx][inp.dataset.field] = inp.value;
       });
-    }
+    });
 
-    prog.style.display = 'none';
-    renderBtsThumbs();
-  });
-
-  function renderBtsThumbs() {
-    const grid = document.getElementById('btsGrid');
-    grid.innerHTML = Object.entries(btsPhotos).map(([key, url]) => `
-      <div class="bts-thumb-wrap">
-        <img src="${url}" alt="">
-        <button class="bts-remove" data-key="${key}">✕</button>
-      </div>`).join('');
-
-    grid.querySelectorAll('.bts-remove').forEach(btn => {
+    list.querySelectorAll('.bts-link-remove').forEach(btn => {
       btn.addEventListener('click', () => {
-        delete btsPhotos[btn.dataset.key];
-        renderBtsThumbs();
+        btsLinks.splice(+btn.dataset.idx, 1);
+        renderBtsLinks();
+      });
+    });
+
+    /* drag-to-reorder within links list */
+    let lkDragSrc = null;
+    list.querySelectorAll('.bts-link-row').forEach(row => {
+      row.addEventListener('dragstart', e => { lkDragSrc = row; e.dataTransfer.effectAllowed = 'move'; });
+      row.addEventListener('dragover', e => { e.preventDefault(); });
+      row.addEventListener('drop', e => {
+        e.preventDefault();
+        if (!lkDragSrc || lkDragSrc === row) return;
+        const srcIdx = +lkDragSrc.dataset.idx;
+        const tgtIdx = +row.dataset.idx;
+        const [moved] = btsLinks.splice(srcIdx, 1);
+        btsLinks.splice(tgtIdx, 0, moved);
+        renderBtsLinks();
       });
     });
   }
+
+  document.getElementById('addBtsLink').addEventListener('click', () => {
+    btsLinks.push({ url: '', label: '' });
+    renderBtsLinks();
+  });
 
   // shop image preview
   function showShopImgPreview(url) {
@@ -1366,15 +1421,18 @@
 
   async function saveProject() {
     const title    = document.getElementById('fTitle').value.trim();
-    const category = document.getElementById('fCategory').value;
     const desc     = document.getElementById('fDesc').value.trim();
     const featured = document.getElementById('fFeatured').checked;
     const visible  = document.getElementById('fVisible').checked;
 
+    const categories = [...document.querySelectorAll('#fCategoryChips input:checked')].map(cb => cb.value);
     if (!title) { alert('Please enter a title.'); throw new Error('No title'); }
+    if (!categories.length) { alert('Please select at least one category.'); throw new Error('No category'); }
 
-    const data = { title, category, description: desc, heroType, heroUrl,
-                   btsPhotos, featured, visible, addedAt: Date.now() };
+    const validLinks = btsLinks.filter(lk => lk.url && lk.url.trim());
+
+    const data = { title, categories, description: desc, heroType, heroUrl,
+                   btsLinks: validLinks, featured, visible, addedAt: Date.now() };
 
     const items = Object.values(projectsMap).sort((a,b) => (a.order||0) - (b.order||0));
 
