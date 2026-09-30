@@ -5,26 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Shop — 6rac13</title>
   <link rel="icon" href="assets/g-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     @font-face {
       font-family: 'Amoresa Aged';
       src: url('assets/fonts/AmorosaAged.otf') format('opentype');
       font-weight: normal; font-style: normal;
-    }
-    @font-face {
-      font-family: 'Coco Gothic';
-      src: url('assets/fonts/CocoGothic.ttf') format('truetype');
-      font-weight: 400;
-    }
-    @font-face {
-      font-family: 'Coco Gothic';
-      src: url('assets/fonts/CocoGothic-Bold.ttf') format('truetype');
-      font-weight: 700;
-    }
-    @font-face {
-      font-family: 'Coco Gothic';
-      src: url('assets/fonts/CocoGothic-Light.ttf') format('truetype');
-      font-weight: 300;
     }
     :root {
       --blue:   #1C1CCC;
@@ -41,7 +29,7 @@
     body {
       background: var(--yellow);
       color: var(--blue);
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       min-height: 100vh;
     }
 
@@ -64,7 +52,7 @@
     .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
       color: var(--blue); text-decoration: none;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
+      font-family: 'Jost', sans-serif; font-weight: 700;
       font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase;
       transition: opacity 0.2s;
     }
@@ -72,7 +60,14 @@
     .nav-links a.active { border-bottom: 1px solid var(--blue); }
 
     .nav-dropdown-wrap { position: relative; }
-    .dropdown-toggle { cursor: pointer; background: none; border: none; padding: 0; }
+    .dropdown-toggle {
+      cursor: pointer; background: none; border: none; padding: 0;
+      color: var(--blue); font-family: 'Jost', sans-serif; font-weight: 700;
+      font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+    .dropdown-toggle:hover { opacity: 0.5; }
+    .dropdown-toggle.active { border-bottom: 1px solid var(--blue); }
     .nav-dropdown {
       position: absolute; top: calc(100% + 12px); left: -16px;
       background: var(--yellow); border: 1px solid rgba(28,28,204,0.2);
@@ -81,7 +76,7 @@
     .nav-dropdown-wrap.open .nav-dropdown { display: flex; }
     .nav-dropdown a {
       padding: 12px 20px; color: rgba(28,28,204,0.65); text-decoration: none;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600; font-size: 11px;
+      font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px;
       letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.15s;
       border-left: 2px solid transparent;
     }
@@ -152,7 +147,7 @@
       border-bottom: 1px solid rgba(28,28,204,0.12);
     }
     .mobile-nav-sub a {
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.14em;
@@ -171,7 +166,7 @@
     }
 
     .header-label {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
+      font-family: 'Jost', sans-serif; font-weight: 600;
       font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
       color: rgba(28,28,204,0.4); margin-bottom: 12px; text-align: right; display: none;
     }
@@ -231,12 +226,12 @@
     }
 
     .shop-tile-title {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
+      font-family: 'Jost', sans-serif; font-weight: 600;
       font-size: 13px; color: var(--blue); line-height: 1.3;
     }
 
     .shop-tile-desc {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 300;
+      font-family: 'Jost', sans-serif; font-weight: 300;
       font-size: 12px; color: rgba(28,28,204,0.6);
       line-height: 1.5; display: -webkit-box;
       -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
@@ -248,12 +243,12 @@
     }
 
     .shop-tile-price {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
+      font-family: 'Jost', sans-serif; font-weight: 600;
       font-size: 15px; color: var(--blue);
     }
 
     .platform-badge {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
+      font-family: 'Jost', sans-serif; font-weight: 600;
       font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
       background: var(--blue); color: var(--yellow);
       padding: 3px 8px;
@@ -261,7 +256,7 @@
 
     .shop-tile-cta {
       margin-top: 8px;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
+      font-family: 'Jost', sans-serif; font-weight: 600;
       font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--red);
       display: flex; align-items: center; gap: 6px;
@@ -301,12 +296,12 @@
       background: transparent;
       border: none;
       resize: none;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
       color: #1C1CCC;
       outline: none;
-      padding: 45% 4% 4% 4%;
+      padding: 45% 4% 4% 10%;
       line-height: 2;
     }
     .pc-msg::placeholder { color: rgba(28,28,204,0.35); }
@@ -314,10 +309,10 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 40% 4% 4% 6%;
+      padding: 40% 4% 4% 9%;
     }
     .pc-to {
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: clamp(12px, 1.5vw, 20px);
       color: #1C1CCC;
@@ -333,7 +328,7 @@
       gap: 4px;
     }
     .pc-lbl {
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.3vw, 17px);
       color: rgba(28,28,204,0.7);
@@ -344,7 +339,7 @@
       background: transparent;
       border: none;
       color: #1C1CCC;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: clamp(12px, 1.4vw, 18px);
       outline: none;
@@ -353,11 +348,11 @@
     .pc-input::placeholder { color: rgba(28,28,204,0.3); }
     .pc-send {
       margin-top: 6%;
-      align-self: flex-end;
+      align-self: flex-end; margin-right: 30px;
       background: none;
       border: 1px solid rgba(120,100,70,0.5);
       color: #1C1CCC;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.2vw, 15px);
       letter-spacing: 0.12em;
@@ -373,7 +368,7 @@
       left: 10%; right: 10%;
       top: 40%;
       text-align: center;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
       color: #1C1CCC;
@@ -388,7 +383,7 @@
       background: var(--cream);
     }
     .pc-mobile-to {
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 0.12em;
@@ -402,7 +397,7 @@
       border: none;
       border-bottom: 1px solid rgba(120,100,70,0.22);
       resize: none;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 16px;
       color: #1C1CCC;
@@ -423,7 +418,7 @@
       min-height: 44px;
     }
     .pc-mobile-lbl {
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 0.1em;
@@ -437,7 +432,7 @@
       background: transparent;
       border: none;
       color: #1C1CCC;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 16px;
       outline: none;
@@ -454,7 +449,7 @@
       background: none;
       border: 1px solid rgba(120,100,70,0.45);
       color: #1C1CCC;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 0.14em;
@@ -468,7 +463,7 @@
     .pc-mobile-send:disabled { opacity: 0.4; }
     .pc-mobile-sent {
       text-align: center;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 15px;
       color: #1C1CCC;
@@ -502,11 +497,16 @@
       <img src="assets/g-logo.png" alt="6rac13">
     </a>
     <ul class="nav-links">
-      <li><a href="work.html?filter=art">Art</a></li>
-      <li><a href="work.html?filter=portraits">Portraits</a></li>
-      <li><a href="work.html?filter=videoart">Video Art</a></li>
-      <li><a href="stopmotion.html">Stop Motion</a></li>
-      <li><a href="work.html?filter=events">Events</a></li>
+      <li class="nav-dropdown-wrap" id="workDropWrap">
+        <button class="dropdown-toggle" id="workToggle">Work</button>
+        <div class="nav-dropdown">
+          <a href="work.html?filter=art">Art</a>
+          <a href="work.html?filter=portraits">Portraits</a>
+          <a href="work.html?filter=videoart">Video Art</a>
+          <a href="stopmotion.html">Stop Motion</a>
+          <a href="work.html?filter=events">Events</a>
+        </div>
+      </li>
       <li><a href="shop.html" class="active">Shop</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
@@ -531,11 +531,14 @@
       </button>
     </div>
     <div class="mobile-nav-links">
-      <a href="work.html?filter=art" class="mobile-nav-link">Art</a>
-      <a href="work.html?filter=portraits" class="mobile-nav-link">Portraits</a>
-      <a href="work.html?filter=videoart" class="mobile-nav-link">Video Art</a>
-      <a href="stopmotion.html" class="mobile-nav-link">Stop Motion</a>
-      <a href="work.html?filter=events" class="mobile-nav-link">Events</a>
+      <a href="work.html" class="mobile-nav-link">Work</a>
+      <div class="mobile-nav-sub">
+        <a href="work.html?filter=art">Art</a>
+        <a href="work.html?filter=portraits">Portraits</a>
+        <a href="work.html?filter=videoart">Video Art</a>
+        <a href="stopmotion.html">Stop Motion</a>
+        <a href="work.html?filter=events">Events</a>
+      </div>
       <a href="shop.html" class="mobile-nav-link">Shop</a>
       <a href="contact.html" class="mobile-nav-link">Contact</a>
     </div>

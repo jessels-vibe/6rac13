@@ -5,26 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Work — 6rac13</title>
   <link rel="icon" href="assets/g-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     @font-face {
       font-family: 'Amoresa Aged';
       src: url('assets/fonts/AmorosaAged.otf') format('opentype');
       font-weight: normal; font-style: normal;
-    }
-    @font-face {
-      font-family: 'Coco Gothic';
-      src: url('assets/fonts/CocoGothic.ttf') format('truetype');
-      font-weight: 400;
-    }
-    @font-face {
-      font-family: 'Coco Gothic';
-      src: url('assets/fonts/CocoGothic-Bold.ttf') format('truetype');
-      font-weight: 700;
-    }
-    @font-face {
-      font-family: 'Coco Gothic';
-      src: url('assets/fonts/CocoGothic-Light.ttf') format('truetype');
-      font-weight: 300;
     }
     :root {
       --blue:   #1C1CCC;
@@ -40,7 +28,7 @@
     body {
       background: var(--blue);
       color: var(--yellow);
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       min-height: 100vh;
     }
 
@@ -67,7 +55,7 @@
 
     .nav-links a {
       color: var(--yellow); text-decoration: none;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 700;
+      font-family: 'Jost', sans-serif; font-weight: 700;
       font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase;
       transition: opacity 0.2s;
     }
@@ -76,7 +64,14 @@
     .nav-links a.active { border-bottom: 1px solid var(--yellow); }
 
     .nav-dropdown-wrap { position: relative; }
-    .dropdown-toggle { cursor: pointer; background: none; border: none; padding: 0; }
+    .dropdown-toggle {
+      cursor: pointer; background: none; border: none; padding: 0;
+      color: var(--yellow); font-family: 'Jost', sans-serif; font-weight: 700;
+      font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+    .dropdown-toggle:hover { opacity: 0.6; }
+    .dropdown-toggle.active { border-bottom: 1px solid var(--yellow); }
 
     .nav-dropdown {
       position: absolute; top: calc(100% + 12px); left: -16px;
@@ -88,7 +83,7 @@
 
     .nav-dropdown a {
       padding: 12px 20px; color: rgba(242,200,0,0.75); text-decoration: none;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600; font-size: 11px;
+      font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px;
       letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.15s;
       border-left: 2px solid transparent;
     }
@@ -164,7 +159,7 @@
       border-bottom: 1px solid rgba(242,200,0,0.12);
     }
     .mobile-nav-sub a {
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.14em;
@@ -209,7 +204,7 @@
     }
 
     .header-label {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
+      font-family: 'Jost', sans-serif; font-weight: 600;
       font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
       color: rgba(242,200,0,0.45); margin-bottom: 12px; text-align: right; display: none;
     }
@@ -222,39 +217,6 @@
       margin-bottom: 32px;
       transition: opacity 0.3s ease;
       text-align: right;
-    }
-
-    /* ── FILTER BAR ──────────────────────────────────────────────────── */
-    .filter-bar {
-      position: sticky;
-      top: var(--nav-h);
-      z-index: 100;
-      background: var(--blue);
-      border-top: 1px solid rgba(242,200,0,0.15);
-      border-bottom: 1px solid rgba(242,200,0,0.15);
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .filter-bar::-webkit-scrollbar { display: none; }
-
-    .filter-btn {
-      background: none; border: none; border-right: 1px solid rgba(242,200,0,0.12);
-      color: rgba(242,200,0,0.45); cursor: pointer;
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
-      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 14px 24px; white-space: nowrap; min-height: 44px;
-      transition: color 0.2s, background 0.2s;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .filter-btn:hover { color: var(--yellow); }
-
-    .filter-btn.active {
-      color: var(--blue);
-      background: var(--yellow);
     }
 
     /* ── PROJECT GRID ────────────────────────────────────────────────── */
@@ -297,7 +259,7 @@
     .work-tile:hover .tile-overlay { opacity: 1; }
 
     .tile-cat {
-      font-family: 'Coco Gothic', sans-serif; font-weight: 600;
+      font-family: 'Jost', sans-serif; font-weight: 600;
       font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
       color: rgba(242,200,0,0.7); margin-bottom: 6px;
     }
@@ -341,12 +303,12 @@
       background: transparent;
       border: none;
       resize: none;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
       color: #1C1CCC;
       outline: none;
-      padding: 45% 4% 4% 4%;
+      padding: 45% 4% 4% 10%;
       line-height: 2;
     }
     .pc-msg::placeholder { color: rgba(28,28,204,0.35); }
@@ -354,10 +316,10 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 40% 4% 4% 6%;
+      padding: 40% 4% 4% 9%;
     }
     .pc-to {
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: clamp(12px, 1.5vw, 20px);
       color: #1C1CCC;
@@ -373,7 +335,7 @@
       gap: 4px;
     }
     .pc-lbl {
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.3vw, 17px);
       color: rgba(28,28,204,0.7);
@@ -384,7 +346,7 @@
       background: transparent;
       border: none;
       color: #1C1CCC;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: clamp(12px, 1.4vw, 18px);
       outline: none;
@@ -393,11 +355,11 @@
     .pc-input::placeholder { color: rgba(28,28,204,0.3); }
     .pc-send {
       margin-top: 6%;
-      align-self: flex-end;
+      align-self: flex-end; margin-right: 30px;
       background: none;
       border: 1px solid rgba(120,100,70,0.5);
       color: #1C1CCC;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: clamp(11px, 1.2vw, 15px);
       letter-spacing: 0.12em;
@@ -413,7 +375,7 @@
       left: 10%; right: 10%;
       top: 40%;
       text-align: center;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: clamp(15px, 1.8vw, 23px);
       color: #1C1CCC;
@@ -428,7 +390,7 @@
       background: var(--cream);
     }
     .pc-mobile-to {
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 0.12em;
@@ -442,7 +404,7 @@
       border: none;
       border-bottom: 1px solid rgba(120,100,70,0.22);
       resize: none;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 16px;
       color: #1C1CCC;
@@ -463,7 +425,7 @@
       min-height: 44px;
     }
     .pc-mobile-lbl {
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 0.1em;
@@ -477,7 +439,7 @@
       background: transparent;
       border: none;
       color: #1C1CCC;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 16px;
       outline: none;
@@ -494,7 +456,7 @@
       background: none;
       border: 1px solid rgba(120,100,70,0.45);
       color: #1C1CCC;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 0.14em;
@@ -508,7 +470,7 @@
     .pc-mobile-send:disabled { opacity: 0.4; }
     .pc-mobile-sent {
       text-align: center;
-      font-family: 'Coco Gothic', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 15px;
       color: #1C1CCC;
@@ -550,11 +512,16 @@
       <img src="assets/g-logo.png" alt="6rac13">
     </a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="work.html?filter=art" data-filter="art">Art</a></li>
-      <li><a href="work.html?filter=portraits" data-filter="portraits">Portraits</a></li>
-      <li><a href="work.html?filter=videoart" data-filter="videoart">Video Art</a></li>
-      <li><a href="stopmotion.html">Stop Motion</a></li>
-      <li><a href="work.html?filter=events" data-filter="events">Events</a></li>
+      <li class="nav-dropdown-wrap" id="workDropWrap">
+        <button class="dropdown-toggle active" id="workToggle">Work</button>
+        <div class="nav-dropdown">
+          <a href="work.html?filter=art" data-filter="art">Art</a>
+          <a href="work.html?filter=portraits" data-filter="portraits">Portraits</a>
+          <a href="work.html?filter=videoart" data-filter="videoart">Video Art</a>
+          <a href="stopmotion.html">Stop Motion</a>
+          <a href="work.html?filter=events" data-filter="events">Events</a>
+        </div>
+      </li>
       <li><a href="shop.html">Shop</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
@@ -579,11 +546,14 @@
       </button>
     </div>
     <div class="mobile-nav-links">
-      <a href="work.html?filter=art" class="mobile-nav-link">Art</a>
-      <a href="work.html?filter=portraits" class="mobile-nav-link">Portraits</a>
-      <a href="work.html?filter=videoart" class="mobile-nav-link">Video Art</a>
-      <a href="stopmotion.html" class="mobile-nav-link">Stop Motion</a>
-      <a href="work.html?filter=events" class="mobile-nav-link">Events</a>
+      <a href="work.html" class="mobile-nav-link">Work</a>
+      <div class="mobile-nav-sub">
+        <a href="work.html?filter=art">Art</a>
+        <a href="work.html?filter=portraits">Portraits</a>
+        <a href="work.html?filter=videoart">Video Art</a>
+        <a href="stopmotion.html">Stop Motion</a>
+        <a href="work.html?filter=events">Events</a>
+      </div>
       <a href="shop.html" class="mobile-nav-link">Shop</a>
       <a href="contact.html" class="mobile-nav-link">Contact</a>
     </div>
@@ -594,15 +564,6 @@
     <p class="header-label" id="headerLabel">All Work</p>
     <h1 class="header-title" id="headerTitle">Work</h1>
   </header>
-
-  <!-- FILTER BAR -->
-  <div class="filter-bar">
-    <button class="filter-btn active" data-cat="all">All</button>
-    <button class="filter-btn" data-cat="art">Art</button>
-    <button class="filter-btn" data-cat="portraits">Portraits</button>
-    <button class="filter-btn" data-cat="videoart">Video Art</button>
-    <button class="filter-btn" data-cat="events">Events</button>
-  </div>
 
   <!-- VIDEO ART HERO -->
   <div class="video-art-hero" id="videoArtHero" style="display:none">
@@ -679,6 +640,13 @@
       document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
     });
 
+    // Work dropdown
+    const workDropWrap = document.getElementById('workDropWrap');
+    if (workDropWrap) {
+      document.getElementById('workToggle').addEventListener('click', e => { e.preventDefault(); workDropWrap.classList.toggle('open'); });
+      document.addEventListener('click', e => { if (!workDropWrap.contains(e.target)) workDropWrap.classList.remove('open'); });
+    }
+
     // Mobile nav
     const navBurger = document.getElementById('navBurger');
     const mobileNav = document.getElementById('mobileNav');
@@ -700,17 +668,13 @@
     const urlFilter = new URLSearchParams(window.location.search).get('filter');
     if (urlFilter && CAT_LABELS[urlFilter]) activeFilter = urlFilter;
 
-    // Update header, filter bar, nav links, video hero
+    // Update header, dropdown nav links, video hero
     function applyUIState() {
       document.getElementById('headerTitle').textContent = CAT_LABELS[activeFilter] || activeFilter;
       document.getElementById('headerLabel').textContent = CAT_DISPLAY[activeFilter] || activeFilter;
 
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.cat === activeFilter);
-      });
-
       document.querySelectorAll('#navLinks a[data-filter]').forEach(a => {
-        a.classList.toggle('active', a.dataset.filter === activeFilter);
+        a.classList.toggle('active-filter', a.dataset.filter === activeFilter);
       });
 
       const hero = document.getElementById('videoArtHero');
@@ -730,16 +694,6 @@
       document.getElementById('vahBg').innerHTML = `<video src="${firstVid.heroUrl}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>`;
       videoHeroSet = true;
     }
-
-    // Filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        activeFilter = btn.dataset.cat;
-        applyUIState();
-        renderGrid();
-        history.replaceState(null, '', activeFilter === 'all' ? 'work.html' : `?filter=${activeFilter}`);
-      });
-    });
 
     function tileHTML(p) {
       const cat = CAT_LABELS[p.category] || p.category;
