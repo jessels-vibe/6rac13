@@ -825,6 +825,12 @@
         loadProjects(ps => {
           const grid = document.getElementById('worksGrid');
           grid.innerHTML = ps.length ? ps.map(p => tileHTML(p, null)).join('') : '';
+          grid.querySelectorAll('.work-tile').forEach(tile => {
+            tile.addEventListener('click', () => {
+              const id = tile.dataset.id;
+              if (id) location.hash = `work?p=${id}`;
+            });
+          });
         });
 
       } else if (view === 'work') {
