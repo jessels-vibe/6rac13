@@ -696,6 +696,17 @@
         </div>
 
         <div class="field-group">
+          <label>Hero Aspect Ratio</label>
+          <div class="radio-tabs" id="heroAspectTabs">
+            <div class="radio-tab active" data-aspect="16/9" style="flex:none;padding:10px 14px">16:9</div>
+            <div class="radio-tab" data-aspect="4/3"  style="flex:none;padding:10px 14px">4:3</div>
+            <div class="radio-tab" data-aspect="1/1"  style="flex:none;padding:10px 14px">1:1</div>
+            <div class="radio-tab" data-aspect="4/5"  style="flex:none;padding:10px 14px">4:5</div>
+            <div class="radio-tab" data-aspect="9/16" style="flex:none;padding:10px 14px">9:16</div>
+          </div>
+        </div>
+
+        <div class="field-group">
           <label>Description</label>
           <textarea id="fDesc" rows="4" placeholder="Describe this project…"></textarea>
         </div>
@@ -840,6 +851,7 @@
   let editingType   = null;   // 'project' | 'shop'
   let heroUrl       = '';
   let heroType      = 'image';
+  let heroAspect    = '16/9';
   let btsLinks      = [];     // [{ url, label }]
   let shopImgUrl    = '';
 
@@ -1164,6 +1176,7 @@
     shopImgUrl  = '';
     btsLinks    = [];
     heroType    = 'image';
+    heroAspect  = '16/9';
 
     const overlay = document.getElementById('modalOverlay');
     overlay.classList.add('open');
@@ -1182,6 +1195,7 @@
       document.getElementById('fVisible').checked             = true;
       /* reset all category chips */
       document.querySelectorAll('#fCategoryChips input').forEach(cb => cb.checked = false);
+      setHeroAspect('16/9');
 
       if (id) {
         const p = projectsMap[id];
@@ -1191,6 +1205,7 @@
         document.getElementById('fVisible').checked  = p.visible !== false;
         heroType = p.heroType || 'image';
         setHeroType(heroType);
+        setHeroAspect(p.heroAspect || '16/9');
 
         /* load categories (backwards-compatible) */
         const cats = getCategories(p);
@@ -1263,6 +1278,17 @@
 
   document.getElementById('heroTypeImage').addEventListener('click', () => setHeroType('image'));
   document.getElementById('heroTypeVideo').addEventListener('click', () => setHeroType('video'));
+
+  function setHeroAspect(aspect) {
+    heroAspect = aspect;
+    document.querySelectorAll('#heroAspectTabs .radio-tab').forEach(tab => {
+      tab.classList.toggle('active', tab.dataset.aspect === aspect);
+    });
+  }
+
+  document.querySelectorAll('#heroAspectTabs .radio-tab').forEach(tab => {
+    tab.addEventListener('click', () => setHeroAspect(tab.dataset.aspect));
+  });
 
   // hero preview helpers
   function showHeroPreview(url, isVideo) {
@@ -1431,7 +1457,7 @@
 
     const validLinks = btsLinks.filter(lk => lk.url && lk.url.trim());
 
-    const data = { title, categories, description: desc, heroType, heroUrl,
+    const data = { title, categories, description: desc, heroType, heroAspect, heroUrl,
                    btsLinks: validLinks, featured, visible, addedAt: Date.now() };
 
     const items = Object.values(projectsMap).sort((a,b) => (a.order||0) - (b.order||0));
