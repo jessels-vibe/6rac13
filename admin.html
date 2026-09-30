@@ -727,7 +727,14 @@
         </div>
 
         <div class="field-group">
-          <label>BTS Video Links</label>
+          <label>Behind the Scenes</label>
+          <div class="bts-upload-grid" id="btsPhotoGrid"></div>
+          <div class="upload-progress" id="btsProgress"><div class="upload-progress-bar" id="btsProgressBar"></div></div>
+          <label class="add-link-btn" style="cursor:pointer;display:inline-block;margin-bottom:16px">
+            + Upload Photos / Videos
+            <input type="file" id="btsFile" accept="image/*,video/*" multiple style="display:none">
+          </label>
+          <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px">External Links</div>
           <div id="btsLinksList"></div>
           <button type="button" class="add-link-btn" id="addBtsLink">+ Add Link</button>
         </div>
@@ -852,6 +859,7 @@
   let heroUrl       = '';
   let heroType      = 'image';
   let heroAspect    = '16/9';
+  let btsPhotos     = {};     // { [bts_key]: storageUrl }
   let btsLinks      = [];     // [{ url, label }]
   let shopImgUrl    = '';
 
@@ -1174,6 +1182,7 @@
     editingType = type;
     heroUrl     = '';
     shopImgUrl  = '';
+    btsPhotos   = {};
     btsLinks    = [];
     heroType    = 'image';
     heroAspect  = '16/9';
@@ -1190,7 +1199,8 @@
       setHeroType('image');
       document.getElementById('heroPrev').style.display       = 'none';
       document.getElementById('heroUploadZone').style.display = 'block';
-      document.getElementById('btsLinksList').innerHTML       = '';
+      document.getElementById('btsPhotoGrid').innerHTML        = '';
+      document.getElementById('btsLinksList').innerHTML        = '';
       document.getElementById('fFeatured').checked            = false;
       document.getElementById('fVisible').checked             = true;
       /* reset all category chips */
@@ -1218,6 +1228,10 @@
           showHeroPreview(p.heroUrl, p.heroType === 'video');
         }
 
+        /* load bts photos */
+        btsPhotos = (p.btsPhotos && typeof p.btsPhotos === 'object' && !Array.isArray(p.btsPhotos))
+          ? {...p.btsPhotos} : {};
+        renderBtsPhotos();
         /* load bts links */
         btsLinks = Array.isArray(p.btsLinks) ? [...p.btsLinks] : [];
         renderBtsLinks();
@@ -1334,6 +1348,56 @@
         showHeroPreview(heroUrl, isVideo);
       }
     );
+  });
+
+  // BTS photo/video management
+  function renderBtsPhotos() {
+    const grid = document.getElementById('btsPhotoGrid');
+    grid.innerHTML = '';
+    Object.entries(btsPhotos).forEach(([key, url]) => {
+      const isVid = /\.(mp4|mov|webm)(\?|$)/i.test(url);
+      const wrap = document.createElement('div');
+      wrap.className = 'bts-thumb-wrap';
+      wrap.innerHTML = (isVid
+        ? `<video src="${url}" muted preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;"></video>`
+        : `<img src="${url}" alt="">`)
+        + `<button class="bts-remove" data-key="${key}">✕</button>`;
+      grid.appendChild(wrap);
+    });
+    grid.querySelectorAll('.bts-remove').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const key = btn.dataset.key;
+        const url = btsPhotos[key];
+        delete btsPhotos[key];
+        renderBtsPhotos();
+        try { await storage.refFromURL(url).delete(); } catch(e) {}
+      });
+    });
+  }
+
+  document.getElementById('btsFile').addEventListener('change', async e => {
+    const files = [...e.target.files];
+    if (!files.length) return;
+    const prog = document.getElementById('btsProgress');
+    const bar  = document.getElementById('btsProgressBar');
+    prog.style.display = 'block';
+    for (const file of files) {
+      const ext = file.name.split('.').pop();
+      const key = `bts_${Date.now()}_${Math.random().toString(36).slice(2,6)}`;
+      const basePath = editingId ? `projects/${editingId}` : `projects/tmp_${Date.now()}`;
+      const ref  = storage.ref(`${basePath}/bts/${key}.${ext}`);
+      const task = ref.put(file);
+      bar.style.width = '0%';
+      await new Promise((res, rej) => {
+        task.on('state_changed',
+          snap => { bar.style.width = (snap.bytesTransferred / snap.totalBytes * 100) + '%'; },
+          rej,
+          async () => { btsPhotos[key] = await ref.getDownloadURL(); renderBtsPhotos(); res(); }
+        );
+      });
+    }
+    prog.style.display = 'none';
+    e.target.value = '';
   });
 
   // BTS link management
@@ -1458,6 +1522,7 @@
     const validLinks = btsLinks.filter(lk => lk.url && lk.url.trim());
 
     const data = { title, categories, description: desc, heroType, heroAspect, heroUrl,
+                   btsPhotos: Object.keys(btsPhotos).length ? btsPhotos : null,
                    btsLinks: validLinks, featured, visible, addedAt: Date.now() };
 
     const items = Object.values(projectsMap).sort((a,b) => (a.order||0) - (b.order||0));
