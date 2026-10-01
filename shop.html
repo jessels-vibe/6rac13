@@ -31,8 +31,6 @@
       background: var(--yellow);
       color: var(--blue);
       font-family: 'Jost', sans-serif;
-      min-height: 100vh;
-      display: flex; flex-direction: column;
     }
 
     /* ── NAV (inverted for yellow BG) ───────────────────────────────── */
@@ -276,7 +274,7 @@
     }
 
     /* ── POSTCARD FOOTER ─────────────────────────────────────────────── */
-    .postcard-footer { margin: auto 28px var(--nav-h); }
+    .postcard-footer { margin: 0 28px var(--nav-h); }
     .pc-wrap { position: relative; }
     .pc-bg { width: 100%; display: block; }
     .pc-form {
@@ -394,7 +392,7 @@
       .nav-links { display: none; }
       .nav-burger { display: flex; align-items: center; justify-content: center; }
       body { padding-bottom: env(safe-area-inset-bottom, 0px); }
-      .postcard-footer { margin: auto 12px var(--nav-h); }
+      .postcard-footer { margin: 0 12px var(--nav-h); }
       .pc-msg { font-size: 16px; padding: 20% 8% 4% 8%; }
     }
 
