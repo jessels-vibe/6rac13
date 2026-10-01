@@ -370,7 +370,7 @@
     <div class="pc-wrap">
       <img src="assets/postcard.png" class="pc-bg" alt="">
       <form class="pc-form" id="pcForm" action="https://formspree.io/f/mwlpabqv" method="POST">
-        <textarea class="pc-msg" id="pcMsg" name="message" placeholder="Write your message to Gracie…" maxlength="200"></textarea>
+        <textarea class="pc-msg" id="pcMsg" name="message" placeholder="Write your message to Gracie…" maxlength="500"></textarea>
         <div class="pc-addr">
           <div class="pc-to">To: Gracie F. Vanderlaan</div>
           <div class="pc-row">
@@ -387,7 +387,7 @@
           <button class="pc-send" type="submit">Send →</button>
         </div>
       </form>
-      <span class="pc-char-count" id="pcCharCount">0 / 200</span>
+      <span class="pc-char-count" id="pcCharCount">0 / 500</span>
       <div class="pc-sent" id="pcSent" style="display:none">Message sent — Gracie will be in touch.</div>
     </div>
   </footer>
@@ -414,7 +414,7 @@
     const pcMsg = document.getElementById('pcMsg');
     const pcCharCount = document.getElementById('pcCharCount');
     if (pcMsg) {
-      pcMsg.addEventListener('input', () => { pcCharCount.textContent = `${pcMsg.value.length} / 200`; });
+      pcMsg.addEventListener('input', () => { pcCharCount.textContent = `${pcMsg.value.length} / 500`; });
     }
 
     const pcForm = document.getElementById('pcForm');
