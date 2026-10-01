@@ -31,6 +31,7 @@
       color: var(--yellow);
       font-family: 'Jost', sans-serif;
       min-height: 100vh;
+      display: flex; flex-direction: column;
     }
 
     /* ── NAV ─────────────────────────────────────────────────────────── */
@@ -178,7 +179,7 @@
     }
 
     /* ── POSTCARD FOOTER ─────────────────────────────────────────────── */
-    .postcard-footer { margin: 0 28px 40px; }
+    .postcard-footer { margin: auto 28px var(--nav-h); }
     .pc-wrap { position: relative; }
     .pc-bg { width: 100%; display: block; }
     .pc-form {
@@ -260,6 +261,7 @@
     .pc-addr > :nth-child(4) { margin-top: 10px; }
     .pc-send {
       margin-top: 4%;
+      position: relative; top: 20px;
       align-self: flex-end; margin-right: 70px;
       background: none;
       border: 1px solid rgba(120,100,70,0.5);
@@ -292,7 +294,7 @@
       .nav-links { display: none; }
       .nav-burger { display: flex; align-items: center; justify-content: center; }
       body { padding-bottom: env(safe-area-inset-bottom, 0px); }
-      .postcard-footer { margin: 0 12px 40px; }
+      .postcard-footer { margin: auto 12px var(--nav-h); }
       .pc-msg { font-size: 16px; padding: 20% 8% 4% 8%; }
     }
 
