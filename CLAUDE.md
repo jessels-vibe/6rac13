@@ -148,6 +148,10 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 
 **shop.html:** Postcard CSS brought in line with index.html — removed `border: 2px solid`, removed `margin-top: 100px` / `margin-left: 20px`, set `padding: 22% 6% 4% 11%`, `line-height: 1.5`, `font-size: clamp(13px, 1.6vw, 18px)`. Fixed `pc-to` padding-bottom `5% → 2.5%`. Fixed `pc-send` margin-right `50px → 70px`. Added `.pc-char-count` CSS, `id="pcMsg"` + `maxlength="200"` to textarea, char counter span + JS. Removed mobile postcard form entirely (CSS, HTML, JS). Added `margin-top: 60px` on postcard-footer to separate it from shop grid.
 
+### 2026-10-02 — Shop header cleanup
+
+**shop.html:** Removed `<p class="header-label">The 6rac13 Shop</p>` — redundant label above the Shop h1.
+
 ### 2026-09-30 — Revision pass C
 
 **All pages (index, contact, shop, work, project, stopmotion):**
