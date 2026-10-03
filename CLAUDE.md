@@ -148,6 +148,17 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 
 **shop.html:** Postcard CSS brought in line with index.html — removed `border: 2px solid`, removed `margin-top: 100px` / `margin-left: 20px`, set `padding: 22% 6% 4% 11%`, `line-height: 1.5`, `font-size: clamp(13px, 1.6vw, 18px)`. Fixed `pc-to` padding-bottom `5% → 2.5%`. Fixed `pc-send` margin-right `50px → 70px`. Added `.pc-char-count` CSS, `id="pcMsg"` + `maxlength="200"` to textarea, char counter span + JS. Removed mobile postcard form entirely (CSS, HTML, JS). Added `margin-top: 60px` on postcard-footer to separate it from shop grid.
 
+### 2026-10-03 — Stop Motion layout editor
+
+**admin.html:** New "Stop Motion" tab with a full visual canvas editor.
+- Character palette lists all 10 built-in PNGs (red-fig, blue-fig, rabbit, flytrap, 2-head worm, millipede, mama-bird, metal-fly, snake, worm). Click any to place it on canvas.
+- Upload button adds new PNGs to Firebase Storage (`stopmotion/chars/`) and saves the list to `/stopmotionChars`.
+- Desktop / Mobile toggle — each saves a separate layout. Desktop canvas is 16:9, mobile is 9:16 (max 320px wide).
+- Per-layer controls: drag to move, corner handles to resize, rotation handle (yellow circle) to rotate, Flip H/V buttons, ↑/↓ z-order, Delete button. Delete/Backspace key also removes selected layer.
+- "Save Layout" writes to Firebase `/stopmotionLayout/desktop` and `/stopmotionLayout/mobile`.
+
+**stopmotion.html:** On page load, reads `/stopmotionLayout/desktop` or `/mobile` from Firebase (based on viewport width < 768px). Replaces hardcoded character images with dynamically positioned ones using saved position/size/rotation/flip. Falls back to hardcoded CSS positions if no layout is saved yet.
+
 ### 2026-10-02 — Shop header cleanup
 
 **shop.html:** Removed `<p class="header-label">The 6rac13 Shop</p>` — redundant label above the Shop h1.
