@@ -338,6 +338,10 @@
           if (addr) {
             if (data.addrPadBottom !== undefined) addr.style.paddingBottom = data.addrPadBottom + '%';
             if (data.addrPadLeft   !== undefined) addr.style.paddingLeft   = data.addrPadLeft   + '%';
+            const ch = addr.children;
+            if (data.addrGap1 !== undefined && ch[1]) ch[1].style.marginTop = data.addrGap1 + '%';
+            if (data.addrGap2 !== undefined && ch[2]) ch[2].style.marginTop = data.addrGap2 + '%';
+            if (data.addrGap3 !== undefined && ch[3]) ch[3].style.marginTop = data.addrGap3 + '%';
           }
         }).catch(() => {});
     })();
