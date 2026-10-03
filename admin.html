@@ -1764,6 +1764,45 @@
 
     attachSMItemEvents();
     updateSMLayerCount();
+    renderSMGuides();
+  }
+
+  function renderSMGuides() {
+    const canvas = document.getElementById('smCanvas');
+    canvas.querySelectorAll('.sm-guide').forEach(el => el.remove());
+
+    const canvasH = canvas.offsetHeight;
+    if (!canvasH) return;
+
+    const navH    = 80;
+    const titleOffsetPx = 52;
+    const fontPx  = Math.min(Math.max(72, window.innerWidth * 0.12), 180);
+    const vh      = window.innerHeight;
+
+    const navBot   = (navH / vh * 100).toFixed(2);
+    const titleTop = ((navH + titleOffsetPx) / vh * 100).toFixed(2);
+    const titleH   = (fontPx / vh * 100).toFixed(2);
+
+    /* nav zone */
+    const navEl = document.createElement('div');
+    navEl.className = 'sm-guide';
+    navEl.style.cssText = `position:absolute;top:0;left:0;right:0;height:${navBot}%;
+      background:rgba(204,24,24,0.15);border-bottom:1px solid rgba(204,24,24,0.5);
+      pointer-events:none;z-index:50;display:flex;align-items:flex-end;
+      justify-content:flex-end;padding:2px 6px;box-sizing:border-box;`;
+    navEl.innerHTML = `<span style="font-family:Jost,sans-serif;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,120,120,0.9)">Nav Bar</span>`;
+    canvas.appendChild(navEl);
+
+    /* title zone */
+    const titleEl = document.createElement('div');
+    titleEl.className = 'sm-guide';
+    titleEl.style.cssText = `position:absolute;top:${titleTop}%;left:0;right:0;height:${titleH}%;
+      border-top:1px dashed rgba(242,200,0,0.55);border-bottom:1px dashed rgba(242,200,0,0.55);
+      pointer-events:none;z-index:50;display:flex;align-items:center;
+      padding:0 8px;box-sizing:border-box;`;
+    titleEl.innerHTML = `<span style="font-family:'Amoresa Aged',cursive;font-size:clamp(8px,2vw,14px);color:rgba(242,200,0,0.45);pointer-events:none;">Stop Motion</span>
+      <span style="font-family:Jost,sans-serif;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(242,200,0,0.5);margin-left:auto">Title Zone</span>`;
+    canvas.appendChild(titleEl);
   }
 
   function attachSMItemEvents() {
