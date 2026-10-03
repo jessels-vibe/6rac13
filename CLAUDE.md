@@ -222,3 +222,13 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 - `.pc-send` shifted down 20px via `position: relative; top: 20px`.
 - Textarea `maxlength` raised `200 → 500`; char counter updated to show `/ 500`.
 - `.pc-wrap` now has `overflow: hidden; aspect-ratio: 1774 / 1100` — clips the transparent bottom ~33% of postcard.png (image is 1774×1650 but card design occupies only the top ~1100px). Root fix for the "dead space below postcard" issue that persisted across all pages.
+
+### 2026-10-03 — Firebase Storage token fix + admin postcard editor improvements
+
+**index.html:**
+- Added `storageUrl(url)` helper that strips `?token=...` params from Firebase Storage URLs. Firebase revokes download tokens periodically; stripping the token lets the browser use the public security rules path (`?alt=media`) instead.
+- Applied `storageUrl()` to hero image/video src and all BTS photo/video src attributes.
+- Added `onerror="this.closest('.bts-photo').style.display='none'"` on BTS `<img>` so tiles that still fail are hidden cleanly.
+
+**admin.html:**
+- Widened postcard layout editor preview container from `max-width: 640px` to `max-width: 960px` so the full postcard is visible without cropping.
