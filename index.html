@@ -598,6 +598,11 @@
       return m ? m[1] : null;
     }
 
+    function storageUrl(url) {
+      try { const u = new URL(url); u.searchParams.delete('token'); return u.toString(); }
+      catch { return url; }
+    }
+
     function getVimeoId(url) {
       const m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
       return m ? m[1] : null;
@@ -685,20 +690,21 @@
         const ytId = getYouTubeId(p.heroUrl);
         if (ytId) heroHTML = `<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;width:100%"><iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
       } else if (p.heroType === 'video' && p.heroUrl) {
-        heroHTML = `<video src="${p.heroUrl}" autoplay muted loop playsinline style="max-width:100%;max-height:75vh;width:100%;height:100%;object-fit:contain;display:block;"></video>`;
+        heroHTML = `<video src="${storageUrl(p.heroUrl)}" autoplay muted loop playsinline style="max-width:100%;max-height:75vh;width:100%;height:100%;object-fit:contain;display:block;"></video>`;
       } else if (p.heroUrl) {
-        heroHTML = `<img src="${p.heroUrl}" alt="${p.title}" style="max-width:100%;max-height:75vh;width:100%;height:100%;object-fit:contain;display:block;">`;
+        heroHTML = `<img src="${storageUrl(p.heroUrl)}" alt="${p.title}" style="max-width:100%;max-height:75vh;width:100%;height:100%;object-fit:contain;display:block;">`;
       }
 
       let btsPhotoHTML = '';
       if (btsPhotos.length) {
         btsPhotoHTML = `<div class="expand-bts-label">Behind the Scenes</div>
           <div class="expand-bts-grid">${btsPhotos.map(url => {
+            const safeUrl = storageUrl(url);
             const isVid = /\.(mp4|mov|webm)(\?|$)/i.test(url);
             const media = isVid
-              ? `<video src="${url}" muted playsinline loop preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;"></video>`
-              : `<img src="${url}" alt="BTS" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.closest('.bts-photo').style.display='none'">`;
-            return `<div class="bts-photo" onclick="openLightbox('${url}')">${media}</div>`;
+              ? `<video src="${safeUrl}" muted playsinline loop preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;"></video>`
+              : `<img src="${safeUrl}" alt="BTS" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.closest('.bts-photo').style.display='none'">`;
+            return `<div class="bts-photo" onclick="openLightbox('${safeUrl}')">${media}</div>`;
           }).join('')}</div>`;
       }
 
