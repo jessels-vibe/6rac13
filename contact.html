@@ -315,6 +315,27 @@
 
     document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
     document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+
+    (function() {
+      const key = window.innerWidth < 768 ? 'mobile' : 'desktop';
+      fetch('https://rac13-12cca-default-rtdb.firebaseio.com/postcardLayout/' + key + '.json')
+        .then(r => r.json())
+        .then(data => {
+          if (!data) return;
+          const form = document.querySelector('.pc-form');
+          const msg  = document.querySelector('.pc-msg');
+          if (form) {
+            if (data.formLeft   !== undefined) form.style.left   = data.formLeft   + '%';
+            if (data.formRight  !== undefined) form.style.right  = data.formRight  + '%';
+            if (data.formTop    !== undefined) form.style.top    = data.formTop    + '%';
+            if (data.formBottom !== undefined) form.style.bottom = data.formBottom + '%';
+          }
+          if (msg) {
+            if (data.msgPadTop  !== undefined) msg.style.paddingTop  = data.msgPadTop  + '%';
+            if (data.msgPadLeft !== undefined) msg.style.paddingLeft = data.msgPadLeft + '%';
+          }
+        }).catch(() => {});
+    })();
   </script>
 </body>
 </html>

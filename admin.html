@@ -596,6 +596,32 @@
     }
     .sm-upload-btn:hover { background: rgba(242,200,0,0.08); }
     .sm-upload-btn input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    /* ── POSTCARD EDITOR ────────────────────────────────────────────── */
+    .pc-editor-preview {
+      position: relative; overflow: hidden; aspect-ratio: 1774/1100;
+      border: 1px solid rgba(255,255,255,0.15); user-select: none; cursor: default;
+    }
+    .pc-editor-img { width: 100%; display: block; pointer-events: none; }
+    .pc-el { position: absolute; }
+    .pc-form-rect { border: 2px solid rgba(220,60,60,0.8); pointer-events: none; }
+    .pc-msg-area { background: rgba(28,28,204,0.18); border: 1px dashed rgba(100,100,255,0.7); pointer-events: none; }
+    .pc-divider-line { width: 1px; background: rgba(200,80,80,0.4); pointer-events: none; }
+    .pc-edge-handle {
+      width: 14px; height: 14px; background: #CC1818; border: 2px solid #fff;
+      transform: translate(-50%,-50%); cursor: pointer; z-index: 5;
+    }
+    .pc-text-dot {
+      width: 22px; height: 22px; background: #1C1CCC; border: 3px solid #fff;
+      border-radius: 50%; transform: translate(-50%,-50%); cursor: crosshair; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Jost',sans-serif; font-size: 9px; font-weight: 700; color: #fff;
+    }
+    .pc-editor-vals {
+      display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 10px 0 6px;
+      font-family: 'Jost',sans-serif; font-size: 11px; color: rgba(255,255,255,0.5);
+    }
+    .pc-editor-vals strong { color: #F2C800; }
+    .pc-editor-hint { font-family:'Jost',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.6;margin-top:4px; }
     /* ── HOME LAYOUT EDITOR ─────────────────────────────────────────── */
     .home-canvas {
       position: relative; width: 320px; aspect-ratio: 9/16;
@@ -706,6 +732,7 @@
         <button class="tab-btn" data-tab="shop" id="tabBtnShop">Shop</button>
         <button class="tab-btn" data-tab="stopmotion" id="tabBtnStopMotion">Stop Motion</button>
         <button class="tab-btn" data-tab="home" id="tabBtnHome">Home</button>
+        <button class="tab-btn" data-tab="postcard" id="tabBtnPostcard">Postcard</button>
       </div>
       <button class="logout-btn" id="logoutBtn">Logout</button>
     </header>
@@ -824,6 +851,31 @@
           <div class="home-fig-item" id="homeFigBlue" data-fig="blue"><img src="assets/blue-fig.png" alt=""><div class="home-fig-resize"></div></div>
           <div class="home-fig-item" id="homeFigRed"  data-fig="red"><img src="assets/red-fig.png"  alt=""><div class="home-fig-resize"></div></div>
         </div>
+      </div>
+    </div>
+
+    <!-- ── POSTCARD LAYOUT TAB ──────────────────────────────────────────── -->
+    <div class="tab-panel" id="tabPostcard" style="display:none">
+      <div class="panel-header">
+        <span style="font-family:Jost,sans-serif;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:0.08em;">Drag red handles to adjust form area · drag blue dot to move text start</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="sm-view-toggle">
+            <button class="sm-view-btn active" id="pcViewDesktop">Desktop</button>
+            <button class="sm-view-btn" id="pcViewMobile">Mobile</button>
+          </div>
+          <button class="sm-save-btn" id="pcSaveBtn">Save Layout</button>
+        </div>
+      </div>
+      <div style="max-width:640px">
+        <div class="pc-editor-preview" id="pcEditorPreview">
+          <img src="assets/postcard.png" class="pc-editor-img" alt="">
+        </div>
+        <div class="pc-editor-vals" id="pcEditorVals"></div>
+        <p class="pc-editor-hint">
+          <span style="color:#CC1818">■</span> Red handles — drag edges to reposition the form area on the card.&nbsp;&nbsp;
+          <span style="color:#1C1CCC;background:#fff;border-radius:50%;padding:0 2px">●</span> Blue dot — drag to move where text starts typing.
+          &nbsp;&nbsp;<button id="pcResetBtn" style="background:none;border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.45);font-family:Jost,sans-serif;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;cursor:pointer">Reset defaults</button>
+        </p>
       </div>
     </div>
 
@@ -1105,8 +1157,10 @@
       document.getElementById('tabShop').style.display       = activeTab === 'shop'       ? 'block' : 'none';
       document.getElementById('tabStopMotion').style.display = activeTab === 'stopmotion' ? 'block' : 'none';
       document.getElementById('tabHome').style.display       = activeTab === 'home'       ? 'block' : 'none';
+      document.getElementById('tabPostcard').style.display   = activeTab === 'postcard'   ? 'block' : 'none';
       if (activeTab === 'stopmotion' && !smLoaded) { loadSMLayout(); smLoaded = true; }
       if (activeTab === 'home' && !homeLoaded) { loadHomeLayout(); homeLoaded = true; }
+      if (activeTab === 'postcard' && !pcLoaded) { pcLoaded = true; loadPCLayout(); }
       updateSaveBar();
     });
   });
@@ -1119,7 +1173,7 @@
   }
 
   function updateSaveBar() {
-    if (activeTab === 'stopmotion' || activeTab === 'home') { document.getElementById('saveBar').classList.remove('visible'); return; }
+    if (activeTab === 'stopmotion' || activeTab === 'home' || activeTab === 'postcard') { document.getElementById('saveBar').classList.remove('visible'); return; }
     const dirty = activeTab === 'projects' ? projDirty : shopDirty;
     document.getElementById('saveBar').classList.toggle('visible', dirty);
   }
@@ -1870,6 +1924,159 @@
       if (data && data.blueFig && data.redFig) homeLayout = data;
       renderHomeCanvas();
       attachHomeEvents();
+    });
+  }
+
+  // ─── POSTCARD LAYOUT EDITOR ──────────────────────────────────────────────
+  const PC_DEFAULTS = {
+    desktop: { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:27, msgPadLeft:11 },
+    mobile:  { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:13, msgPadLeft:9  }
+  };
+  let pcData   = { desktop: {...PC_DEFAULTS.desktop}, mobile: {...PC_DEFAULTS.mobile} };
+  let pcMode   = 'desktop';
+  let pcLoaded = false;
+  let pcDrag   = null;
+
+  function pcLay() { return pcData[pcMode]; }
+
+  function pcRender() {
+    const preview = document.getElementById('pcEditorPreview');
+    if (!preview) return;
+    preview.querySelectorAll('.pc-el').forEach(e => e.remove());
+    const lay = pcLay();
+    const W = preview.offsetWidth;
+    const H = W * 1100 / 1774;
+    preview.style.height = H + 'px';
+
+    const fL = lay.formLeft  / 100 * W;
+    const fR = W - lay.formRight  / 100 * W;
+    const fT = lay.formTop    / 100 * H;
+    const fB = H - lay.formBottom / 100 * H;
+    const fW = fR - fL, fH = fB - fT, mW = fW / 2;
+
+    // form outline
+    pcEl(preview, 'div', 'pc-form-rect', fL, fT, fW, fH);
+    // msg area tint
+    pcEl(preview, 'div', 'pc-msg-area', fL, fT, mW, fH);
+    // divider line
+    pcEl(preview, 'div', 'pc-divider-line', fL + mW, fT, 1, fH);
+
+    // edge handles
+    pcHandle(preview, 'left',   fL,      fT+fH/2, 'ew-resize');
+    pcHandle(preview, 'right',  fR,      fT+fH/2, 'ew-resize');
+    pcHandle(preview, 'top',    fL+fW/2, fT,      'ns-resize');
+    pcHandle(preview, 'bottom', fL+fW/2, fB,      'ns-resize');
+
+    // text-start dot (msgPad% are % of pc-msg WIDTH = mW)
+    const dotX = fL + lay.msgPadLeft / 100 * mW;
+    const dotY = fT + lay.msgPadTop  / 100 * mW;
+    const dot  = pcEl(preview, 'div', 'pc-text-dot', dotX, dotY);
+    dot.textContent = 'A';
+    dot.dataset.h = 'dot';
+    dot.addEventListener('mousedown',  e => pcBeginDrag(e, 'dot'));
+    dot.addEventListener('touchstart', e => pcBeginDrag(e, 'dot'), { passive: false });
+
+    const v = document.getElementById('pcEditorVals');
+    if (v) v.innerHTML =
+      `Form: left <strong>${lay.formLeft.toFixed(1)}%</strong>  right <strong>${lay.formRight.toFixed(1)}%</strong>  top <strong>${lay.formTop.toFixed(1)}%</strong>  bottom <strong>${lay.formBottom.toFixed(1)}%</strong>` +
+      `&nbsp;|&nbsp; Text: top <strong>${lay.msgPadTop.toFixed(1)}%</strong>  left <strong>${lay.msgPadLeft.toFixed(1)}%</strong>`;
+  }
+
+  function pcEl(parent, tag, cls, x, y, w, h) {
+    const el = document.createElement(tag);
+    el.className = 'pc-el ' + cls;
+    el.style.cssText = `position:absolute;left:${x}px;top:${y}px;${w!==undefined?'width:'+w+'px;':''}${h!==undefined?'height:'+h+'px;':''}`;
+    parent.appendChild(el);
+    return el;
+  }
+
+  function pcHandle(parent, edge, x, y, cursor) {
+    const h = pcEl(parent, 'div', 'pc-edge-handle', x, y);
+    h.style.cursor = cursor;
+    h.dataset.h = edge;
+    h.addEventListener('mousedown',  e => pcBeginDrag(e, edge));
+    h.addEventListener('touchstart', e => pcBeginDrag(e, edge), { passive: false });
+  }
+
+  function pcBeginDrag(e, handle) {
+    e.preventDefault(); e.stopPropagation();
+    const preview = document.getElementById('pcEditorPreview');
+    const W = preview.offsetWidth;
+    const H = W * 1100 / 1774;
+    const lay = pcLay();
+    const cx = e.touches ? e.touches[0].clientX : e.clientX;
+    const cy = e.touches ? e.touches[0].clientY : e.clientY;
+    pcDrag = { handle, startX: cx, startY: cy, W, H, ...JSON.parse(JSON.stringify(lay)) };
+  }
+
+  function pcOnMove(e) {
+    if (!pcDrag) return;
+    const d = pcDrag;
+    const cx = e.touches ? e.touches[0].clientX : e.clientX;
+    const cy = e.touches ? e.touches[0].clientY : e.clientY;
+    const dx = cx - d.startX, dy = cy - d.startY;
+    const lay = pcLay();
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+    if (d.handle === 'left')   lay.formLeft   = clamp(d.formLeft   + dx/d.W*100, 0, 35);
+    if (d.handle === 'right')  lay.formRight  = clamp(d.formRight  - dx/d.W*100, 0, 35);
+    if (d.handle === 'top')    lay.formTop    = clamp(d.formTop    + dy/d.H*100, 0, 35);
+    if (d.handle === 'bottom') lay.formBottom = clamp(d.formBottom - dy/d.H*100, 0, 35);
+
+    if (d.handle === 'dot') {
+      const fL = d.formLeft/100*d.W, fT = d.formTop/100*d.H;
+      const mW = (1 - d.formLeft/100 - d.formRight/100)*d.W / 2;
+      const origDotX = fL + d.msgPadLeft/100 * mW;
+      const origDotY = fT + d.msgPadTop /100 * mW;
+      lay.msgPadLeft = clamp((origDotX + dx - fL) / mW * 100, 0, 80);
+      lay.msgPadTop  = clamp((origDotY + dy - fT) / mW * 100, 0, 90);
+    }
+    pcRender();
+  }
+
+  document.addEventListener('mousemove', pcOnMove);
+  document.addEventListener('mouseup',   () => { pcDrag = null; });
+  document.addEventListener('touchmove', e => { if (pcDrag) { e.preventDefault(); pcOnMove(e); } }, { passive: false });
+  document.addEventListener('touchend',  () => { pcDrag = null; });
+
+  document.getElementById('pcViewDesktop').addEventListener('click', () => {
+    pcMode = 'desktop';
+    document.getElementById('pcViewDesktop').classList.add('active');
+    document.getElementById('pcViewMobile').classList.remove('active');
+    pcRender();
+  });
+  document.getElementById('pcViewMobile').addEventListener('click', () => {
+    pcMode = 'mobile';
+    document.getElementById('pcViewMobile').classList.add('active');
+    document.getElementById('pcViewDesktop').classList.remove('active');
+    pcRender();
+  });
+  document.getElementById('pcResetBtn').addEventListener('click', () => {
+    pcData[pcMode] = { ...PC_DEFAULTS[pcMode] };
+    pcRender();
+  });
+  document.getElementById('pcSaveBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('pcSaveBtn');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    try {
+      await db.ref('postcardLayout').set(pcData);
+      btn.textContent = 'Saved ✓';
+      setTimeout(() => { btn.disabled = false; btn.textContent = 'Save Layout'; }, 2000);
+    } catch(err) {
+      alert('Save failed: ' + err.message);
+      btn.disabled = false; btn.textContent = 'Save Layout';
+    }
+  });
+
+  function loadPCLayout() {
+    db.ref('postcardLayout').once('value', snap => {
+      const data = snap.val();
+      if (data) {
+        if (data.desktop) pcData.desktop = { ...PC_DEFAULTS.desktop, ...data.desktop };
+        if (data.mobile)  pcData.mobile  = { ...PC_DEFAULTS.mobile,  ...data.mobile  };
+      }
+      pcRender();
+      window.addEventListener('resize', pcRender);
     });
   }
 
