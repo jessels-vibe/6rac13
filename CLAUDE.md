@@ -223,6 +223,19 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 - Textarea `maxlength` raised `200 → 500`; char counter updated to show `/ 500`.
 - `.pc-wrap` now has `overflow: hidden; aspect-ratio: 1774 / 1100` — clips the transparent bottom ~33% of postcard.png (image is 1774×1650 but card design occupies only the top ~1100px). Root fix for the "dead space below postcard" issue that persisted across all pages.
 
+### 2026-10-03 — Postcard editor: image overflow fix + per-row address spacing
+
+**admin.html:**
+- Fixed postcard preview image overflow: `.pc-editor-img` now uses `height:100%; object-fit:cover; object-position:top` so the 1774×1650 PNG fills the 1774/1100 aspect-ratio container instead of bleeding below it.
+- Added `addrGap1/2/3` params (% of form half-width) to `PC_DEFAULTS` — control vertical spacing before each of the 3 address rows (From, email, Subject).
+- Added 3 teal drag handles (numbered 1/2/3) in the addr section of `pcRender()`. Dragging down increases the gap before that row; dragging up decreases it.
+- `pcOnMove()` handles `addrGap1/2/3` keys.
+- Values readout updated to show all three gap values.
+- Legend updated to describe the teal row-gap dots.
+
+**contact.html, shop.html, index.html:**
+- Firebase postcard loaders now apply `addrGap1/2/3` as `marginTop` on `.pc-addr` children 1/2/3. Units are % of `.pc-addr` width ≈ form half-width, matching how they're stored.
+
 ### 2026-10-03 — Firebase Storage token fix + admin postcard editor improvements
 
 **index.html:**
