@@ -814,6 +814,7 @@
               <label class="cat-chip"><input type="checkbox" value="art"> Art</label>
               <label class="cat-chip"><input type="checkbox" value="portraits"> Portraits</label>
               <label class="cat-chip"><input type="checkbox" value="videoart"> Video Art</label>
+              <label class="cat-chip"><input type="checkbox" value="stopmotion"> Stop Motion</label>
               <label class="cat-chip"><input type="checkbox" value="events"> Events</label>
             </div>
           </div>
@@ -997,7 +998,7 @@
   // dragging
   let dragSrc = null;
 
-  const CAT_LABELS = { art: 'Art', portraits: 'Portraits', videoart: 'Video Art', events: 'Events' };
+  const CAT_LABELS = { art: 'Art', portraits: 'Portraits', videoart: 'Video Art', stopmotion: 'Stop Motion', events: 'Events' };
 
   /* Transparent migration: old single string → array */
   function getCategories(p) {
