@@ -782,6 +782,7 @@
       VIEWS.forEach(v => document.getElementById(`view-${v}`).classList.remove('active'));
       document.getElementById(`view-${name}`).classList.add('active');
       window.scrollTo(0, 0);
+      setTimeout(() => window.scrollTo(0, 0), 50);
     }
 
     function setNavActive(view, filter) {
