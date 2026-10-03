@@ -180,17 +180,15 @@
     }
     .vah-bg { position: absolute; inset: 0; }
     .vah-bg video { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .vah-overlay {
-      position: absolute; inset: 0;
-      background: rgba(28,28,204,0.45);
-    }
     .vah-title {
       position: relative; z-index: 2;
       font-family: 'Amoresa Aged', cursive;
-      font-size: clamp(72px, 13vw, 180px);
+      font-size: clamp(80px, 18vw, 320px);
       color: var(--yellow);
       text-align: center;
+      line-height: 0.9;
       pointer-events: none;
+      padding: 0 16px;
     }
 
     /* ── PAGE HEADER ─────────────────────────────────────────────────── */
@@ -567,7 +565,6 @@
   <!-- VIDEO ART HERO -->
   <div class="video-art-hero" id="videoArtHero" style="display:none">
     <div class="vah-bg" id="vahBg"></div>
-    <div class="vah-overlay"></div>
     <h2 class="vah-title">Video Art</h2>
   </div>
 
@@ -677,20 +674,21 @@
       });
 
       const hero = document.getElementById('videoArtHero');
+      const pageHeader = document.querySelector('.page-header');
       if (activeFilter === 'videoart') {
         hero.style.display = 'flex';
+        if (pageHeader) pageHeader.style.display = 'none';
         setVideoHero();
       } else {
         hero.style.display = 'none';
+        if (pageHeader) pageHeader.style.display = '';
       }
     }
 
     let videoHeroSet = false;
     function setVideoHero() {
       if (videoHeroSet) return;
-      const firstVid = allProjects.find(p => p.category === 'videoart' && p.heroUrl && (p.heroType === 'video' || /\.(mp4|mov|webm)(\?|$)/i.test(p.heroUrl)));
-      if (!firstVid) return;
-      document.getElementById('vahBg').innerHTML = `<video src="${firstVid.heroUrl}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>`;
+      document.getElementById('vahBg').innerHTML = `<video src="assets/videoart-hero.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>`;
       videoHeroSet = true;
     }
 
