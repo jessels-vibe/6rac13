@@ -827,6 +827,7 @@
             <div class="radio-tabs">
               <div class="radio-tab active" data-type="image" id="heroTypeImage">Image</div>
               <div class="radio-tab" data-type="video" id="heroTypeVideo">Video</div>
+              <div class="radio-tab" data-type="youtube" id="heroTypeYoutube">YouTube</div>
             </div>
           </div>
         </div>
@@ -852,6 +853,10 @@
           <div class="hero-preview" id="heroPrev">
             <div id="heroPrevMedia"></div>
             <button class="hero-preview-remove" id="heroRemoveBtn">Remove</button>
+          </div>
+          <div id="heroYoutubeField" style="display:none">
+            <input type="text" id="heroYoutubeUrl" placeholder="https://youtube.com/watch?v=…" style="width:100%;margin-bottom:8px">
+            <button type="button" class="add-link-btn" id="heroYoutubeApply">Set YouTube Hero</button>
           </div>
           <div class="upload-zone" id="heroUploadZone">
             <input type="file" id="heroFile" accept="image/*,video/*">
@@ -1131,8 +1136,11 @@
 
   function projRowHTML(p) {
     const cats = getCategories(p);
-    const thumb = p.heroUrl
-      ? `<img class="row-thumb" src="${p.heroUrl}" alt="" loading="lazy">`
+    const ytThumb = p.heroType === 'youtube' && p.heroUrl
+      ? (() => { const m = p.heroUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/); return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : null; })()
+      : null;
+    const thumb = (ytThumb || p.heroUrl)
+      ? `<img class="row-thumb" src="${ytThumb || p.heroUrl}" alt="" loading="lazy">`
       : `<div class="row-thumb-placeholder">🖼</div>`;
     const catBadges = cats.map(c => `<span class="cat-badge ${c}">${CAT_LABELS[c] || c}</span>`).join(' ');
 
@@ -1142,7 +1150,7 @@
         ${thumb}
         <div class="row-info">
           <div class="row-title">${p.title || 'Untitled'}</div>
-          <div class="row-sub">${p.heroType === 'video' ? 'Video' : 'Image'}</div>
+          <div class="row-sub">${p.heroType === 'video' ? 'Video' : p.heroType === 'youtube' ? 'YouTube' : 'Image'}</div>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:4px">${catBadges}</div>
         <button class="toggle-pill featured ${p.featured ? 'on' : ''}" data-id="${p.id}" data-field="featured">
@@ -1338,6 +1346,7 @@
       setHeroType('image');
       document.getElementById('heroPrev').style.display       = 'none';
       document.getElementById('heroUploadZone').style.display = 'block';
+      document.getElementById('heroYoutubeUrl').value         = '';
       document.getElementById('btsPhotoGrid').innerHTML        = '';
       document.getElementById('btsLinksList').innerHTML        = '';
       document.getElementById('fFeatured').checked            = false;
@@ -1364,7 +1373,13 @@
 
         if (p.heroUrl) {
           heroUrl = p.heroUrl;
-          showHeroPreview(p.heroUrl, p.heroType === 'video');
+          if (p.heroType === 'youtube') {
+            document.getElementById('heroYoutubeUrl').value = p.heroUrl;
+            const m = p.heroUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+            if (m) showHeroPreview(`https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`, false);
+          } else {
+            showHeroPreview(p.heroUrl, p.heroType === 'video');
+          }
         }
 
         /* load bts photos */
@@ -1427,10 +1442,19 @@
     heroType = type;
     document.getElementById('heroTypeImage').classList.toggle('active', type === 'image');
     document.getElementById('heroTypeVideo').classList.toggle('active', type === 'video');
+    document.getElementById('heroTypeYoutube').classList.toggle('active', type === 'youtube');
+    document.getElementById('heroYoutubeField').style.display = type === 'youtube' ? 'block' : 'none';
+    if (type !== 'youtube') {
+      document.getElementById('heroUploadZone').style.display = heroUrl ? 'none' : 'block';
+    } else {
+      document.getElementById('heroUploadZone').style.display = 'none';
+      document.getElementById('heroPrev').style.display = 'none';
+    }
   }
 
   document.getElementById('heroTypeImage').addEventListener('click', () => setHeroType('image'));
   document.getElementById('heroTypeVideo').addEventListener('click', () => setHeroType('video'));
+  document.getElementById('heroTypeYoutube').addEventListener('click', () => setHeroType('youtube'));
 
   function setHeroAspect(aspect) {
     heroAspect = aspect;
@@ -1457,8 +1481,19 @@
   document.getElementById('heroRemoveBtn').addEventListener('click', () => {
     heroUrl = '';
     document.getElementById('heroPrev').style.display       = 'none';
-    document.getElementById('heroUploadZone').style.display = 'block';
     document.getElementById('heroPrevMedia').innerHTML      = '';
+    document.getElementById('heroYoutubeUrl').value         = '';
+    if (heroType !== 'youtube') document.getElementById('heroUploadZone').style.display = 'block';
+  });
+
+  document.getElementById('heroYoutubeApply').addEventListener('click', () => {
+    const url = document.getElementById('heroYoutubeUrl').value.trim();
+    if (!url) return;
+    const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (!m) { alert('Not a recognised YouTube URL'); return; }
+    heroUrl = url;
+    const thumb = `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`;
+    showHeroPreview(thumb, false);
   });
 
   // hero file upload

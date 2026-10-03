@@ -69,37 +69,6 @@
     .nav-dropdown a:hover,
     .nav-dropdown a.active-filter { color: var(--yellow); border-left-color: var(--yellow); background: rgba(255,239,94,0.04); }
 
-    /* ── HAMBURGER ───────────────────────────────────────────────────── */
-    .nav-burger {
-      display: none; background: none; border: none; cursor: pointer;
-      padding: 8px; color: var(--yellow); -webkit-tap-highlight-color: transparent;
-    }
-
-    /* ── MOBILE NAV ──────────────────────────────────────────────────── */
-    .mobile-nav {
-      position: fixed; inset: 0; z-index: 499; background: var(--blue);
-      display: flex; flex-direction: column; padding: 0 32px 48px;
-      overflow-y: auto; transform: translateX(100%);
-      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .mobile-nav.open { transform: translateX(0); }
-    .mobile-nav-head { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); flex-shrink: 0; }
-    .mobile-nav-close { background: none; border: none; cursor: pointer; padding: 8px; color: var(--yellow); -webkit-tap-highlight-color: transparent; }
-    .mobile-nav-links { display: flex; flex-direction: column; padding-top: 12px; }
-    .mobile-nav-link {
-      font-family: 'Amoresa Aged', cursive; font-size: clamp(56px, 16vw, 80px);
-      color: var(--yellow); text-decoration: none; line-height: 1; padding: 6px 0; transition: opacity 0.15s;
-    }
-    .mobile-nav-link:active { opacity: 0.6; }
-    .mobile-nav-sub {
-      display: flex; flex-wrap: wrap; gap: 4px 16px;
-      padding: 4px 0 20px 2px; margin-bottom: 4px; border-bottom: 1px solid rgba(255,239,94,0.12);
-    }
-    .mobile-nav-sub a {
-      font-family: 'Jost', sans-serif; font-weight: 700; font-size: 10px;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(255,239,94,0.45); text-decoration: none; padding: 8px 0; display: inline-block;
-    }
 
     /* ── HOME VIEW ───────────────────────────────────────────────────── */
     .home-hero { height: 100vh; padding-top: var(--nav-h); position: relative; overflow: hidden; }
@@ -215,7 +184,11 @@
     .expand-bts { padding: 28px 28px 0; }
     .expand-bts-label { font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,239,94,0.4); border-top: 1px solid rgba(255,239,94,0.12); padding-top: 28px; margin-bottom: 16px; }
     .expand-bts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
-    .expand-bts-link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 16px; }
+    .expand-bts-link-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 16px; }
+    .bts-embed { width: 100%; }
+    .bts-embed-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
+    .bts-embed-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .bts-embed-label { font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,239,94,0.5); margin-top: 6px; }
     .bts-link-card {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       background: rgba(255,255,255,0.06); padding: 24px 16px; gap: 10px;
@@ -225,25 +198,6 @@
     .bts-link-card:hover { background: rgba(255,255,255,0.1); }
     .bts-link-icon { font-size: 28px; line-height: 1; }
     .bts-link-label { font-family: 'Jost', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; }
-    /* thumbnail variant */
-    .bts-link-card--thumb {
-      aspect-ratio: 16/9; position: relative; overflow: hidden;
-      padding: 0; align-items: stretch; justify-content: stretch;
-      background: rgba(255,255,255,0.04);
-    }
-    .bts-link-card--thumb:hover { background: rgba(255,255,255,0.04); opacity: 0.88; }
-    .bts-link-thumb-img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; display: block;
-      background: rgba(255,255,255,0.06); background-size: cover; background-position: center;
-    }
-    .bts-link-info {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 24px 12px 12px;
-      background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 100%);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .bts-link-play { font-size: 16px; flex-shrink: 0; }
 
     /* tile image protection overlay */
     .tile-protect {
@@ -271,6 +225,7 @@
     #sm-metal-fly      { left: 68%;  top: 20%;     height: 18vh; z-index: 6; }
     #sm-snake          { right: 18%; top: 55%;     height: 15vh; z-index: 6; }
     #sm-worm           { left: 48%;  top: 50%;     height: 10vh; z-index: 6; }
+    .sm-projects { background: var(--blue); padding: 48px 28px 0; }
 
     /* ── PROJECT VIEW (legacy — kept for direct URL fallback) ────────── */
     .project-hero { width: 100%; height: 75vh; min-height: 400px; position: relative; overflow: hidden; background: var(--dark); }
@@ -359,14 +314,17 @@
       #sm-flytrap  { height: 40vh; }
     }
     @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .nav-burger { display: flex; align-items: center; justify-content: center; }
       body { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      /* compact nav — stays visible, no hamburger */
+      nav { padding: 0 14px; }
+      .nav-links { gap: 12px; }
+      .nav-links a, .dropdown-toggle { font-size: 11px; letter-spacing: 0.1em; }
+      .nav-dropdown { right: 0; left: auto; min-width: 130px; }
       .work-grid { grid-template-columns: repeat(2, 1fr); }
       .project-body { padding: 28px 20px; }
       .next-project-bar { padding: 32px 20px 0; }
-      .postcard-footer { margin: 0 12px var(--nav-h); }
-      .pc-msg { font-size: 16px; padding: 20% 8% 4% 8%; }
+      .postcard-footer { margin: 0 0 var(--nav-h); }
+      .pc-msg { font-size: 14px; padding: 13% 4% 4% 9%; }
 
       /* home */
       .works-section { padding: 48px 16px 0; }
@@ -380,7 +338,6 @@
 
       /* expand panel */
       .expand-bts-grid { grid-template-columns: repeat(2, 1fr); }
-      .expand-bts-link-grid { grid-template-columns: repeat(2, 1fr); }
 
       /* stop motion */
       .sm-title { font-size: clamp(44px, 11vw, 72px); left: 10%; right: 1%; }
@@ -396,8 +353,9 @@
       #sm-worm           { height: 8vh;  left: 46%; top: 52%; }
     }
     @media (max-width: 420px) {
-      .work-grid { grid-template-columns: 1fr; }
-      .works-grid { grid-template-columns: 1fr; }
+      /* keep 2-column grid even on small phones */
+      .work-grid { grid-template-columns: repeat(2, 1fr); }
+      .works-grid { grid-template-columns: repeat(2, 1fr); }
       .bts-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (hover: none) {
@@ -429,40 +387,7 @@
       <li><a href="shop.html">Shop</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <button class="nav-burger" id="navBurger" aria-label="Open menu">
-      <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
-        <rect width="22" height="2" fill="currentColor"/>
-        <rect y="6" width="22" height="2" fill="currentColor"/>
-        <rect y="12" width="22" height="2" fill="currentColor"/>
-      </svg>
-    </button>
   </nav>
-
-  <!-- MOBILE NAV -->
-  <div class="mobile-nav" id="mobileNav">
-    <div class="mobile-nav-head">
-      <a href="#" class="nav-logo"><img src="assets/g-logo.png" alt="6rac13"></a>
-      <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <line x1="1" y1="1" x2="19" y2="19" stroke="currentColor" stroke-width="2.5"/>
-          <line x1="19" y1="1" x2="1" y2="19" stroke="currentColor" stroke-width="2.5"/>
-        </svg>
-      </button>
-    </div>
-    <div class="mobile-nav-links">
-      <a href="#work" class="mobile-nav-link">Work</a>
-      <div class="mobile-nav-sub">
-        <a href="#work">All Work</a>
-        <a href="#work/art">Art</a>
-        <a href="#work/portraits">Portraits</a>
-        <a href="#work/videoart">Video Art</a>
-        <a href="#stopmotion">Stop Motion</a>
-        <a href="#work/events">Events</a>
-      </div>
-      <a href="shop.html" class="mobile-nav-link">Shop</a>
-      <a href="contact.html" class="mobile-nav-link">Contact</a>
-    </div>
-  </div>
 
   <!-- ── VIEW: HOME ──────────────────────────────────────────────────── -->
   <div class="view" id="view-home">
@@ -527,6 +452,9 @@
       <img class="sm-char" id="sm-snake"         src="assets/snake.png"         alt="">
       <img class="sm-char" id="sm-worm"          src="assets/worm.png"          alt="">
     </section>
+    <div class="sm-projects">
+      <div class="work-grid" id="smWorkGrid"></div>
+    </div>
   </div>
 
   <!-- ── VIEW: PROJECT (fallback) ──────────────────────────────────────── -->
@@ -622,10 +550,6 @@
     document.getElementById('workToggle').addEventListener('click', e => { e.preventDefault(); workDropWrap.classList.toggle('open'); });
     document.addEventListener('click', e => { if (!workDropWrap.contains(e.target)) workDropWrap.classList.remove('open'); });
 
-    const mobileNav = document.getElementById('mobileNav');
-    document.getElementById('navBurger').addEventListener('click', () => { mobileNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
-    document.getElementById('mobileNavClose').addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; });
-    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; }));
 
     /* ── Lightbox ─────────────────────────────────────────────────────── */
     const lightbox = document.getElementById('lightbox');
@@ -647,6 +571,11 @@
       let media;
       if (!p.heroUrl) {
         media = `<div class="tile-img skeleton"></div>`;
+      } else if (p.heroType === 'youtube') {
+        const ytId = getYouTubeId(p.heroUrl);
+        media = ytId
+          ? `<img class="tile-img" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="${p.title}" loading="lazy">`
+          : `<div class="tile-img skeleton"></div>`;
       } else if (p.heroType === 'video' || /\.(mp4|mov|webm)(\?|$)/i.test(p.heroUrl)) {
         media = `<video class="tile-img" src="${p.heroUrl}" muted playsinline loop preload="metadata"></video>`;
       } else {
@@ -665,20 +594,25 @@
       return m ? m[1] : null;
     }
 
+    function getVimeoId(url) {
+      const m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+      return m ? m[1] : null;
+    }
+
     function btsLinkCardHTML(url, lbl) {
       const ytId = getYouTubeId(url);
       if (ytId) {
-        const thumb = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
-        return `<a class="bts-link-card bts-link-card--thumb" href="${url}" target="_blank" rel="noopener">
-          <img class="bts-link-thumb-img" src="${thumb}" alt="" loading="lazy">
-          <div class="bts-link-info"><span class="bts-link-play">▶</span><span class="bts-link-label">${lbl}</span></div>
-        </a>`;
+        return `<div class="bts-embed">
+          <div class="bts-embed-wrap"><iframe src="https://www.youtube.com/embed/${ytId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          ${lbl ? `<div class="bts-embed-label">${lbl}</div>` : ''}
+        </div>`;
       }
-      if (/vimeo\.com/i.test(url)) {
-        return `<a class="bts-link-card bts-link-card--thumb" href="${url}" target="_blank" rel="noopener" data-vimeo="${encodeURIComponent(url)}">
-          <div class="bts-link-thumb-img"></div>
-          <div class="bts-link-info"><span class="bts-link-play">▶</span><span class="bts-link-label">${lbl}</span></div>
-        </a>`;
+      const vimeoId = getVimeoId(url);
+      if (vimeoId) {
+        return `<div class="bts-embed">
+          <div class="bts-embed-wrap"><iframe src="https://player.vimeo.com/video/${vimeoId}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+          ${lbl ? `<div class="bts-embed-label">${lbl}</div>` : ''}
+        </div>`;
       }
       return `<a class="bts-link-card" href="${url}" target="_blank" rel="noopener">
         <span class="bts-link-icon">${platformIcon(url)}</span>
@@ -704,6 +638,7 @@
     /* ── Inline Expand ────────────────────────────────────────────────── */
     const PROJECT_OPEN_MODE = 'inline';
     let openProjectId = null;
+    let currentGridId = 'workGrid';
 
     function platformIcon(url) {
       if (/youtube\.com|youtu\.be/i.test(url)) return '▶';
@@ -725,7 +660,7 @@
       closeExpand(false);
       openProjectId = p.id;
 
-      const grid = document.getElementById('workGrid');
+      const grid = document.getElementById(currentGridId);
       const tile = grid.querySelector(`.work-tile[data-id="${p.id}"]`);
       if (!tile) return;
 
@@ -742,7 +677,10 @@
       const btsLinks = Array.isArray(p.btsLinks) ? p.btsLinks : [];
 
       let heroHTML = '';
-      if (p.heroType === 'video' && p.heroUrl) {
+      if (p.heroType === 'youtube' && p.heroUrl) {
+        const ytId = getYouTubeId(p.heroUrl);
+        if (ytId) heroHTML = `<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;width:100%"><iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+      } else if (p.heroType === 'video' && p.heroUrl) {
         heroHTML = `<video src="${p.heroUrl}" autoplay muted loop playsinline style="max-width:100%;max-height:75vh;width:100%;height:100%;object-fit:contain;display:block;"></video>`;
       } else if (p.heroUrl) {
         heroHTML = `<img src="${p.heroUrl}" alt="${p.title}" style="max-width:100%;max-height:75vh;width:100%;height:100%;object-fit:contain;display:block;">`;
@@ -814,7 +752,7 @@
     }
 
     function getGridCols() {
-      const grid = document.getElementById('workGrid');
+      const grid = document.getElementById(currentGridId);
       if (!grid) return 3;
       const style = window.getComputedStyle(grid);
       return style.gridTemplateColumns.split(' ').length;
@@ -867,7 +805,7 @@
     });
 
     function attachTileClicks(filter) {
-      document.querySelectorAll('#workGrid .work-tile').forEach(tile => {
+      document.querySelectorAll(`#${currentGridId} .work-tile`).forEach(tile => {
         tile.addEventListener('click', e => {
           e.preventDefault();
           const id = tile.dataset.id;
@@ -928,6 +866,7 @@
           if (pageHeader) pageHeader.style.display = '';
         }
 
+        currentGridId = 'workGrid';
         loadProjects(ps => {
           const grid = document.getElementById('workGrid');
           const list = filter === 'all' ? ps : ps.filter(p => getCategories(p).includes(filter));
@@ -983,6 +922,14 @@
             })
             .catch(() => {});
         }
+        /* load stopmotion-tagged projects below hero */
+        currentGridId = 'smWorkGrid';
+        loadProjects(ps => {
+          const grid = document.getElementById('smWorkGrid');
+          const list = ps.filter(p => getCategories(p).includes('stopmotion'));
+          grid.innerHTML = list.length ? list.map(p => tileHTML(p, 'stopmotion')).join('') : '';
+          attachTileClicks('stopmotion');
+        });
 
       } else {
         location.hash = '';

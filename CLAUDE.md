@@ -177,6 +177,35 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 
 **shop.html:** Removed `<p class="header-label">The 6rac13 Shop</p>` — redundant label above the Shop h1.
 
+### 2026-10-03 — Mobile nav redesign + grid + postcard fix
+
+**index.html:**
+- Removed hamburger button, mobile nav overlay (HTML, CSS, JS) entirely
+- Nav links now always visible at all screen widths — matches Stone Rock style (Work / Shop / Contact top-right, Work has dropdown)
+- At ≤640px: `nav padding: 0 14px`, `nav-links gap: 12px`, font 11px/0.1em letter-spacing; dropdown right-aligned so it doesn't overflow on small screens
+- Work grid: removed `@media (max-width: 420px)` single-column override — grid stays 2 columns on all mobile sizes
+- Postcard: margin reduced to `0 0` (full bleed) and `pc-msg` top padding reduced from 20% → 13% so text area is taller and more usable on mobile
+
+### 2026-10-03 — Stop Motion project grid + YouTube hero + BTS embeds
+
+**index.html:**
+- Added `.sm-projects` section below `.sm-hero` in `#view-stopmotion` with a `work-grid` (`id="smWorkGrid"`)
+- Added `currentGridId` variable; `expandProject`, `getGridCols`, `attachTileClicks` now use it instead of hardcoding `'workGrid'`
+- Stopmotion route handler now sets `currentGridId = 'smWorkGrid'` and calls `loadProjects` to populate stop-motion-tagged tiles below the hero
+- Work route handler sets `currentGridId = 'workGrid'` before loading to reset context
+- `tileHTML` now handles `heroType === 'youtube'` — renders YouTube CDN thumbnail
+- `expandProject` now handles `heroType === 'youtube'` — renders iframe embed in expand panel
+- `btsLinkCardHTML` rewritten: YouTube/Vimeo links now render as `<iframe>` embeds (`.bts-embed` + `.bts-embed-wrap`); other platforms keep card link fallback
+- Added `getVimeoId()` helper; removed Vimeo thumbnail async approach (no longer needed)
+- CSS: `.expand-bts-link-grid` changed to `flex column`; added `.bts-embed`, `.bts-embed-wrap`, `.bts-embed-label` styles
+
+**admin.html:**
+- Added "YouTube" radio tab to Hero Type selector
+- Added YouTube URL input field (`#heroYoutubeField`) shown when YouTube selected; "Set YouTube Hero" button validates URL and shows thumbnail preview
+- `setHeroType()` handles `youtube` — hides upload zone, shows URL field
+- Save/load handles `heroType === 'youtube'` correctly (stores URL as `heroUrl`)
+- Project row thumbnail uses YouTube CDN thumb when `heroType === 'youtube'`
+
 ### 2026-09-30 — Revision pass C
 
 **All pages (index, contact, shop, work, project, stopmotion):**
