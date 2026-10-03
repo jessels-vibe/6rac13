@@ -616,6 +616,12 @@
       display: flex; align-items: center; justify-content: center;
       font-family: 'Jost',sans-serif; font-size: 9px; font-weight: 700; color: #fff;
     }
+    .pc-addr-dot {
+      width: 22px; height: 22px; background: #CC7700; border: 3px solid #fff;
+      border-radius: 50%; transform: translate(-50%,-50%); cursor: crosshair; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Jost',sans-serif; font-size: 11px; font-weight: 700; color: #fff;
+    }
     .pc-editor-vals {
       display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 10px 0 6px;
       font-family: 'Jost',sans-serif; font-size: 12px; color: rgba(0,0,0,0.5);
@@ -872,8 +878,9 @@
         </div>
         <div class="pc-editor-vals" id="pcEditorVals"></div>
         <p class="pc-editor-hint">
-          <span style="color:#CC1818">■</span> Red handles — drag edges to reposition the form area on the card.&nbsp;&nbsp;
-          <span style="color:#1C1CCC">●</span> Blue dot — drag to move where text starts typing.
+          <span style="color:#CC1818">■</span> Red handles — drag to move form boundary.&nbsp;&nbsp;
+          <span style="color:#1C1CCC">●</span> Blue dot (A) — drag to move where message text starts.&nbsp;&nbsp;
+          <span style="color:#CC7700">●</span> Orange dot (¶) — drag to reposition the address fields (From/email/Subject).
           &nbsp;&nbsp;<button id="pcResetBtn" style="background:none;border:1px solid rgba(0,0,0,0.2);color:rgba(0,0,0,0.45);font-family:Jost,sans-serif;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;cursor:pointer">Reset defaults</button>
         </p>
       </div>
@@ -1160,7 +1167,7 @@
       document.getElementById('tabPostcard').style.display   = activeTab === 'postcard'   ? 'block' : 'none';
       if (activeTab === 'stopmotion' && !smLoaded) { loadSMLayout(); smLoaded = true; }
       if (activeTab === 'home' && !homeLoaded) { loadHomeLayout(); homeLoaded = true; }
-      if (activeTab === 'postcard' && !pcLoaded) { pcLoaded = true; loadPCLayout(); }
+      if (activeTab === 'postcard' && !pcLoaded) { pcLoaded = true; requestAnimationFrame(() => loadPCLayout()); }
       updateSaveBar();
     });
   });
@@ -1929,8 +1936,8 @@
 
   // ─── POSTCARD LAYOUT EDITOR ──────────────────────────────────────────────
   const PC_DEFAULTS = {
-    desktop: { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:27, msgPadLeft:11 },
-    mobile:  { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:13, msgPadLeft:9  }
+    desktop: { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:27, msgPadLeft:11, addrPadBottom:22, addrPadLeft:7 },
+    mobile:  { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:13, msgPadLeft:9,  addrPadBottom:22, addrPadLeft:7 }
   };
   let pcData   = { desktop: {...PC_DEFAULTS.desktop}, mobile: {...PC_DEFAULTS.mobile} };
   let pcMode   = 'desktop';
@@ -1942,11 +1949,11 @@
   function pcRender() {
     const preview = document.getElementById('pcEditorPreview');
     if (!preview) return;
+    const W = preview.offsetWidth;
+    if (!W) { requestAnimationFrame(pcRender); return; }  // defer until laid out
     preview.querySelectorAll('.pc-el').forEach(e => e.remove());
     const lay = pcLay();
-    const W = preview.offsetWidth;
     const H = W * 1100 / 1774;
-    preview.style.height = H + 'px';
 
     const fL = lay.formLeft  / 100 * W;
     const fR = W - lay.formRight  / 100 * W;
@@ -1967,7 +1974,7 @@
     pcHandle(preview, 'top',    fL+fW/2, fT,      'ns-resize');
     pcHandle(preview, 'bottom', fL+fW/2, fB,      'ns-resize');
 
-    // text-start dot (msgPad% are % of pc-msg WIDTH = mW)
+    // message text-start dot (blue A)
     const dotX = fL + lay.msgPadLeft / 100 * mW;
     const dotY = fT + lay.msgPadTop  / 100 * mW;
     const dot  = pcEl(preview, 'div', 'pc-text-dot', dotX, dotY);
@@ -1976,10 +1983,20 @@
     dot.addEventListener('mousedown',  e => pcBeginDrag(e, 'dot'));
     dot.addEventListener('touchstart', e => pcBeginDrag(e, 'dot'), { passive: false });
 
+    // address fields dot (yellow ¶) — bottom-left of addr content area
+    const adX = fL + mW + lay.addrPadLeft   / 100 * mW;
+    const adY = fB      - lay.addrPadBottom  / 100 * mW;
+    const adDot = pcEl(preview, 'div', 'pc-addr-dot', adX, adY);
+    adDot.textContent = '¶';
+    adDot.dataset.h = 'addrDot';
+    adDot.addEventListener('mousedown',  e => pcBeginDrag(e, 'addrDot'));
+    adDot.addEventListener('touchstart', e => pcBeginDrag(e, 'addrDot'), { passive: false });
+
     const v = document.getElementById('pcEditorVals');
     if (v) v.innerHTML =
       `Form: left <strong>${lay.formLeft.toFixed(1)}%</strong>  right <strong>${lay.formRight.toFixed(1)}%</strong>  top <strong>${lay.formTop.toFixed(1)}%</strong>  bottom <strong>${lay.formBottom.toFixed(1)}%</strong>` +
-      `&nbsp;|&nbsp; Text: top <strong>${lay.msgPadTop.toFixed(1)}%</strong>  left <strong>${lay.msgPadLeft.toFixed(1)}%</strong>`;
+      `&nbsp;&nbsp;|&nbsp;&nbsp; Msg text: top <strong>${lay.msgPadTop.toFixed(1)}%</strong>  left <strong>${lay.msgPadLeft.toFixed(1)}%</strong>` +
+      `&nbsp;&nbsp;|&nbsp;&nbsp; Addr fields: bottom pad <strong>${lay.addrPadBottom.toFixed(1)}%</strong>  left pad <strong>${lay.addrPadLeft.toFixed(1)}%</strong>`;
   }
 
   function pcEl(parent, tag, cls, x, y, w, h) {
@@ -2030,6 +2047,14 @@
       const origDotY = fT + d.msgPadTop /100 * mW;
       lay.msgPadLeft = clamp((origDotX + dx - fL) / mW * 100, 0, 80);
       lay.msgPadTop  = clamp((origDotY + dy - fT) / mW * 100, 0, 90);
+    }
+    if (d.handle === 'addrDot') {
+      const fL = d.formLeft/100*d.W, fB = d.H - d.formBottom/100*d.H;
+      const mW = (1 - d.formLeft/100 - d.formRight/100)*d.W / 2;
+      const origAdX = fL + mW + d.addrPadLeft/100 * mW;
+      const origAdY = fB - d.addrPadBottom/100 * mW;
+      lay.addrPadLeft   = clamp((origAdX + dx - fL - mW) / mW * 100, 0, 40);
+      lay.addrPadBottom = clamp((fB - (origAdY + dy)) / mW * 100, 0, 60);
     }
     pcRender();
   }

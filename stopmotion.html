@@ -385,6 +385,11 @@
             if (data.msgPadTop  !== undefined) msg.style.paddingTop  = data.msgPadTop  + '%';
             if (data.msgPadLeft !== undefined) msg.style.paddingLeft = data.msgPadLeft + '%';
           }
+          const addr = document.querySelector('.pc-addr');
+          if (addr) {
+            if (data.addrPadBottom !== undefined) addr.style.paddingBottom = data.addrPadBottom + '%';
+            if (data.addrPadLeft   !== undefined) addr.style.paddingLeft   = data.addrPadLeft   + '%';
+          }
         }).catch(() => {});
     })();
   </script>
