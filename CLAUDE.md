@@ -177,6 +177,15 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 
 **shop.html:** Removed `<p class="header-label">The 6rac13 Shop</p>` — redundant label above the Shop h1.
 
+### 2026-10-03 — Nav consistency + mobile scroll fix
+
+**shop.html, contact.html, work.html, project.html, stopmotion.html:**
+- Removed hamburger button + mobile nav overlay (CSS, HTML, JS) from all 5 remaining pages
+- All pages now use the same compact inline nav as index.html (Jost, always visible, 11px at ≤640px, dropdown right-aligned)
+
+**index.html:**
+- Fixed mobile work grid cut-off: added `setTimeout(() => window.scrollTo(0, 0), 50)` alongside the immediate `scrollTo` in `showView()`. iOS Safari overrides scroll position after hashchange fires; the deferred call runs after the browser's scroll restoration and ensures the view starts at y=0.
+
 ### 2026-10-03 — Mobile nav redesign + grid + postcard fix
 
 **index.html:**
