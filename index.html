@@ -86,6 +86,10 @@
       color: var(--yellow); text-decoration: none; line-height: 0.85; transition: opacity 0.2s;
     }
     .hero-cta-link:hover { opacity: 0.72; }
+    @media (max-width: 640px) {
+      .hero-ctas { bottom: 10%; padding: 0 6%; }
+      .hero-cta-link { font-size: clamp(44px, 13vw, 72px); }
+    }
     .works-section { padding: 80px 28px 0; }
     .works-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
     .view-all-wrap { padding: 40px 28px; }
@@ -771,6 +775,7 @@
     /* ── Router ───────────────────────────────────────────────────────── */
     const VIEWS = ['home', 'work', 'stopmotion', 'project'];
     let videoHeroSet = false;
+    let homeLayoutApplied = false;
     let smLayoutLoaded = false;
 
     function showView(name) {
@@ -834,6 +839,20 @@
         showView('home');
         setNavActive('home', null);
         document.title = '6rac13';
+        /* apply saved mobile figure layout once */
+        if (!homeLayoutApplied && window.innerWidth < 768) {
+          homeLayoutApplied = true;
+          fetch('https://rac13-12cca-default-rtdb.firebaseio.com/homeLayout/mobile.json')
+            .then(r => r.json())
+            .then(data => {
+              if (!data || !data.blueFig || !data.redFig) return;
+              const bf = document.querySelector('.c-blue-fig');
+              const rf = document.querySelector('.c-red-fig');
+              if (bf) bf.style.cssText = `left:${data.blueFig.left}%;top:${data.blueFig.top}%;width:${data.blueFig.width}%;bottom:auto;position:absolute;z-index:20;`;
+              if (rf) rf.style.cssText = `left:${data.redFig.left}%;top:${data.redFig.top}%;width:${data.redFig.width}%;bottom:auto;position:absolute;z-index:20;`;
+            })
+            .catch(() => {});
+        }
         loadProjects(ps => {
           const grid = document.getElementById('worksGrid');
           grid.innerHTML = ps.length ? ps.map(p => tileHTML(p, null)).join('') : '';

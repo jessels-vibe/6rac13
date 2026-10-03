@@ -596,6 +596,20 @@
     }
     .sm-upload-btn:hover { background: rgba(242,200,0,0.08); }
     .sm-upload-btn input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    /* ── HOME LAYOUT EDITOR ─────────────────────────────────────────── */
+    .home-canvas {
+      position: relative; width: 320px; aspect-ratio: 9/16;
+      background: #1C1CCC; overflow: hidden; user-select: none; cursor: default;
+      border: 1px solid rgba(255,239,94,0.2);
+    }
+    .home-canvas-ref { position: absolute; left: 50%; top: 18%; transform: translateX(-50%); width: 72%; pointer-events: none; z-index: 2; }
+    .home-canvas-ref img { width: 100%; display: block; }
+    .home-canvas-cta { position: absolute; bottom: 7%; left: 0; right: 0; text-align: center; font-family: 'Jost',sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(242,200,0,0.35); pointer-events: none; z-index: 2; }
+    .home-fig-item { position: absolute; cursor: move; z-index: 10; }
+    .home-fig-item img { width: 100%; display: block; pointer-events: none; }
+    .home-fig-item.selected > img { outline: 2px solid rgba(255,255,255,0.85); outline-offset: 1px; }
+    .home-fig-resize { position: absolute; bottom: -6px; right: -6px; width: 12px; height: 12px; background: var(--yellow); border: 2px solid #1C1CCC; cursor: se-resize; z-index: 20; display: none; }
+    .home-fig-item.selected .home-fig-resize { display: block; }
     .sm-canvas-wrap { flex: 1; min-width: 0; }
     .sm-canvas {
       position: relative; width: 100%; aspect-ratio: 16/9;
@@ -691,6 +705,7 @@
         <button class="tab-btn active" data-tab="projects" id="tabBtnProjects">Projects</button>
         <button class="tab-btn" data-tab="shop" id="tabBtnShop">Shop</button>
         <button class="tab-btn" data-tab="stopmotion" id="tabBtnStopMotion">Stop Motion</button>
+        <button class="tab-btn" data-tab="home" id="tabBtnHome">Home</button>
       </div>
       <button class="logout-btn" id="logoutBtn">Logout</button>
     </header>
@@ -781,6 +796,33 @@
           <div class="sm-toolbar" id="smToolbar">
             <span class="sm-hint">Click a character to add · Drag to move · Corner handles to resize · ↺ to rotate</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HOME LAYOUT TAB ────────────────────────────────────────────── -->
+    <div class="tab-panel" id="tabHome" style="display:none">
+      <div class="panel-header">
+        <span style="font-family:Jost,sans-serif;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:0.08em;">Mobile home page — drag figures to reposition</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <a href="https://6rac13.com" target="_blank" rel="noopener"
+             style="font-family:Jost,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;border:1px solid rgba(255,255,255,0.2);padding:6px 12px;transition:color 0.2s,border-color 0.2s"
+             onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.5)'"
+             onmouseout="this.style.color='rgba(255,255,255,0.55)';this.style.borderColor='rgba(255,255,255,0.2)'">
+            View Live ↗
+          </a>
+          <button class="sm-save-btn" id="homeLayoutSaveBtn">Save Layout</button>
+        </div>
+      </div>
+      <div style="background:rgba(242,200,0,0.1);border:1px solid rgba(242,200,0,0.3);padding:10px 14px;margin-bottom:16px;font-family:Jost,sans-serif;font-size:12px;line-height:1.5;color:rgba(255,255,255,0.8);">
+        <strong style="color:#F2C800">This is the mobile home layout.</strong> Drag the figures to reposition. Corner handle (yellow square) to resize. Hit Save Layout to publish.
+      </div>
+      <div style="display:flex;justify-content:center;padding:8px 0 24px">
+        <div class="home-canvas" id="homeCanvas">
+          <div class="home-canvas-ref"><img src="assets/id-card.png" alt=""></div>
+          <div class="home-canvas-cta">Work · Contact</div>
+          <div class="home-fig-item" id="homeFigBlue" data-fig="blue"><img src="assets/blue-fig.png" alt=""><div class="home-fig-resize"></div></div>
+          <div class="home-fig-item" id="homeFigRed"  data-fig="red"><img src="assets/red-fig.png"  alt=""><div class="home-fig-resize"></div></div>
         </div>
       </div>
     </div>
@@ -1062,7 +1104,9 @@
       document.getElementById('tabProjects').style.display   = activeTab === 'projects'   ? 'block' : 'none';
       document.getElementById('tabShop').style.display       = activeTab === 'shop'       ? 'block' : 'none';
       document.getElementById('tabStopMotion').style.display = activeTab === 'stopmotion' ? 'block' : 'none';
+      document.getElementById('tabHome').style.display       = activeTab === 'home'       ? 'block' : 'none';
       if (activeTab === 'stopmotion' && !smLoaded) { loadSMLayout(); smLoaded = true; }
+      if (activeTab === 'home' && !homeLoaded) { loadHomeLayout(); homeLoaded = true; }
       updateSaveBar();
     });
   });
@@ -1075,7 +1119,7 @@
   }
 
   function updateSaveBar() {
-    if (activeTab === 'stopmotion') { document.getElementById('saveBar').classList.remove('visible'); return; }
+    if (activeTab === 'stopmotion' || activeTab === 'home') { document.getElementById('saveBar').classList.remove('visible'); return; }
     const dirty = activeTab === 'projects' ? projDirty : shopDirty;
     document.getElementById('saveBar').classList.toggle('visible', dirty);
   }
@@ -1736,6 +1780,98 @@
   let smNextZ      = 1;
   let smCustomChars= [];
   let smLoaded     = false;
+
+  // ─── HOME LAYOUT EDITOR ──────────────────────────────────────────────
+  let homeLoaded = false;
+  let homeLayout = {
+    blueFig: { left: 2,  top: 54, width: 24 },
+    redFig:  { left: 74, top: 54, width: 24 }
+  };
+  let homeDrag     = null;
+  let homeSelected = null;
+
+  function renderHomeCanvas() {
+    ['blue', 'red'].forEach(fig => {
+      const el  = document.getElementById(fig === 'blue' ? 'homeFigBlue' : 'homeFigRed');
+      const key = fig === 'blue' ? 'blueFig' : 'redFig';
+      const d   = homeLayout[key];
+      el.style.left  = d.left  + '%';
+      el.style.top   = d.top   + '%';
+      el.style.width = d.width + '%';
+      el.classList.toggle('selected', homeSelected === fig);
+    });
+  }
+
+  function attachHomeEvents() {
+    const canvas = document.getElementById('homeCanvas');
+
+    canvas.addEventListener('mousedown', e => {
+      if (e.target === canvas) { homeSelected = null; renderHomeCanvas(); }
+    });
+
+    ['blue', 'red'].forEach(fig => {
+      const el  = document.getElementById(fig === 'blue' ? 'homeFigBlue' : 'homeFigRed');
+      const key = fig === 'blue' ? 'blueFig' : 'redFig';
+
+      el.addEventListener('mousedown', e => {
+        if (e.target.classList.contains('home-fig-resize')) return;
+        e.preventDefault(); e.stopPropagation();
+        homeSelected = fig; renderHomeCanvas();
+        const rect = canvas.getBoundingClientRect();
+        homeDrag = { type: 'move', key,
+          startX: e.clientX, startY: e.clientY,
+          startLeft: homeLayout[key].left, startTop: homeLayout[key].top,
+          cW: rect.width, cH: rect.height };
+      });
+
+      el.querySelector('.home-fig-resize').addEventListener('mousedown', e => {
+        e.preventDefault(); e.stopPropagation();
+        homeSelected = fig; renderHomeCanvas();
+        const rect = canvas.getBoundingClientRect();
+        homeDrag = { type: 'resize', key,
+          startX: e.clientX, startWidth: homeLayout[key].width, cW: rect.width };
+      });
+    });
+  }
+
+  document.addEventListener('mousemove', e => {
+    if (!homeDrag) return;
+    const d = homeDrag;
+    if (d.type === 'move') {
+      const dx = (e.clientX - d.startX) / d.cW * 100;
+      const dy = (e.clientY - d.startY) / d.cH * 100;
+      homeLayout[d.key].left = Math.max(-10, Math.min(95, d.startLeft + dx));
+      homeLayout[d.key].top  = Math.max(0,   Math.min(95, d.startTop  + dy));
+    } else {
+      const dx = (e.clientX - d.startX) / d.cW * 100;
+      homeLayout[d.key].width = Math.max(5, Math.min(70, d.startWidth + dx));
+    }
+    renderHomeCanvas();
+  });
+
+  document.addEventListener('mouseup', () => { if (homeDrag) homeDrag = null; });
+
+  document.getElementById('homeLayoutSaveBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('homeLayoutSaveBtn');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    try {
+      await db.ref('homeLayout/mobile').set(homeLayout);
+      btn.textContent = 'Saved ✓';
+      setTimeout(() => { btn.disabled = false; btn.textContent = 'Save Layout'; }, 2000);
+    } catch (err) {
+      alert('Save failed: ' + err.message);
+      btn.disabled = false; btn.textContent = 'Save Layout';
+    }
+  });
+
+  function loadHomeLayout() {
+    db.ref('homeLayout/mobile').once('value', snap => {
+      const data = snap.val();
+      if (data && data.blueFig && data.redFig) homeLayout = data;
+      renderHomeCanvas();
+      attachHomeEvents();
+    });
+  }
 
   function smGenId() { return 'sm_' + Date.now() + '_' + Math.random().toString(36).slice(2,6); }
 
