@@ -159,6 +159,12 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 
 **stopmotion.html:** On page load, reads `/stopmotionLayout/desktop` or `/mobile` from Firebase (based on viewport width < 768px). Replaces hardcoded character images with dynamically positioned ones using saved position/size/rotation/flip. Falls back to hardcoded CSS positions if no layout is saved yet.
 
+### 2026-10-03 — Stop Motion title + layout loader fix
+
+**stopmotion.html:**
+- Fixed title cut-off: changed `.sm-title` from `top: 10%` → `top: calc(var(--nav-h) + 20px)` and `line-height: 0.88` → `line-height: 1` so it clears the fixed nav.
+- Replaced Firebase SDK layout loader (compat SDK IIFE) with a simple `fetch` call to the Firebase REST API (`stopmotionLayout/{key}.json`). The SDK approach was silently failing on the live site; the REST API is public-read (rules: `.read: true`), requires no initialization, and is more reliable. Removed the two Firebase compat `<script>` tags from the page.
+
 ### 2026-10-02 — Shop header cleanup
 
 **shop.html:** Removed `<p class="header-label">The 6rac13 Shop</p>` — redundant label above the Shop h1.
