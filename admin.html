@@ -598,10 +598,15 @@
     .sm-upload-btn input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
     /* ── POSTCARD EDITOR ────────────────────────────────────────────── */
     .pc-editor-preview {
-      position: relative; overflow: hidden; aspect-ratio: 1774/1100;
+      position: relative;
       border: 1px solid rgba(255,255,255,0.15); user-select: none; cursor: default;
     }
-    .pc-editor-img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; pointer-events: none; }
+    .pc-editor-img { width: 100%; height: auto; display: block; pointer-events: none; }
+    .pc-clip-line {
+      position: absolute; left: 0; right: 0; height: 2px;
+      background: repeating-linear-gradient(90deg, rgba(180,0,180,0.55) 0 8px, transparent 8px 14px);
+      pointer-events: none; z-index: 10;
+    }
     .pc-el { position: absolute; }
     .pc-form-rect { border: 2px solid rgba(220,60,60,0.8); pointer-events: none; }
     .pc-msg-area { background: rgba(28,28,204,0.18); border: 1px dashed rgba(100,100,255,0.7); pointer-events: none; }
@@ -1967,6 +1972,18 @@
     const fT = lay.formTop    / 100 * H;
     const fB = H - lay.formBottom / 100 * H;
     const fW = fR - fL, fH = fB - fT, mW = fW / 2;
+
+    // dashed purple line showing where live pages clip the image
+    const clipEl = document.createElement('div');
+    clipEl.className = 'pc-el pc-clip-line';
+    clipEl.style.top = H + 'px';
+    clipEl.title = 'Live pages clip here';
+    preview.appendChild(clipEl);
+    const clipLbl = document.createElement('div');
+    clipLbl.className = 'pc-el';
+    clipLbl.style.cssText = `position:absolute;top:${H+4}px;left:4px;font-family:Jost,sans-serif;font-size:9px;color:rgba(180,0,180,0.6);letter-spacing:0.08em;pointer-events:none;`;
+    clipLbl.textContent = '▲ live page clips here';
+    preview.appendChild(clipLbl);
 
     // form outline
     pcEl(preview, 'div', 'pc-form-rect', fL, fT, fW, fH);
