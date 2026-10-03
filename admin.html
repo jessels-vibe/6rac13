@@ -567,6 +567,99 @@
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── STOP MOTION EDITOR ─────────────────────────────────────── */
+    .sm-editor { display: flex; gap: 16px; align-items: flex-start; }
+    .sm-palette {
+      width: 148px; flex-shrink: 0;
+      border: 1px solid var(--border);
+      max-height: calc(100vh - 180px); overflow-y: auto;
+    }
+    .sm-palette-section {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--border);
+      font-weight: 600; position: sticky; top: 0; background: var(--surface); z-index: 1;
+    }
+    .sm-char-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 8px 6px; background: none; border: none; border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: background 0.15s; width: 100%;
+    }
+    .sm-char-btn:hover { background: rgba(242,200,0,0.08); }
+    .sm-char-btn img { width: 72px; height: 72px; object-fit: contain; display: block; background: rgba(28,28,204,0.06); }
+    .sm-char-btn span { font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-align: center; line-height: 1.2; }
+    .sm-upload-btn {
+      display: block; padding: 12px 8px; background: none; border: none;
+      border-bottom: 1px solid var(--border); cursor: pointer; width: 100%; text-align: center;
+      font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+      font-weight: 600; color: var(--yellow); transition: background 0.15s; position: relative;
+    }
+    .sm-upload-btn:hover { background: rgba(242,200,0,0.08); }
+    .sm-upload-btn input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .sm-canvas-wrap { flex: 1; min-width: 0; }
+    .sm-canvas {
+      position: relative; width: 100%; aspect-ratio: 16/9;
+      background: #1C1CCC; overflow: hidden; user-select: none; cursor: default;
+    }
+    .sm-canvas.mobile-view { aspect-ratio: 9/16; max-width: 320px; }
+    .sm-item { position: absolute; cursor: move; transform-origin: center center; }
+    .sm-item img { width: 100%; display: block; pointer-events: none; mix-blend-mode: multiply; }
+    .sm-item.selected > img { outline: 2px solid rgba(255,255,255,0.9); outline-offset: 1px; }
+    .sm-handle {
+      position: absolute; width: 10px; height: 10px;
+      background: #fff; border: 2px solid #1C1CCC; display: none; z-index: 200;
+    }
+    .sm-item.selected .sm-handle { display: block; }
+    .sm-handle-nw { top: -5px; left: -5px; cursor: nw-resize; }
+    .sm-handle-ne { top: -5px; right: -5px; cursor: ne-resize; }
+    .sm-handle-sw { bottom: -5px; left: -5px; cursor: sw-resize; }
+    .sm-handle-se { bottom: -5px; right: -5px; cursor: se-resize; }
+    .sm-handle-rot {
+      top: -26px; left: calc(50% - 5px); cursor: grab;
+      border-radius: 50%; border-color: var(--yellow); background: var(--yellow);
+    }
+    .sm-item.selected::before {
+      content: ''; position: absolute; top: -21px; left: calc(50% - 0.5px);
+      width: 1px; height: 19px; background: rgba(255,255,255,0.7);
+    }
+    .sm-toolbar {
+      display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+      padding: 10px 0; min-height: 42px;
+    }
+    .sm-tool-btn {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      cursor: pointer; padding: 5px 11px; font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.15s;
+    }
+    .sm-tool-btn:hover { color: var(--text); border-color: rgba(0,0,0,0.3); }
+    .sm-tool-btn.danger:hover { color: var(--red); border-color: var(--red); }
+    .sm-rot-field {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600;
+    }
+    .sm-rot-field input {
+      width: 52px; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: var(--text); font-family: 'Jost', sans-serif; font-size: 12px;
+      padding: 5px 7px; outline: none; text-align: center;
+    }
+    .sm-rot-field input:focus { border-color: rgba(242,200,0,0.4); }
+    .sm-view-toggle { display: flex; }
+    .sm-view-btn {
+      background: none; border: 1px solid var(--border); border-right: none;
+      cursor: pointer; padding: 6px 14px; font-family: 'Jost', sans-serif; font-weight: 600;
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); transition: all 0.2s;
+    }
+    .sm-view-btn:last-child { border-right: 1px solid var(--border); }
+    .sm-view-btn.active { background: rgba(242,200,0,0.12); color: var(--yellow); border-color: rgba(242,200,0,0.3); }
+    .sm-save-btn {
+      background: var(--yellow); color: var(--dark); border: none; cursor: pointer;
+      padding: 8px 20px; font-family: 'Jost', sans-serif; font-weight: 700;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; transition: opacity 0.2s;
+    }
+    .sm-save-btn:hover { opacity: 0.85; }
+    .sm-save-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .sm-hint { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -597,6 +690,7 @@
       <div class="admin-tabs">
         <button class="tab-btn active" data-tab="projects" id="tabBtnProjects">Projects</button>
         <button class="tab-btn" data-tab="shop" id="tabBtnShop">Shop</button>
+        <button class="tab-btn" data-tab="stopmotion" id="tabBtnStopMotion">Stop Motion</button>
       </div>
       <button class="logout-btn" id="logoutBtn">Logout</button>
     </header>
@@ -648,6 +742,37 @@
       </div>
 
       <div id="shopList"></div>
+    </div>
+
+    <!-- ── STOP MOTION TAB ──────────────────────────────────────────── -->
+    <div class="tab-panel" id="tabStopMotion" style="display:none">
+      <div class="panel-header">
+        <div class="panel-stats">
+          <div class="stat">
+            <span class="stat-val" id="smLayerCount">0</span>
+            <span class="stat-label">Layers</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="sm-view-toggle">
+            <button class="sm-view-btn active" id="smViewDesktop">Desktop</button>
+            <button class="sm-view-btn" id="smViewMobile">Mobile</button>
+          </div>
+          <button class="sm-save-btn" id="smSaveBtn">Save Layout</button>
+        </div>
+      </div>
+
+      <div class="sm-editor">
+        <div class="sm-palette" id="smPalette">
+          <div class="sm-palette-section">Characters</div>
+        </div>
+        <div class="sm-canvas-wrap">
+          <div class="sm-canvas" id="smCanvas"></div>
+          <div class="sm-toolbar" id="smToolbar">
+            <span class="sm-hint">Click a character to add · Drag to move · Corner handles to resize · ↺ to rotate</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- save bar -->
@@ -918,8 +1043,10 @@
     btn.addEventListener('click', () => {
       activeTab = btn.dataset.tab;
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b === btn));
-      document.getElementById('tabProjects').style.display = activeTab === 'projects' ? 'block' : 'none';
-      document.getElementById('tabShop').style.display     = activeTab === 'shop'     ? 'block' : 'none';
+      document.getElementById('tabProjects').style.display   = activeTab === 'projects'   ? 'block' : 'none';
+      document.getElementById('tabShop').style.display       = activeTab === 'shop'       ? 'block' : 'none';
+      document.getElementById('tabStopMotion').style.display = activeTab === 'stopmotion' ? 'block' : 'none';
+      if (activeTab === 'stopmotion' && !smLoaded) { loadSMLayout(); smLoaded = true; }
       updateSaveBar();
     });
   });
@@ -932,6 +1059,7 @@
   }
 
   function updateSaveBar() {
+    if (activeTab === 'stopmotion') { document.getElementById('saveBar').classList.remove('visible'); return; }
     const dirty = activeTab === 'projects' ? projDirty : shopDirty;
     document.getElementById('saveBar').classList.toggle('visible', dirty);
   }
@@ -1539,6 +1667,352 @@
     loadProjects();
     updateSaveBar();
   }
+
+  // ─── STOP MOTION EDITOR ──────────────────────────────────────────────
+
+  const SM_BUILTINS = [
+    { name: 'Red Fig',       src: 'assets/red-fig.png' },
+    { name: 'Blue Fig',      src: 'assets/blue-fig.png' },
+    { name: 'Rabbit',        src: 'assets/rabbit.png' },
+    { name: 'Flytrap',       src: 'assets/venus-flytrap.png' },
+    { name: '2-Head Worm',   src: 'assets/two-head-worm.png' },
+    { name: 'Millipede',     src: 'assets/millipede.png' },
+    { name: 'Mama Bird',     src: 'assets/mama-bird.png' },
+    { name: 'Metal Fly',     src: 'assets/metal-fly.png' },
+    { name: 'Snake',         src: 'assets/snake.png' },
+    { name: 'Worm',          src: 'assets/worm.png' },
+  ];
+
+  let smView       = 'desktop';
+  let smLayers     = { desktop: [], mobile: [] };
+  let smSelected   = null;
+  let smDrag       = null;
+  let smNextZ      = 1;
+  let smCustomChars= [];
+  let smLoaded     = false;
+
+  function smGenId() { return 'sm_' + Date.now() + '_' + Math.random().toString(36).slice(2,6); }
+
+  function smGetLayer(id) {
+    return smLayers[smView].find(l => l.id === id) || null;
+  }
+
+  function smBuildTransform(layer) {
+    const parts = [];
+    if (layer.rotation) parts.push(`rotate(${layer.rotation}deg)`);
+    if (layer.flipH) parts.push('scaleX(-1)');
+    if (layer.flipV) parts.push('scaleY(-1)');
+    return parts.join(' ');
+  }
+
+  // ── PALETTE ──────────────────────────────────────────────────────────
+  function renderSMPalette() {
+    const palette = document.getElementById('smPalette');
+    palette.innerHTML = '<div class="sm-palette-section">Characters</div>';
+
+    [...SM_BUILTINS, ...smCustomChars].forEach(char => {
+      const btn = document.createElement('button');
+      btn.className = 'sm-char-btn';
+      btn.innerHTML = `<img src="${char.src}" alt="${char.name}"><span>${char.name}</span>`;
+      btn.addEventListener('click', () => smAddLayer(char.src, char.name));
+      palette.appendChild(btn);
+    });
+
+    const uploadBtn = document.createElement('label');
+    uploadBtn.className = 'sm-upload-btn';
+    uploadBtn.innerHTML = '+ Upload Image<input type="file" id="smUploadFile" accept="image/*" multiple>';
+    palette.appendChild(uploadBtn);
+
+    document.getElementById('smUploadFile').addEventListener('change', smHandleUpload);
+  }
+
+  // ── CANVAS ───────────────────────────────────────────────────────────
+  function renderSMCanvas() {
+    const canvas = document.getElementById('smCanvas');
+    canvas.querySelectorAll('.sm-item').forEach(el => el.remove());
+
+    smLayers[smView]
+      .slice()
+      .sort((a, b) => (a.zIndex || 1) - (b.zIndex || 1))
+      .forEach(layer => {
+        const el = document.createElement('div');
+        el.className = 'sm-item' + (smSelected === layer.id ? ' selected' : '');
+        el.dataset.id = layer.id;
+        el.style.cssText = `left:${layer.left}%;top:${layer.top}%;width:${layer.width}%;z-index:${layer.zIndex||1};`;
+        const tf = smBuildTransform(layer);
+        if (tf) el.style.transform = tf;
+
+        const img = document.createElement('img');
+        img.src = layer.src;
+        img.draggable = false;
+        el.appendChild(img);
+
+        ['nw','ne','sw','se'].forEach(dir => {
+          const h = document.createElement('div');
+          h.className = `sm-handle sm-handle-${dir}`;
+          h.dataset.handle = dir;
+          el.appendChild(h);
+        });
+
+        const rot = document.createElement('div');
+        rot.className = 'sm-handle sm-handle-rot';
+        rot.dataset.handle = 'rot';
+        el.appendChild(rot);
+
+        canvas.appendChild(el);
+      });
+
+    attachSMItemEvents();
+    updateSMLayerCount();
+  }
+
+  function attachSMItemEvents() {
+    const canvas = document.getElementById('smCanvas');
+
+    canvas.addEventListener('mousedown', e => {
+      if (e.target === canvas) smSelectLayer(null);
+    }, { once: true });
+
+    canvas.querySelectorAll('.sm-item').forEach(el => {
+      const id = el.dataset.id;
+
+      el.addEventListener('mousedown', e => {
+        if (e.target.classList.contains('sm-handle')) return;
+        e.preventDefault();
+        smSelectLayer(id);
+        const rect  = canvas.getBoundingClientRect();
+        const layer = smGetLayer(id);
+        smDrag = { type: 'move', id,
+          startX: e.clientX, startY: e.clientY,
+          startLeft: layer.left, startTop: layer.top,
+          cW: rect.width, cH: rect.height };
+      });
+
+      el.querySelectorAll('.sm-handle').forEach(handle => {
+        handle.addEventListener('mousedown', e => {
+          e.preventDefault(); e.stopPropagation();
+          smSelectLayer(id);
+          const rect  = canvas.getBoundingClientRect();
+          const layer = smGetLayer(id);
+          const elRect = el.getBoundingClientRect();
+
+          if (handle.dataset.handle === 'rot') {
+            smDrag = { type: 'rotate', id,
+              cx: elRect.left + elRect.width / 2,
+              cy: elRect.top  + elRect.height / 2 };
+          } else {
+            smDrag = { type: 'resize', dir: handle.dataset.handle, id,
+              startX: e.clientX, startY: e.clientY,
+              startLeft: layer.left, startTop: layer.top,
+              startWidth: layer.width, cW: rect.width, cH: rect.height };
+          }
+        });
+      });
+    });
+  }
+
+  document.addEventListener('mousemove', e => {
+    if (!smDrag) return;
+    const canvas = document.getElementById('smCanvas');
+    if (!canvas) return;
+    const layer  = smGetLayer(smDrag.id);
+    if (!layer) return;
+    const el = canvas.querySelector(`[data-id="${smDrag.id}"]`);
+
+    if (smDrag.type === 'move') {
+      const dx = (e.clientX - smDrag.startX) / smDrag.cW * 100;
+      const dy = (e.clientY - smDrag.startY) / smDrag.cH * 100;
+      layer.left = smDrag.startLeft + dx;
+      layer.top  = smDrag.startTop  + dy;
+      if (el) { el.style.left = layer.left + '%'; el.style.top = layer.top + '%'; }
+
+    } else if (smDrag.type === 'resize') {
+      const dx  = (e.clientX - smDrag.startX) / smDrag.cW * 100;
+      const dir = smDrag.dir;
+      let newW  = smDrag.startWidth;
+      let newL  = smDrag.startLeft;
+
+      if (dir === 'se' || dir === 'ne') {
+        newW = Math.max(3, smDrag.startWidth + dx);
+      } else {
+        newW = Math.max(3, smDrag.startWidth - dx);
+        newL = smDrag.startLeft + (smDrag.startWidth - newW);
+      }
+      layer.width = newW; layer.left = newL;
+      if (el) { el.style.width = newW + '%'; el.style.left = newL + '%'; }
+
+    } else if (smDrag.type === 'rotate') {
+      const angle = Math.atan2(e.clientY - smDrag.cy, e.clientX - smDrag.cx) * 180 / Math.PI + 90;
+      layer.rotation = Math.round(angle);
+      if (el) { const tf = smBuildTransform(layer); el.style.transform = tf || ''; }
+      const inp = document.getElementById('smRotInput');
+      if (inp) inp.value = layer.rotation;
+    }
+  });
+
+  document.addEventListener('mouseup', () => { smDrag = null; });
+
+  document.addEventListener('keydown', e => {
+    if (activeTab !== 'stopmotion') return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if ((e.key === 'Delete' || e.key === 'Backspace') && smSelected) {
+      e.preventDefault();
+      smDeleteSelected();
+    }
+  });
+
+  function smAddLayer(src, name) {
+    const layer = { id: smGenId(), src, name,
+      left: 30, top: 20, width: 25,
+      rotation: 0, flipH: false, flipV: false,
+      zIndex: smNextZ++ };
+    smLayers[smView].push(layer);
+    renderSMCanvas();
+    smSelectLayer(layer.id);
+  }
+
+  function smSelectLayer(id) {
+    smSelected = id;
+    renderSMCanvas();
+    updateSMToolbar();
+  }
+
+  function smDeleteSelected() {
+    if (!smSelected) return;
+    smLayers[smView] = smLayers[smView].filter(l => l.id !== smSelected);
+    smSelected = null;
+    renderSMCanvas();
+    updateSMToolbar();
+  }
+
+  function updateSMLayerCount() {
+    const el = document.getElementById('smLayerCount');
+    if (el) el.textContent = smLayers[smView].length;
+  }
+
+  function updateSMToolbar() {
+    const tb = document.getElementById('smToolbar');
+    if (!tb) return;
+
+    if (!smSelected) {
+      tb.innerHTML = '<span class="sm-hint">Click a character to add · Drag to move · Corner handles to resize · ↺ to rotate</span>';
+      return;
+    }
+
+    const layer = smGetLayer(smSelected);
+    if (!layer) { tb.innerHTML = ''; return; }
+
+    tb.innerHTML = `
+      <button class="sm-tool-btn" id="smFlipH">Flip H</button>
+      <button class="sm-tool-btn" id="smFlipV">Flip V</button>
+      <div class="sm-rot-field">
+        <span>Rotate</span>
+        <input type="number" id="smRotInput" value="${Math.round(layer.rotation||0)}" step="1">
+        <span>°</span>
+      </div>
+      <button class="sm-tool-btn" id="smBringFwd">↑ Forward</button>
+      <button class="sm-tool-btn" id="smSendBack">↓ Back</button>
+      <button class="sm-tool-btn danger" id="smDeleteBtn">Delete</button>`;
+
+    document.getElementById('smFlipH').addEventListener('click', () => {
+      const l = smGetLayer(smSelected); if (!l) return;
+      l.flipH = !l.flipH; renderSMCanvas(); updateSMToolbar();
+    });
+    document.getElementById('smFlipV').addEventListener('click', () => {
+      const l = smGetLayer(smSelected); if (!l) return;
+      l.flipV = !l.flipV; renderSMCanvas(); updateSMToolbar();
+    });
+    document.getElementById('smRotInput').addEventListener('input', e => {
+      const l = smGetLayer(smSelected); if (!l) return;
+      l.rotation = +e.target.value || 0;
+      const canvas = document.getElementById('smCanvas');
+      const el = canvas && canvas.querySelector(`[data-id="${smSelected}"]`);
+      if (el) { const tf = smBuildTransform(l); el.style.transform = tf || ''; }
+    });
+    document.getElementById('smBringFwd').addEventListener('click', () => {
+      const l = smGetLayer(smSelected); if (!l) return;
+      l.zIndex = ++smNextZ; renderSMCanvas(); smSelectLayer(smSelected);
+    });
+    document.getElementById('smSendBack').addEventListener('click', () => {
+      const l = smGetLayer(smSelected); if (!l) return;
+      l.zIndex = Math.max(1, (l.zIndex||1) - 2); renderSMCanvas(); smSelectLayer(smSelected);
+    });
+    document.getElementById('smDeleteBtn').addEventListener('click', smDeleteSelected);
+  }
+
+  // ── VIEW TOGGLE ───────────────────────────────────────────────────────
+  document.getElementById('smViewDesktop').addEventListener('click', () => {
+    smView = 'desktop';
+    document.getElementById('smViewDesktop').classList.add('active');
+    document.getElementById('smViewMobile').classList.remove('active');
+    document.getElementById('smCanvas').classList.remove('mobile-view');
+    smSelected = null; renderSMCanvas(); updateSMToolbar();
+  });
+
+  document.getElementById('smViewMobile').addEventListener('click', () => {
+    smView = 'mobile';
+    document.getElementById('smViewMobile').classList.add('active');
+    document.getElementById('smViewDesktop').classList.remove('active');
+    document.getElementById('smCanvas').classList.add('mobile-view');
+    smSelected = null; renderSMCanvas(); updateSMToolbar();
+  });
+
+  // ── UPLOAD ────────────────────────────────────────────────────────────
+  async function smHandleUpload(e) {
+    const files = [...e.target.files];
+    for (const file of files) {
+      const ext  = file.name.split('.').pop();
+      const name = file.name.replace(/\.[^.]+$/, '');
+      const path = `stopmotion/chars/${Date.now()}_${name}.${ext}`;
+      const ref  = storage.ref(path);
+      await new Promise((res, rej) => {
+        ref.put(file).on('state_changed', null, rej, async () => {
+          const url = await ref.getDownloadURL();
+          smCustomChars.push({ name, src: url });
+          await db.ref('stopmotionChars').set(smCustomChars);
+          renderSMPalette();
+          res();
+        });
+      });
+    }
+    e.target.value = '';
+  }
+
+  // ── SAVE / LOAD ───────────────────────────────────────────────────────
+  document.getElementById('smSaveBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('smSaveBtn');
+    btn.textContent = 'Saving…'; btn.disabled = true;
+    try {
+      const toObj = arr => { const o = {}; arr.forEach(l => { o[l.id] = l; }); return o; };
+      await db.ref('stopmotionLayout').set({
+        desktop: smLayers.desktop.length ? toObj(smLayers.desktop) : null,
+        mobile:  smLayers.mobile.length  ? toObj(smLayers.mobile)  : null
+      });
+      btn.textContent = 'Saved ✓';
+      setTimeout(() => { btn.textContent = 'Save Layout'; btn.disabled = false; }, 2000);
+    } catch(err) {
+      alert('Save failed: ' + err.message);
+      btn.textContent = 'Save Layout'; btn.disabled = false;
+    }
+  });
+
+  function loadSMLayout() {
+    db.ref('stopmotionLayout').once('value', snap => {
+      const data = snap.val() || {};
+      smLayers.desktop = data.desktop ? Object.values(data.desktop) : [];
+      smLayers.mobile  = data.mobile  ? Object.values(data.mobile)  : [];
+      const all = [...smLayers.desktop, ...smLayers.mobile];
+      if (all.length) smNextZ = Math.max(...all.map(l => l.zIndex || 1)) + 1;
+      renderSMCanvas();
+    });
+    db.ref('stopmotionChars').once('value', snap => {
+      smCustomChars = snap.val() || [];
+      renderSMPalette();
+    });
+  }
+
+  // Init palette immediately so it's ready when tab opens
+  renderSMPalette();
 
   async function saveShopItem() {
     const title      = document.getElementById('sTitle').value.trim();

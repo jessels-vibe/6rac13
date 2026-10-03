@@ -325,6 +325,10 @@
     </div>
   </div>
 
+  <!-- Firebase (layout reader) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
   <!-- HERO -->
   <section class="sm-hero">
     <h1 class="sm-title">Stop Motion</h1>
@@ -385,6 +389,61 @@
       mobileNavClose.addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; });
       mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mobileNav.classList.remove('open'); document.body.style.overflow = ''; }));
     }
+
+    // ── FIREBASE LAYOUT LOADER ────────────────────────────────────────
+    (function() {
+      const firebaseConfig = {
+        apiKey:            "AIzaSyDmNYdW7lFABFWjA_eSEDqmd2YuOrX32g8",
+        authDomain:        "rac13-12cca.firebaseapp.com",
+        databaseURL:       "https://rac13-12cca-default-rtdb.firebaseio.com",
+        projectId:         "rac13-12cca",
+        storageBucket:     "rac13-12cca.firebasestorage.app",
+        messagingSenderId: "761534687296",
+        appId:             "1:761534687296:web:04fef318d00c1f7b0457a5"
+      };
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+
+      const isMobile = window.innerWidth < 768;
+      const key = isMobile ? 'mobile' : 'desktop';
+
+      db.ref('stopmotionLayout/' + key).once('value', snap => {
+        const data = snap.val();
+        if (!data) return; // no saved layout — keep hardcoded CSS positions
+
+        const hero = document.querySelector('.sm-hero');
+        hero.querySelectorAll('.sm-char').forEach(el => el.remove());
+
+        Object.values(data)
+          .sort((a, b) => (a.zIndex || 1) - (b.zIndex || 1))
+          .forEach(layer => {
+            const img = document.createElement('img');
+            img.src   = layer.src;
+            img.className = 'sm-char';
+            img.alt   = '';
+
+            const transforms = [];
+            if (layer.rotation) transforms.push('rotate(' + layer.rotation + 'deg)');
+            if (layer.flipH)    transforms.push('scaleX(-1)');
+            if (layer.flipV)    transforms.push('scaleY(-1)');
+
+            img.style.cssText = [
+              'position:absolute',
+              'left:'    + layer.left  + '%',
+              'top:'     + layer.top   + '%',
+              'width:'   + layer.width + '%',
+              'height:auto',
+              'z-index:' + (layer.zIndex || 1),
+              'object-fit:contain',
+              transforms.length ? 'transform:' + transforms.join(' ') : '',
+              'transform-origin:center center',
+              'mix-blend-mode:multiply'
+            ].filter(Boolean).join(';');
+
+            hero.appendChild(img);
+          });
+      });
+    })();
 
     const pcForm = document.getElementById('pcForm');
     if (pcForm) {
