@@ -159,13 +159,8 @@
     /* shared tile styles */
     .work-tile {
       position: relative; overflow: hidden; cursor: pointer;
-      background: rgba(255,255,255,0.04); aspect-ratio: 4/5; text-decoration: none; transition: opacity 0.4s;
+      background: rgba(255,255,255,0.04); aspect-ratio: 1/1; text-decoration: none; transition: opacity 0.4s;
     }
-    .work-tile:nth-child(5n+1) { aspect-ratio: 3/4; }
-    .work-tile:nth-child(5n+3) { aspect-ratio: 1/1; }
-    .works-grid .work-tile { aspect-ratio: 1/1; }
-    .works-grid .work-tile:nth-child(4n+1) { aspect-ratio: 1/1; }
-    .works-grid .work-tile:nth-child(4n+2) { aspect-ratio: 1/1; }
     .tile-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
     .work-tile:hover .tile-img { transform: scale(1.05); }
     .tile-overlay {
