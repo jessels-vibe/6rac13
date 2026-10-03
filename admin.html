@@ -768,6 +768,10 @@
         </div>
       </div>
 
+      <div id="smMobileHint" style="display:none;background:rgba(242,200,0,0.12);border:1px solid rgba(242,200,0,0.35);padding:10px 14px;margin-bottom:12px;font-family:Jost,sans-serif;font-size:12px;line-height:1.5;color:rgba(255,255,255,0.8);">
+        <strong style="color:#F2C800">Mobile layout is separate.</strong> Character sizes from the desktop layout appear tiny on phone because the screen is portrait. Place and size characters fresh here for mobile — then hit Save Layout.
+      </div>
+
       <div class="sm-editor">
         <div class="sm-palette" id="smPalette">
           <div class="sm-palette-section">Characters</div>
@@ -1992,6 +1996,7 @@
     document.getElementById('smViewDesktop').classList.add('active');
     document.getElementById('smViewMobile').classList.remove('active');
     document.getElementById('smCanvas').classList.remove('mobile-view');
+    document.getElementById('smMobileHint').style.display = 'none';
     smSelected = null; renderSMCanvas(); updateSMToolbar();
   });
 
@@ -2000,6 +2005,7 @@
     document.getElementById('smViewMobile').classList.add('active');
     document.getElementById('smViewDesktop').classList.remove('active');
     document.getElementById('smCanvas').classList.add('mobile-view');
+    document.getElementById('smMobileHint').style.display = 'block';
     smSelected = null; renderSMCanvas(); updateSMToolbar();
   });
 
