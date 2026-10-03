@@ -159,6 +159,14 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 
 **stopmotion.html:** On page load, reads `/stopmotionLayout/desktop` or `/mobile` from Firebase (based on viewport width < 768px). Replaces hardcoded character images with dynamically positioned ones using saved position/size/rotation/flip. Falls back to hardcoded CSS positions if no layout is saved yet.
 
+### 2026-10-03 — Fix Video Art + Stop Motion in index.html SPA
+
+**Root cause discovered:** All nav links use hash routing (`#work/videoart`, `#stopmotion`) which renders views inside `index.html`, NOT the separate `work.html` / `stopmotion.html` files. Previous fixes to those standalone files had no effect on what users see.
+
+**index.html:**
+- Video Art hero: replaced blue overlay div with `<h2 class="vah-title">Video Art</h2>`. Added `.vah-title` CSS (`clamp(80px, 18vw, 320px)`, centered, script font). Removed `.vah-overlay` CSS. Route handler now uses `assets/videoart-hero.mp4` directly instead of searching Firebase for a video project. Hides `.page-header` when videoart filter is active; restores it for other filters.
+- Stop Motion: fixed `.sm-title` `top: calc(var(--nav-h) + 8px)` → `+20px` and `line-height: 0.88` → `1`. Added Firebase REST API layout loader (`fetch stopmotionLayout/{key}.json`) that runs once when the stopmotion view is first shown, replaces hardcoded character positions with saved layout.
+
 ### 2026-10-03 — Stop Motion title + layout loader fix
 
 **stopmotion.html:**

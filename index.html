@@ -143,7 +143,16 @@
     .video-art-hero { position: relative; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     .vah-bg { position: absolute; inset: 0; }
     .vah-bg video { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .vah-overlay { position: absolute; inset: 0; background: rgba(24,0,173,0.45); }
+    .vah-title {
+      position: relative; z-index: 2;
+      font-family: 'Amoresa Aged', cursive;
+      font-size: clamp(80px, 18vw, 320px);
+      color: var(--yellow);
+      text-align: center;
+      line-height: 0.9;
+      pointer-events: none;
+      padding: 0 16px;
+    }
     .grid-wrap { padding: 3px; }
     .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
 
@@ -233,8 +242,8 @@
     .sm-title {
       font-family: 'Amoresa Aged', cursive; font-size: clamp(72px, 12vw, 180px);
       color: var(--yellow); position: absolute;
-      top: calc(var(--nav-h) + 8px); left: 17%; right: 2%;
-      line-height: 0.88; z-index: 5; pointer-events: none;
+      top: calc(var(--nav-h) + 20px); left: 17%; right: 2%;
+      line-height: 1; z-index: 5; pointer-events: none;
     }
     .sm-char { position: absolute; object-fit: contain; -webkit-user-drag: none; user-select: none; -webkit-touch-callout: none; }
     #sm-red-fig        { left: 1%;   bottom: 0;    height: 87vh; z-index: 8; }
@@ -474,7 +483,7 @@
     </header>
     <div class="video-art-hero" id="videoArtHero" style="display:none">
       <div class="vah-bg" id="vahBg"></div>
-      <div class="vah-overlay"></div>
+      <h2 class="vah-title">Video Art</h2>
     </div>
     <div class="grid-wrap">
       <div class="work-grid" id="workGrid">
@@ -769,6 +778,7 @@
     /* ── Router ───────────────────────────────────────────────────────── */
     const VIEWS = ['home', 'work', 'stopmotion', 'project'];
     let videoHeroSet = false;
+    let smLayoutLoaded = false;
 
     function showView(name) {
       VIEWS.forEach(v => document.getElementById(`view-${v}`).classList.remove('active'));
@@ -850,16 +860,17 @@
         setTitle(CAT_LABELS[filter] || filter);
 
         const hero = document.getElementById('videoArtHero');
+        const pageHeader = document.querySelector('#view-work .page-header');
         if (filter === 'videoart') {
           hero.style.display = 'flex';
+          if (pageHeader) pageHeader.style.display = 'none';
           if (!videoHeroSet) {
-            loadProjects(ps => {
-              const v = ps.find(p => getCategories(p).includes('videoart') && p.heroUrl && (p.heroType === 'video' || /\.(mp4|mov|webm)(\?|$)/i.test(p.heroUrl)));
-              if (v) { document.getElementById('vahBg').innerHTML = `<video src="${v.heroUrl}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>`; videoHeroSet = true; }
-            });
+            document.getElementById('vahBg').innerHTML = `<video src="assets/videoart-hero.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>`;
+            videoHeroSet = true;
           }
         } else {
           hero.style.display = 'none';
+          if (pageHeader) pageHeader.style.display = '';
         }
 
         loadProjects(ps => {
@@ -881,6 +892,43 @@
         showView('stopmotion');
         setNavActive('stopmotion', null);
         document.title = 'Stop Motion — 6rac13';
+        if (!smLayoutLoaded) {
+          smLayoutLoaded = true;
+          const smKey = window.innerWidth < 768 ? 'mobile' : 'desktop';
+          fetch('https://rac13-12cca-default-rtdb.firebaseio.com/stopmotionLayout/' + smKey + '.json')
+            .then(r => r.json())
+            .then(data => {
+              if (!data || typeof data !== 'object') return;
+              const hero = document.querySelector('#view-stopmotion .sm-hero');
+              hero.querySelectorAll('.sm-char').forEach(el => el.remove());
+              Object.values(data)
+                .sort((a, b) => (a.zIndex || 1) - (b.zIndex || 1))
+                .forEach(layer => {
+                  const img = document.createElement('img');
+                  img.src = layer.src;
+                  img.className = 'sm-char';
+                  img.alt = '';
+                  const transforms = [];
+                  if (layer.rotation) transforms.push('rotate(' + layer.rotation + 'deg)');
+                  if (layer.flipH)    transforms.push('scaleX(-1)');
+                  if (layer.flipV)    transforms.push('scaleY(-1)');
+                  img.style.cssText = [
+                    'position:absolute',
+                    'left:'    + layer.left  + '%',
+                    'top:'     + layer.top   + '%',
+                    'width:'   + layer.width + '%',
+                    'height:auto',
+                    'z-index:' + (layer.zIndex || 1),
+                    'object-fit:contain',
+                    transforms.length ? 'transform:' + transforms.join(' ') : '',
+                    'transform-origin:center center',
+                    'mix-blend-mode:multiply'
+                  ].filter(Boolean).join(';');
+                  hero.appendChild(img);
+                });
+            })
+            .catch(() => {});
+        }
 
       } else {
         location.hash = '';
