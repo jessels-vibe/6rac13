@@ -421,8 +421,7 @@
                 'z-index:' + (layer.zIndex || 1),
                 'object-fit:contain',
                 transforms.length ? 'transform:' + transforms.join(' ') : '',
-                'transform-origin:center center',
-                'mix-blend-mode:multiply'
+                'transform-origin:center center'
               ].filter(Boolean).join(';');
 
               hero.appendChild(img);
