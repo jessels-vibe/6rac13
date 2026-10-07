@@ -253,6 +253,14 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 - Reduced `pc-row` padding from `3.5% 0 1.5%` to `1% 0 0.5%` to tighten vertical spacing between From / email / Subject rows.
 - Reduced `pc-send` to 9px / 0.08em letter-spacing and `margin-right: 20px` (was 70px) so the button sits cleanly within the right panel.
 
+### 2026-10-07 — Postcard right-panel font size + send button fixes
+
+**contact.html:**
+- Lowered `clamp()` floor values directly in base styles: `pc-to` 9px (was 12px), `pc-lbl` 8px (was 11px), `pc-input` 9px (was 12px). The previous breakpoint-only approach didn't help above 640px; the clamp floors hit at ~850px viewport so text was always oversized on any non-desktop width.
+- Reduced `pc-row` padding to `2% 0 1%` (was `3.5% 0 1.5%`) for tighter row spacing.
+- Removed `position: relative; top: 20px` from `pc-send` — this was pushing the SEND button outside the card bounds. Changed `margin-right: 70px` to `10%` so it scales with postcard width.
+- Updated ≤640px mobile overrides to match new smaller floor values.
+
 ### 2026-10-07 — Admin postcard editor clip line fix
 
 **admin.html:**
