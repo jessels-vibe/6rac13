@@ -252,3 +252,8 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 - Added mobile overrides in `@media (max-width: 640px)` for the right address panel: `pc-to` 10px, `pc-lbl` 9px, `pc-input` 10px. The `clamp()` floor values (12px, 11px, 12px) were too large for the ~140px-wide right half of the postcard at mobile widths, causing "To: Gracie F. Vanderlaan" to clip and fields to feel oversized.
 - Reduced `pc-row` padding from `3.5% 0 1.5%` to `1% 0 0.5%` to tighten vertical spacing between From / email / Subject rows.
 - Reduced `pc-send` to 9px / 0.08em letter-spacing and `margin-right: 20px` (was 70px) so the button sits cleanly within the right panel.
+
+### 2026-10-07 — Admin postcard editor clip line fix
+
+**admin.html:**
+- Added separate `clipH` variable for the "live page clips here" indicator: `W * (1650/1774 − 0.243)` ≈ `W * 1219/1774`. The previous value (`W * 1100/1774`) was the design-end pixel inside the image, but the live pages use `margin-bottom: -24.3%` (not overflow:hidden), so the actual visible bottom is ~119px lower. Form coordinate system (`H = W * 1100/1774`) is unchanged so existing saved layouts are unaffected.

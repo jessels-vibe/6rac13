@@ -1966,6 +1966,8 @@
     preview.querySelectorAll('.pc-el').forEach(e => e.remove());
     const lay = pcLay();
     const H = W * 1100 / 1774;
+    // live pages use margin-bottom:-24.3% so effective bottom = full img height − 24.3% of width
+    const clipH = W * (1650 / 1774 - 0.243);
 
     const fL = lay.formLeft  / 100 * W;
     const fR = W - lay.formRight  / 100 * W;
@@ -1976,12 +1978,12 @@
     // dashed purple line showing where live pages clip the image
     const clipEl = document.createElement('div');
     clipEl.className = 'pc-el pc-clip-line';
-    clipEl.style.top = H + 'px';
+    clipEl.style.top = clipH + 'px';
     clipEl.title = 'Live pages clip here';
     preview.appendChild(clipEl);
     const clipLbl = document.createElement('div');
     clipLbl.className = 'pc-el';
-    clipLbl.style.cssText = `position:absolute;top:${H+4}px;left:4px;font-family:Jost,sans-serif;font-size:9px;color:rgba(180,0,180,0.6);letter-spacing:0.08em;pointer-events:none;`;
+    clipLbl.style.cssText = `position:absolute;top:${clipH+4}px;left:4px;font-family:Jost,sans-serif;font-size:9px;color:rgba(180,0,180,0.6);letter-spacing:0.08em;pointer-events:none;`;
     clipLbl.textContent = '▲ live page clips here';
     preview.appendChild(clipLbl);
 
