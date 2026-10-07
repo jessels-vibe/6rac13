@@ -253,6 +253,14 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 - Reduced `pc-row` padding from `3.5% 0 1.5%` to `1% 0 0.5%` to tighten vertical spacing between From / email / Subject rows.
 - Reduced `pc-send` to 9px / 0.08em letter-spacing and `margin-right: 20px` (was 70px) so the button sits cleanly within the right panel.
 
+### 2026-10-07 — Postcard mobile breakpoint fix (desktop restore)
+
+**contact.html:**
+- Restored base CSS to original desktop values (clamp floors 12/11/12px, pc-row padding 3.5% 0 1.5%, nth-child margins 5/5/10px). Lowering these in base styles broke desktop.
+- Widened mobile breakpoint from 640px → 768px so phones and small tablets both get tighter layout.
+- Mobile overrides: pc-to 9px, pc-lbl 8px, pc-input 9px, pc-row 0.5% padding, nth-child margins zeroed, pc-send 8px.
+- Kept pc-send `position: relative; top: 20px` removal and `margin-right: 10%` from earlier fix.
+
 ### 2026-10-07 — Postcard right-panel font size + send button fixes
 
 **contact.html:**
