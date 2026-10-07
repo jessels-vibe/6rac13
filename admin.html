@@ -873,6 +873,9 @@
 
     <!-- ── POSTCARD LAYOUT TAB ──────────────────────────────────────────── -->
     <div class="tab-panel" id="tabPostcard" style="display:none">
+      <div id="pcMobileHint" style="display:none;background:rgba(242,200,0,0.12);border:1px solid rgba(242,200,0,0.35);padding:10px 14px;margin-bottom:12px;font-family:Jost,sans-serif;font-size:12px;line-height:1.5;color:rgba(255,255,255,0.8);">
+        <strong style="color:#F2C800">You are editing the Mobile layout.</strong> Changes here only affect phones (viewport &lt; 768px). Hit Save Layout when done.
+      </div>
       <div class="panel-header">
         <span style="font-family:Jost,sans-serif;font-size:12px;color:rgba(0,0,0,0.55);letter-spacing:0.06em;">Drag red handles to adjust form area · drag blue dot to move text start</span>
         <div style="display:flex;align-items:center;gap:10px">
@@ -2110,12 +2113,14 @@
     pcMode = 'desktop';
     document.getElementById('pcViewDesktop').classList.add('active');
     document.getElementById('pcViewMobile').classList.remove('active');
+    document.getElementById('pcMobileHint').style.display = 'none';
     pcRender();
   });
   document.getElementById('pcViewMobile').addEventListener('click', () => {
     pcMode = 'mobile';
     document.getElementById('pcViewMobile').classList.add('active');
     document.getElementById('pcViewDesktop').classList.remove('active');
+    document.getElementById('pcMobileHint').style.display = 'block';
     pcRender();
   });
   document.getElementById('pcResetBtn').addEventListener('click', () => {
