@@ -245,3 +245,10 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 
 **admin.html:**
 - Widened postcard layout editor preview container from `max-width: 640px` to `max-width: 960px` so the full postcard is visible without cropping.
+
+### 2026-10-07 — Postcard right-panel mobile text tightening
+
+**contact.html:**
+- Added mobile overrides in `@media (max-width: 640px)` for the right address panel: `pc-to` 10px, `pc-lbl` 9px, `pc-input` 10px. The `clamp()` floor values (12px, 11px, 12px) were too large for the ~140px-wide right half of the postcard at mobile widths, causing "To: Gracie F. Vanderlaan" to clip and fields to feel oversized.
+- Reduced `pc-row` padding from `3.5% 0 1.5%` to `1% 0 0.5%` to tighten vertical spacing between From / email / Subject rows.
+- Reduced `pc-send` to 9px / 0.08em letter-spacing and `margin-right: 20px` (was 70px) so the button sits cleanly within the right panel.
