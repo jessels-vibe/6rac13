@@ -914,7 +914,7 @@
             <button class="pc-adj-btn" onclick="pcAdjGap(0.5)">+</button>
           </span>
           <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(0,0,0,0.55);">
-            Msg indent
+            Addr indent
             <button class="pc-adj-btn" onclick="pcAdjIndent(-0.5)">−</button>
             <strong id="pcIndentVal" style="min-width:24px;text-align:center;color:#1C1CCC;font-size:13px;"></strong>%
             <button class="pc-adj-btn" onclick="pcAdjIndent(0.5)">+</button>
@@ -2099,7 +2099,7 @@
     const rowG = document.getElementById('pcRowGapVal');
     if (rowG) rowG.textContent = (lay.addrGap1 ?? def.addrGap1).toFixed(1);
     const indent = document.getElementById('pcIndentVal');
-    if (indent) indent.textContent = (lay.msgPadLeft ?? def.msgPadLeft).toFixed(1);
+    if (indent) indent.textContent = (lay.addrPadLeft ?? def.addrPadLeft).toFixed(1);
     const sendF = document.getElementById('pcSendFontVal');
     if (sendF) sendF.textContent = (lay.sendFontSize ?? def.sendFontSize).toFixed(isMobile ? 1 : 0);
     const sendT = document.getElementById('pcSendTopVal');
@@ -2130,8 +2130,8 @@
   function pcAdjIndent(delta) {
     const lay = pcLay();
     const def = PC_DEFAULTS[pcMode];
-    const cur = lay.msgPadLeft ?? def.msgPadLeft;
-    lay.msgPadLeft = Math.max(0, Math.round((cur + delta) * 10) / 10);
+    const cur = lay.addrPadLeft ?? def.addrPadLeft;
+    lay.addrPadLeft = Math.max(0, Math.round((cur + delta) * 10) / 10);
     pcRender();
   }
 
