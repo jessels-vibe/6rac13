@@ -269,6 +269,15 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 - Removed `position: relative; top: 20px` from `pc-send` — this was pushing the SEND button outside the card bounds. Changed `margin-right: 70px` to `10%` so it scales with postcard width.
 - Updated ≤640px mobile overrides to match new smaller floor values.
 
+### 2026-10-07 — Admin postcard coord system fix + mobile text width
+
+**admin.html:**
+- Fixed coordinate system bug in `pcRender` and `pcOnMove`: dot positions for blue A (msg) and orange ¶ (addr) were calculated as `% of mW` (half-form width), but the live pages apply `msgPadLeft/msgPadTop/addrPadLeft/addrPadBottom` as CSS `%` which is always relative to the containing block width (`fW`, the full form width). Changed all mW references in dot/addrDot calculations to fW. Now admin accurately previews where text lands on the live page, and horizontal drag has correct sensitivity.
+- Reduced `PC_DEFAULTS.mobile.msgPadLeft` from 9 → 5 so the text area is wider on the default mobile reset.
+
+**contact.html, shop.html, index.html:**
+- Updated mobile breakpoint CSS fallback `pc-msg` padding-left from 9% → 5% to match new default.
+
 ### 2026-10-07 — Admin postcard editor clip line fix
 
 **admin.html:**

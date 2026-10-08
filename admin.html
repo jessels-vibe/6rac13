@@ -1975,7 +1975,7 @@
   // ─── POSTCARD LAYOUT EDITOR ──────────────────────────────────────────────
   const PC_DEFAULTS = {
     desktop: { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:27, msgPadLeft:11, addrPadBottom:22, addrPadLeft:7, addrGap1:1.5, addrGap2:1.5, addrGap3:3, msgFontSize:16, addrFontSize:13 },
-    mobile:  { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:13, msgPadLeft:9,  addrPadBottom:22, addrPadLeft:7, addrGap1:0,   addrGap2:0,   addrGap3:0,   msgFontSize:3,  addrFontSize:2.4 }
+    mobile:  { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:13, msgPadLeft:5,  addrPadBottom:22, addrPadLeft:7, addrGap1:0,   addrGap2:0,   addrGap3:0,   msgFontSize:3,  addrFontSize:2.4 }
   };
   let pcData   = { desktop: {...PC_DEFAULTS.desktop}, mobile: {...PC_DEFAULTS.mobile} };
   let pcMode   = 'desktop';
@@ -2027,8 +2027,8 @@
     pcHandle(preview, 'bottom', fL+fW/2, fB,      'ns-resize');
 
     // message text-start dot (blue A)
-    const dotX = fL + lay.msgPadLeft / 100 * mW;
-    const dotY = fT + lay.msgPadTop  / 100 * mW;
+    const dotX = fL + lay.msgPadLeft / 100 * fW;
+    const dotY = fT + lay.msgPadTop  / 100 * fW;
     const dot  = pcEl(preview, 'div', 'pc-text-dot', dotX, dotY);
     dot.textContent = 'A';
     dot.dataset.h = 'dot';
@@ -2036,8 +2036,8 @@
     dot.addEventListener('touchstart', e => pcBeginDrag(e, 'dot'), { passive: false });
 
     // address fields dot (orange ¶) — anchor of addr content area
-    const adX = fL + mW + lay.addrPadLeft   / 100 * mW;
-    const adY = fB      - lay.addrPadBottom  / 100 * mW;
+    const adX = fL + mW + lay.addrPadLeft   / 100 * fW;
+    const adY = fB      - lay.addrPadBottom  / 100 * fW;
     const adDot = pcEl(preview, 'div', 'pc-addr-dot', adX, adY);
     adDot.textContent = '¶';
     adDot.dataset.h = 'addrDot';
@@ -2135,19 +2135,20 @@
 
     if (d.handle === 'dot') {
       const fL = d.formLeft/100*d.W, fT = d.formTop/100*d.H;
-      const mW = (1 - d.formLeft/100 - d.formRight/100)*d.W / 2;
-      const origDotX = fL + d.msgPadLeft/100 * mW;
-      const origDotY = fT + d.msgPadTop /100 * mW;
-      lay.msgPadLeft = clamp((origDotX + dx - fL) / mW * 100, 0, 80);
-      lay.msgPadTop  = clamp((origDotY + dy - fT) / mW * 100, 0, 90);
+      const fW = (1 - d.formLeft/100 - d.formRight/100)*d.W;
+      const origDotX = fL + d.msgPadLeft/100 * fW;
+      const origDotY = fT + d.msgPadTop /100 * fW;
+      lay.msgPadLeft = clamp((origDotX + dx - fL) / fW * 100, 0, 80);
+      lay.msgPadTop  = clamp((origDotY + dy - fT) / fW * 100, 0, 90);
     }
     if (d.handle === 'addrDot') {
       const fL = d.formLeft/100*d.W, fB = d.H - d.formBottom/100*d.H;
-      const mW = (1 - d.formLeft/100 - d.formRight/100)*d.W / 2;
-      const origAdX = fL + mW + d.addrPadLeft/100 * mW;
-      const origAdY = fB - d.addrPadBottom/100 * mW;
-      lay.addrPadLeft   = clamp((origAdX + dx - fL - mW) / mW * 100, 0, 40);
-      lay.addrPadBottom = clamp((fB - (origAdY + dy)) / mW * 100, 0, 60);
+      const fW = (1 - d.formLeft/100 - d.formRight/100)*d.W;
+      const mW = fW / 2;
+      const origAdX = fL + mW + d.addrPadLeft/100 * fW;
+      const origAdY = fB - d.addrPadBottom/100 * fW;
+      lay.addrPadLeft   = clamp((origAdX + dx - fL - mW) / fW * 100, 0, 40);
+      lay.addrPadBottom = clamp((fB - (origAdY + dy)) / fW * 100, 0, 60);
     }
     if (['addrGap1','addrGap2','addrGap3'].includes(d.handle)) {
       const mW = (1 - d.formLeft/100 - d.formRight/100)*d.W / 2;
