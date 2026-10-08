@@ -898,13 +898,13 @@
           <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(0,0,0,0.55);">
             Message
             <button class="pc-adj-btn" onclick="pcAdj('msgFontSize',-1)">−</button>
-            <strong id="pcMsgFontVal" style="min-width:20px;text-align:center;color:#1C1CCC;font-size:13px;"></strong>px
+            <strong id="pcMsgFontVal" style="min-width:24px;text-align:center;color:#1C1CCC;font-size:13px;"></strong><span id="pcFontUnit">px</span>
             <button class="pc-adj-btn" onclick="pcAdj('msgFontSize',1)">+</button>
           </span>
           <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(0,0,0,0.55);">
             Address
             <button class="pc-adj-btn" onclick="pcAdj('addrFontSize',-1)">−</button>
-            <strong id="pcAddrFontVal" style="min-width:20px;text-align:center;color:#1C1CCC;font-size:13px;"></strong>px
+            <strong id="pcAddrFontVal" style="min-width:24px;text-align:center;color:#1C1CCC;font-size:13px;"></strong><span class="pc-font-unit">px</span>
             <button class="pc-adj-btn" onclick="pcAdj('addrFontSize',1)">+</button>
           </span>
           <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(0,0,0,0.55);">
@@ -1975,7 +1975,7 @@
   // ─── POSTCARD LAYOUT EDITOR ──────────────────────────────────────────────
   const PC_DEFAULTS = {
     desktop: { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:27, msgPadLeft:11, addrPadBottom:22, addrPadLeft:7, addrGap1:1.5, addrGap2:1.5, addrGap3:3, msgFontSize:16, addrFontSize:13 },
-    mobile:  { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:13, msgPadLeft:9,  addrPadBottom:22, addrPadLeft:7, addrGap1:0,   addrGap2:0,   addrGap3:0,   msgFontSize:11, addrFontSize:9  }
+    mobile:  { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:13, msgPadLeft:9,  addrPadBottom:22, addrPadLeft:7, addrGap1:0,   addrGap2:0,   addrGap3:0,   msgFontSize:3,  addrFontSize:2.4 }
   };
   let pcData   = { desktop: {...PC_DEFAULTS.desktop}, mobile: {...PC_DEFAULTS.mobile} };
   let pcMode   = 'desktop';
@@ -2062,10 +2062,13 @@
       `&nbsp;&nbsp;|&nbsp;&nbsp; Addr: bottom pad <strong>${lay.addrPadBottom.toFixed(1)}%</strong>  left pad <strong>${lay.addrPadLeft.toFixed(1)}%</strong>` +
       `&nbsp;&nbsp;|&nbsp;&nbsp; Row gaps: 1→<strong>${(lay.addrGap1||0).toFixed(1)}%</strong>  2→<strong>${(lay.addrGap2||0).toFixed(1)}%</strong>  3→<strong>${(lay.addrGap3||0).toFixed(1)}%</strong>`;
     const def = PC_DEFAULTS[pcMode];
+    const isMobile = pcMode === 'mobile';
+    const unit = isMobile ? 'vw' : 'px';
+    document.querySelectorAll('#pcFontUnit, .pc-font-unit').forEach(el => el.textContent = unit);
     const msgF = document.getElementById('pcMsgFontVal');
-    if (msgF) msgF.textContent = lay.msgFontSize ?? def.msgFontSize;
+    if (msgF) msgF.textContent = (lay.msgFontSize ?? def.msgFontSize).toFixed(isMobile ? 1 : 0);
     const addrF = document.getElementById('pcAddrFontVal');
-    if (addrF) addrF.textContent = lay.addrFontSize ?? def.addrFontSize;
+    if (addrF) addrF.textContent = (lay.addrFontSize ?? def.addrFontSize).toFixed(isMobile ? 1 : 0);
     const rowG = document.getElementById('pcRowGapVal');
     if (rowG) rowG.textContent = (lay.addrGap1 ?? def.addrGap1).toFixed(1);
   }
@@ -2073,7 +2076,10 @@
   function pcAdj(key, delta) {
     const lay = pcLay();
     const def = PC_DEFAULTS[pcMode];
-    lay[key] = Math.max(6, Math.round(((lay[key] ?? def[key]) + delta) * 10) / 10);
+    const isMobile = pcMode === 'mobile';
+    const step = (isMobile && (key === 'msgFontSize' || key === 'addrFontSize')) ? 0.5 : 1;
+    const min  = isMobile ? 0.5 : 6;
+    lay[key] = Math.max(min, Math.round(((lay[key] ?? def[key]) + delta * step) * 10) / 10);
     pcRender();
   }
 

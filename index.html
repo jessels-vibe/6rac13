@@ -328,7 +328,7 @@
       .project-body { padding: 28px 20px; }
       .next-project-bar { padding: 32px 20px 0; }
       .postcard-footer { margin: 0 0 var(--nav-h); }
-      .pc-msg { font-size: 11px; padding: 13% 4% 4% 9%; }
+      .pc-msg { font-size: 3vw; padding: 13% 4% 4% 9%; }
 
       /* home */
       .works-section { padding: 48px 16px 0; }
@@ -991,6 +991,7 @@
     /* ── Postcard layout ─────────────────────────────────────────────── */
     (function() {
       const key = window.innerWidth < 768 ? 'mobile' : 'desktop';
+      const fontUnit = key === 'mobile' ? 'vw' : 'px';
       fetch('https://rac13-12cca-default-rtdb.firebaseio.com/postcardLayout/' + key + '.json')
         .then(r => r.json())
         .then(data => {
@@ -1006,7 +1007,7 @@
           if (msg) {
             if (data.msgPadTop   !== undefined) msg.style.paddingTop  = data.msgPadTop  + '%';
             if (data.msgPadLeft  !== undefined) msg.style.paddingLeft = data.msgPadLeft + '%';
-            if (data.msgFontSize !== undefined) msg.style.fontSize    = data.msgFontSize + 'px';
+            if (data.msgFontSize !== undefined) msg.style.fontSize = data.msgFontSize + fontUnit;
           }
           const addr = document.querySelector('.pc-addr');
           if (addr) {
@@ -1018,9 +1019,9 @@
             if (data.addrGap3 !== undefined && ch[3]) ch[3].style.marginTop = data.addrGap3 + '%';
             if (data.addrFontSize !== undefined) {
               const to = addr.querySelector('.pc-to');
-              if (to) to.style.fontSize = data.addrFontSize + 'px';
-              addr.querySelectorAll('.pc-lbl').forEach(el => el.style.fontSize = data.addrFontSize + 'px');
-              addr.querySelectorAll('.pc-input').forEach(el => el.style.fontSize = data.addrFontSize + 'px');
+              if (to) to.style.fontSize = data.addrFontSize + fontUnit;
+              addr.querySelectorAll('.pc-lbl').forEach(el => el.style.fontSize = data.addrFontSize + fontUnit);
+              addr.querySelectorAll('.pc-input').forEach(el => el.style.fontSize = data.addrFontSize + fontUnit);
             }
           }
         }).catch(() => {});
