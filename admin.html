@@ -913,6 +913,12 @@
             <strong id="pcRowGapVal" style="min-width:20px;text-align:center;color:#1C1CCC;font-size:13px;"></strong>%
             <button class="pc-adj-btn" onclick="pcAdjGap(0.5)">+</button>
           </span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(0,0,0,0.55);">
+            Msg indent
+            <button class="pc-adj-btn" onclick="pcAdjIndent(-0.5)">−</button>
+            <strong id="pcIndentVal" style="min-width:24px;text-align:center;color:#1C1CCC;font-size:13px;"></strong>%
+            <button class="pc-adj-btn" onclick="pcAdjIndent(0.5)">+</button>
+          </span>
         </div>
         <p class="pc-editor-hint">
           <span style="color:#CC1818">■</span> Red handles — drag to move form boundary.&nbsp;&nbsp;
@@ -2071,6 +2077,8 @@
     if (addrF) addrF.textContent = (lay.addrFontSize ?? def.addrFontSize).toFixed(isMobile ? 1 : 0);
     const rowG = document.getElementById('pcRowGapVal');
     if (rowG) rowG.textContent = (lay.addrGap1 ?? def.addrGap1).toFixed(1);
+    const indent = document.getElementById('pcIndentVal');
+    if (indent) indent.textContent = (lay.msgPadLeft ?? def.msgPadLeft).toFixed(1);
   }
 
   function pcAdj(key, delta) {
@@ -2089,6 +2097,14 @@
     const cur = lay.addrGap1 ?? def.addrGap1;
     const next = Math.round((cur + delta) * 10) / 10;
     lay.addrGap1 = lay.addrGap2 = lay.addrGap3 = next;
+    pcRender();
+  }
+
+  function pcAdjIndent(delta) {
+    const lay = pcLay();
+    const def = PC_DEFAULTS[pcMode];
+    const cur = lay.msgPadLeft ?? def.msgPadLeft;
+    lay.msgPadLeft = Math.max(0, Math.round((cur + delta) * 10) / 10);
     pcRender();
   }
 
