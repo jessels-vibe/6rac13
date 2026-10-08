@@ -269,6 +269,12 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 - Removed `position: relative; top: 20px` from `pc-send` — this was pushing the SEND button outside the card bounds. Changed `margin-right: 70px` to `10%` so it scales with postcard width.
 - Updated ≤640px mobile overrides to match new smaller floor values.
 
+### 2026-10-07 — Send button size/position controls
+
+**admin.html:** Added "Send button" control row below font/gap controls — Size (px/vw), Top (%), Right (%) with +/− buttons. New keys `sendFontSize`, `sendMarginTop`, `sendMarginRight` added to `PC_DEFAULTS` for both desktop and mobile. New `pcAdjSend()` JS function; display updated in `pcRender()`.
+
+**contact.html, shop.html, index.html:** Firebase loader now applies `sendFontSize`, `sendMarginTop`, `sendMarginRight` to `.pc-send` after the addr block.
+
 ### 2026-10-07 — Postcard form overflow fix
 
 **contact.html, shop.html, index.html:**

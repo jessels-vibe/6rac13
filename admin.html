@@ -920,6 +920,27 @@
             <button class="pc-adj-btn" onclick="pcAdjIndent(0.5)">+</button>
           </span>
         </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px 32px;padding:8px 0 4px;font-family:'Jost',sans-serif;align-items:center;border-top:1px solid rgba(0,0,0,0.08);">
+          <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.38);">Send button</span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(0,0,0,0.55);">
+            Size
+            <button class="pc-adj-btn" onclick="pcAdjSend('sendFontSize',-1)">−</button>
+            <strong id="pcSendFontVal" style="min-width:24px;text-align:center;color:#1C1CCC;font-size:13px;"></strong><span class="pc-font-unit">px</span>
+            <button class="pc-adj-btn" onclick="pcAdjSend('sendFontSize',1)">+</button>
+          </span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(0,0,0,0.55);">
+            Top
+            <button class="pc-adj-btn" onclick="pcAdjSend('sendMarginTop',-0.5)">−</button>
+            <strong id="pcSendTopVal" style="min-width:24px;text-align:center;color:#1C1CCC;font-size:13px;"></strong>%
+            <button class="pc-adj-btn" onclick="pcAdjSend('sendMarginTop',0.5)">+</button>
+          </span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(0,0,0,0.55);">
+            Right
+            <button class="pc-adj-btn" onclick="pcAdjSend('sendMarginRight',-0.5)">−</button>
+            <strong id="pcSendRightVal" style="min-width:24px;text-align:center;color:#1C1CCC;font-size:13px;"></strong>%
+            <button class="pc-adj-btn" onclick="pcAdjSend('sendMarginRight',0.5)">+</button>
+          </span>
+        </div>
         <p class="pc-editor-hint">
           <span style="color:#CC1818">■</span> Red handles — drag to move form boundary.&nbsp;&nbsp;
           <span style="color:#1C1CCC">●</span> Blue dot (A) — drag to move where message text starts.&nbsp;&nbsp;
@@ -1980,8 +2001,8 @@
 
   // ─── POSTCARD LAYOUT EDITOR ──────────────────────────────────────────────
   const PC_DEFAULTS = {
-    desktop: { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:27, msgPadLeft:11, addrPadBottom:22, addrPadLeft:7, addrGap1:1.5, addrGap2:1.5, addrGap3:3, msgFontSize:16, addrFontSize:13 },
-    mobile:  { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:13, msgPadLeft:5,  addrPadBottom:22, addrPadLeft:7, addrGap1:0,   addrGap2:0,   addrGap3:0,   msgFontSize:3,  addrFontSize:2.4 }
+    desktop: { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:27, msgPadLeft:11, addrPadBottom:22, addrPadLeft:7, addrGap1:1.5, addrGap2:1.5, addrGap3:3, msgFontSize:16, addrFontSize:13, sendFontSize:13, sendMarginTop:4, sendMarginRight:10 },
+    mobile:  { formLeft:10, formRight:10.5, formTop:14, formBottom:15, msgPadTop:13, msgPadLeft:5,  addrPadBottom:22, addrPadLeft:7, addrGap1:0,   addrGap2:0,   addrGap3:0,   msgFontSize:3,  addrFontSize:2.4, sendFontSize:2.2, sendMarginTop:1, sendMarginRight:4 }
   };
   let pcData   = { desktop: {...PC_DEFAULTS.desktop}, mobile: {...PC_DEFAULTS.mobile} };
   let pcMode   = 'desktop';
@@ -2079,6 +2100,12 @@
     if (rowG) rowG.textContent = (lay.addrGap1 ?? def.addrGap1).toFixed(1);
     const indent = document.getElementById('pcIndentVal');
     if (indent) indent.textContent = (lay.msgPadLeft ?? def.msgPadLeft).toFixed(1);
+    const sendF = document.getElementById('pcSendFontVal');
+    if (sendF) sendF.textContent = (lay.sendFontSize ?? def.sendFontSize).toFixed(isMobile ? 1 : 0);
+    const sendT = document.getElementById('pcSendTopVal');
+    if (sendT) sendT.textContent = (lay.sendMarginTop ?? def.sendMarginTop).toFixed(1);
+    const sendR = document.getElementById('pcSendRightVal');
+    if (sendR) sendR.textContent = (lay.sendMarginRight ?? def.sendMarginRight).toFixed(1);
   }
 
   function pcAdj(key, delta) {
@@ -2105,6 +2132,14 @@
     const def = PC_DEFAULTS[pcMode];
     const cur = lay.msgPadLeft ?? def.msgPadLeft;
     lay.msgPadLeft = Math.max(0, Math.round((cur + delta) * 10) / 10);
+    pcRender();
+  }
+
+  function pcAdjSend(key, delta) {
+    const lay = pcLay();
+    const def = PC_DEFAULTS[pcMode];
+    const cur = lay[key] ?? def[key];
+    lay[key] = Math.max(0, Math.round((cur + delta) * 10) / 10);
     pcRender();
   }
 

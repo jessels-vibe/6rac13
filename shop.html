@@ -518,6 +518,12 @@
               addr.querySelectorAll('.pc-lbl').forEach(el => el.style.fontSize = data.addrFontSize + fontUnit);
               addr.querySelectorAll('.pc-input').forEach(el => el.style.fontSize = data.addrFontSize + fontUnit);
             }
+            const send = addr.querySelector('.pc-send');
+            if (send) {
+              if (data.sendFontSize    !== undefined) send.style.fontSize    = data.sendFontSize   + fontUnit;
+              if (data.sendMarginTop   !== undefined) send.style.marginTop   = data.sendMarginTop  + '%';
+              if (data.sendMarginRight !== undefined) send.style.marginRight = data.sendMarginRight + '%';
+            }
           }
         }).catch(() => {});
     })();
