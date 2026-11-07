@@ -1996,6 +1996,10 @@
       if (data && data.blueFig && data.redFig) homeLayout = data;
       renderHomeCanvas();
       attachHomeEvents();
+    }, err => {
+      console.warn('homeLayout read failed:', err.message);
+      renderHomeCanvas();
+      attachHomeEvents();
     });
   }
 
@@ -2251,6 +2255,10 @@
         if (data.desktop) pcData.desktop = { ...PC_DEFAULTS.desktop, ...data.desktop };
         if (data.mobile)  pcData.mobile  = { ...PC_DEFAULTS.mobile,  ...data.mobile  };
       }
+      pcRender();
+      window.addEventListener('resize', pcRender);
+    }, err => {
+      console.warn('postcardLayout read failed:', err.message);
       pcRender();
       window.addEventListener('resize', pcRender);
     });
@@ -2633,10 +2641,18 @@
       document.getElementById('smSaveBtn').disabled = false;
       document.getElementById('smSaveBtn').textContent = 'Save Layout';
       renderSMCanvas();
+    }, err => {
+      console.warn('stopmotionLayout read failed:', err.message);
+      smDataReady = true;
+      document.getElementById('smSaveBtn').disabled = false;
+      document.getElementById('smSaveBtn').textContent = 'Save Layout';
+      renderSMCanvas();
     });
     db.ref('stopmotionChars').once('value', snap => {
       smCustomChars = Array.isArray(snap.val()) ? snap.val() : Object.values(snap.val() || {});
       renderSMPalette();
+    }, err => {
+      console.warn('stopmotionChars read failed:', err.message);
     });
   }
 
