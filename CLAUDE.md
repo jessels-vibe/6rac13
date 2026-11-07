@@ -122,6 +122,20 @@ Selecting a filter navigates to `work.html?filter={cat}` and updates the page ti
 
 ## Change Log
 
+### 2026-11-07 — Fix stop motion layout: prevent blank hero + race-condition save
+
+**admin.html:**
+- Save button is now disabled with "Loading…" text while `loadSMLayout()` is running. Previously, clicking Save before the Firebase read completed would overwrite the existing layout with empty data (smLayers was still `{desktop: [], mobile: []}`), silently wiping everything saved.
+- Switched from `alert()` to an inline error message rendered below the Save button. The error stays visible for 8 seconds, so the actual Firebase error message can be read.
+- Also fixed `smCustomChars` loading: `snap.val()` from Firebase returns a numeric-keyed object when the original was an array. Changed to `Array.isArray(snap.val()) ? snap.val() : Object.values(snap.val() || {})` so the palette renders correctly regardless of Firebase's array/object representation.
+
+**index.html + stopmotion.html:**
+- The layout fetch was removing all hardcoded characters BEFORE checking whether the returned data contained valid layers. If Firebase had empty or malformed data, the hero ended up blank. Now filters `Object.values(data)` for layers with a valid `src` property first, and only swaps in Firebase characters if at least one valid layer exists. The hardcoded fallback is preserved otherwise.
+
+**Watch out for:** If the layout data in Firebase is corrupt (non-null but no valid layers), the page now silently falls back to hardcoded characters. To fully reset to the hardcoded look, delete the `stopmotionLayout` node from Firebase console — the page will then always use the CSS-positioned fallback chars until a new layout is saved from admin.
+
+---
+
 ### 2026-09-28 — Initial build
 
 **What was built:** Full site from scratch — 6 pages + admin panel.
