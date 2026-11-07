@@ -2585,8 +2585,15 @@
   }
 
   // ── SAVE / LOAD ───────────────────────────────────────────────────────
+  let smDataReady = false; // true once loadSMLayout completes
+
   document.getElementById('smSaveBtn').addEventListener('click', async () => {
     const btn = document.getElementById('smSaveBtn');
+    if (!smDataReady) {
+      btn.textContent = 'Still loading…';
+      setTimeout(() => { btn.textContent = 'Save Layout'; }, 1500);
+      return;
+    }
     btn.textContent = 'Saving…'; btn.disabled = true;
     try {
       const toObj = arr => { const o = {}; arr.forEach(l => { o[l.id] = l; }); return o; };
@@ -2597,22 +2604,38 @@
       btn.textContent = 'Saved ✓';
       setTimeout(() => { btn.textContent = 'Save Layout'; btn.disabled = false; }, 2000);
     } catch(err) {
-      alert('Save failed: ' + err.message);
+      const msg = err.message || String(err);
       btn.textContent = 'Save Layout'; btn.disabled = false;
+      // Show error inline below the button instead of blocking alert
+      let errEl = document.getElementById('smSaveError');
+      if (!errEl) {
+        errEl = document.createElement('div');
+        errEl.id = 'smSaveError';
+        errEl.style.cssText = 'font-family:Jost,sans-serif;font-size:11px;color:#ef4444;margin-top:6px;';
+        btn.parentNode.insertBefore(errEl, btn.nextSibling);
+      }
+      errEl.textContent = 'Save failed: ' + msg;
+      setTimeout(() => { if (errEl) errEl.textContent = ''; }, 8000);
     }
   });
 
   function loadSMLayout() {
+    smDataReady = false;
+    document.getElementById('smSaveBtn').disabled = true;
+    document.getElementById('smSaveBtn').textContent = 'Loading…';
     db.ref('stopmotionLayout').once('value', snap => {
       const data = snap.val() || {};
       smLayers.desktop = data.desktop ? Object.values(data.desktop) : [];
       smLayers.mobile  = data.mobile  ? Object.values(data.mobile)  : [];
       const all = [...smLayers.desktop, ...smLayers.mobile];
       if (all.length) smNextZ = Math.max(...all.map(l => l.zIndex || 1)) + 1;
+      smDataReady = true;
+      document.getElementById('smSaveBtn').disabled = false;
+      document.getElementById('smSaveBtn').textContent = 'Save Layout';
       renderSMCanvas();
     });
     db.ref('stopmotionChars').once('value', snap => {
-      smCustomChars = snap.val() || [];
+      smCustomChars = Array.isArray(snap.val()) ? snap.val() : Object.values(snap.val() || {});
       renderSMPalette();
     });
   }

@@ -919,9 +919,11 @@
             .then(r => r.json())
             .then(data => {
               if (!data || typeof data !== 'object') return;
+              const layers = Object.values(data).filter(l => l && typeof l === 'object' && l.src);
+              if (!layers.length) return; // no valid layers — keep hardcoded fallback
               const hero = document.querySelector('#view-stopmotion .sm-hero');
               hero.querySelectorAll('.sm-char').forEach(el => el.remove());
-              Object.values(data)
+              layers
                 .sort((a, b) => (a.zIndex || 1) - (b.zIndex || 1))
                 .forEach(layer => {
                   const img = document.createElement('img');
