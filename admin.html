@@ -1985,8 +1985,16 @@
       btn.textContent = 'Saved ✓';
       setTimeout(() => { btn.disabled = false; btn.textContent = 'Save Layout'; }, 2000);
     } catch (err) {
-      alert('Save failed: ' + err.message);
       btn.disabled = false; btn.textContent = 'Save Layout';
+      let errEl = document.getElementById('homeLayoutSaveError');
+      if (!errEl) {
+        errEl = document.createElement('div');
+        errEl.id = 'homeLayoutSaveError';
+        errEl.style.cssText = 'font-family:Jost,sans-serif;font-size:11px;color:#ef4444;margin-top:6px;';
+        btn.parentNode.insertBefore(errEl, btn.nextSibling);
+      }
+      errEl.textContent = 'Save failed: ' + err.message;
+      setTimeout(() => { if (errEl) errEl.textContent = ''; }, 8000);
     }
   });
 
@@ -2378,12 +2386,14 @@
     canvas.appendChild(titleEl);
   }
 
+  // Register canvas background deselect once — not inside attachSMItemEvents
+  // to avoid stacking a new listener on every renderSMCanvas() call.
+  document.getElementById('smCanvas').addEventListener('mousedown', e => {
+    if (e.target === document.getElementById('smCanvas')) smSelectLayer(null);
+  });
+
   function attachSMItemEvents() {
     const canvas = document.getElementById('smCanvas');
-
-    canvas.addEventListener('mousedown', e => {
-      if (e.target === canvas) smSelectLayer(null);
-    }, { once: true });
 
     canvas.querySelectorAll('.sm-item').forEach(el => {
       const id = el.dataset.id;
